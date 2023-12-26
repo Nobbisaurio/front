@@ -1,0 +1,92 @@
+<div class="flex justify-content-center align-items-center">
+  <div class="flex justify-content-center w-4">
+    <p-avatar
+      [label]="user.userName.charAt(0).toUpperCase()"
+      size="xlarge"
+      [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"
+      shape="circle"
+    ></p-avatar>
+  </div>
+
+  <div class="w-8" *ngIf="!isEditing">
+    <!-- Mostrar detalles del perfil -->
+    <p class="font-bold text-2xl uppercase mb-1">{{ user.userName }}</p>
+    <p class="text-sm txt-400 font-bold m-0">{{ user.rol.name }}</p>
+    <p class="text-sm txt-400 font-bold m-0">{{ user.career }}</p>
+    <p class="text-sm txt-400 font-bold m-0"></p>
+    <p class="text-sm text-400 font-bold">{{ user.email }}</p>
+    <button
+      pButton
+      type="button"
+      label="Editar"
+      class="p-button-outlined w-full"
+      (click)="editProfile()"
+    ></button>
+  </div>
+
+  <div *ngIf="isEditing">
+    <!-- Formulario de edición del perfil -->
+
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <div
+        class="flex gap-2 align-items-center justify-content-between text-center p-4 border-round mb-3 border-1 border-gray-300"
+      >
+        <label for="userName" class="text-primary font-bold">Nombre de usuario:</label>
+        <input
+          class="text-center"
+          id="userName"
+          type="text"
+          pInputText
+          pAutoFocus
+          [autofocus]="true"
+          formControlName="userName"
+        />
+      </div>
+
+      <div class="flex gap-2 align-items-center justify-content-center text-center p-4 border-round mb-3 border-1 border-gray-300">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-sync"
+          type="button"
+          label="Cambiar contraseña"
+          class="bg-primary"
+          (click)="changePasswordform()"
+        ></button>
+
+        <div *ngIf="isChangePassword">
+          <app-password-change> *ngIf="isChangePassword"</app-password-change>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-row-reverse flex-wrap card-container yellow-container"
+      >
+        <div
+          class="flex-1 h-4rem text-white font-bold text-center p-2 border-round"
+        >
+          <button
+            pButton
+            type="submit"
+            label="Guardar"
+            icon="pi pi-check"
+            class="p-button-success"
+          ></button>
+        </div>
+
+        <div
+          class="flex-1 h-4rem text-white font-bold text-center p-2 border-round"
+        >
+          <button
+            pButton
+            type="button"
+            label="Cancelar"
+            icon="pi pi-times"
+            (click)="hidden()"
+            class="p-button-help"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

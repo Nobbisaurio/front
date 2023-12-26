@@ -1,0 +1,7 @@
+export enum StatusCompany {
+  PENDIENTE = 'PENDIENTE',
+  APROBADA = 'APROBADA',
+  RECHAZADA = 'RECHAZADA',
+  RETIRADA  = 'RETIRADA',
+  ACTIVO = 'ACTIVO',
+}

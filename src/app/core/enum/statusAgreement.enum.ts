@@ -1,0 +1,7 @@
+export enum StatusAgreement {
+  PENDIENTE = 'PENDIENTE',
+  APROBADA = 'APROBADA',
+  RECHAZADA = 'RECHAZADA',
+  RETIRADA  = 'RETIRADA',
+  ACTIVO = 'ACTIVO',
+}

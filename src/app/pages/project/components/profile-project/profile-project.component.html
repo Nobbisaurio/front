@@ -1,0 +1,244 @@
+<p-dialog
+  header="Proyecto"
+  [(visible)]="display"
+  [style]="{ width: '65vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hidden()"
+>
+  <div class="p-grid p-dir-col flex flex-column gap-2">
+    <p-fieldset legend="Datos del proyecto">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Nombre:</label>
+            <div>{{ project?.name }}</div>
+          </div>
+        </div>
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Estado:</label>
+            <div>{{ project?.status }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-column gap-2 w-full">
+        <label class="font-bold">Descripcion</label>
+        {{ project?.description }}
+      </div>
+      <div class="flex gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <label class="font-bold">Tutor Empresarial:</label>
+          <span>
+            {{ project?.businessTutor.firstName }}
+            {{ project?.businessTutor.lastName }}
+          </span>
+        </div>
+        <div class="flex flex-column gap-2 w-6">
+          <label class="font-bold">Tutor Academico:</label>
+          <span>
+            {{ project?.academicTutor.firstName || 'S/N' }}
+            {{ project?.academicTutor.lastName}}
+          </span>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <p-fieldset legend="Lista de Estudiantes">
+      <div *ngIf="project?.students.length > 0; else notFoundsStudents">
+        <button
+          class="p-button-success my-2"
+          *appShowForRoles="['CE','TE']"
+          pButton
+          type="button"
+          label="Agregar"
+          icon="pi pi-plus"
+          (click)="showAssignStudentsModal()"
+        ></button>
+        <div class="flex-column gap-column-2">
+
+
+          <div class="p-card p-4">
+            <table class="w-full">
+              <tr class="flex gap-2 text-left my-3">
+                <th class="w-5">Nombre</th>
+                <th class="w-3">Identificación</th>
+                <th class="w-3">Periodo Academico</th>
+                <th class="w-1" *appShowForRoles="['CE','TE']">Acción</th>
+              </tr>
+
+              <tbody>
+              <tr *ngFor="let student of project?.students" class="flex gap-2 my-3 align-items-center">
+                <td class="w-5">{{ student.fullName }}</td>
+                <td class="w-3">{{ student.dni }}</td>
+                <td class="w-3">{{ student.academicPeriod }}</td>
+                <td class="w-1" *appShowForRoles="['CE','TE']">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger"
+                    (click)="hiddenUnassingStudentModal(student)"
+                    type="button"
+                  ></button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #notFoundsStudents>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <h3>No se encontraron estudiantes</h3>
+        </div>
+      </ng-template>
+    </p-fieldset>
+  </div>
+
+  <ng-template
+    class="flex flex-column gap-2 justify-content-end"
+    pTemplate="footer"
+  >
+    <button
+      pButton
+      type="button"
+      label="Cerrar"
+      icon="pi pi-times"
+      (click)="hidden()"
+      class="p-button-help"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Editar"
+      icon="pi pi-pencil"
+      (click)="hiddenModalWithProjects()"
+      class="p-button-info"
+      *appShowForRoles="['CE']"
+    ></button>
+
+    <ng-container *appShowForRoles="['CA']">
+      <button
+        *ngIf="!project?.academicTutor?.firstName"
+        pButton
+        type="button"
+        label="Asignar Tutor"
+        icon="pi pi-building"
+        class="p-button-success"
+        (click)="showAssignTutorModal()"
+      ></button>
+      <button
+        class="p-button-warning"
+        *ngIf="!!project?.academicTutor?.firstName"
+        pButton
+        type="button"
+        label="Reasignar Tutor"
+        icon="pi pi-building"
+        (click)="showAssignTutorModal()"
+      ></button>
+    </ng-container>
+
+
+    <button
+      *ngIf="!project?.students"
+      pButton
+      type="button"
+      label="Asignar Empresa"
+      icon="pi pi-building"
+      (click)="showAssignStudentsModal()"
+      class="p-button-success"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Asignar Estudiante"
+  [(visible)]="assignStudentsDisplay"
+  [style]="{ width: '55vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hiddenAssignStudentsModal()"
+>
+  <div class="flex flex-column gap-2 pb-5">
+    <label for="students" class="obligatory">Estudiante</label>
+    <p-multiSelect
+      styleClass="w-full"
+      [(ngModel)]="studentsSelected"
+      optionLabel="completeNames"
+      optionValue="id"
+      [options]="studentsOptions"
+      id="students"
+      placeholder="Seleccione un estudiante"
+    ></p-multiSelect>
+  </div>
+  <div class="flex gap-2 justify-content-end my-4">
+    <button
+      pButton
+      type="button"
+      label="Cancelar"
+      icon="pi pi-times"
+      (click)="hiddenAssignStudentsModal()"
+      class="p-button-secondary"
+    ></button>
+    <button
+      pButton
+      type="submit"
+      [disabled]="studentsSelected.length === 0"
+      (click)="saveAssignment()"
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-success"
+    ></button>
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Asignar Tutor"
+  [(visible)]="assignTutorDisplay"
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hiddenAssignTutorModal()"
+>
+  <div class="flex flex-column gap-2 pb-5">
+    <div class="p-col" *ngIf="project?.academicTutor?.firstName">
+      <label class="font-bold">Tutor académico actual:</label>
+      <div>{{ project?.academicTutor?.firstName}} {{ project?.academicTutor?.lastName}}</div>
+    </div>
+    <label for="tutor" class="obligatory">Tutor académico</label>
+    <p-dropdown
+      [options]="tutorOptions"
+      styleClass="w-full"
+      optionLabel="completeName"
+      optionValue="id"
+      [(ngModel)]="tutorSelected"
+      id="tutor"
+      placeholder="Seleccione un tutor"
+    ></p-dropdown>
+  </div>
+  <div class="flex gap-2 justify-content-end my-4">
+    <button
+      pButton
+      type="button"
+      label="Cancelar"
+      icon="pi pi-times"
+      (click)="hiddenAssignTutorModal()"
+      class="p-button-secondary"
+    ></button>
+    <button
+      pButton
+      type="submit"
+      [disabled]="!tutorSelected"
+      (click)="saveTutorAssignment()"
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-success"
+    ></button>
+  </div>
+</p-dialog>
+

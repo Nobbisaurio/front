@@ -1,0 +1,194 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="p-card p-4">
+      <h2>Listado de Convenios</h2>
+
+      <form [formGroup]="formSearch" class="grid" (ngSubmit)="search()">
+        <div class="col-2">
+          <input
+            pInputText
+            placeholder="Código"
+            formControlName="code"
+            class="w-full"
+          />
+        </div>
+        <div class="col-2">
+          <p-calendar
+            placeholder="Fecha inicio"
+            formControlName="dateStart"
+            class="w-full"
+          ></p-calendar>
+        </div>
+        <div class="col-2">
+          <p-calendar
+            placeholder="Fecha fin"
+            formControlName="dateEnd"
+            dateFormat="dd/MM/yyyy"
+            class="w-full"
+          ></p-calendar>
+        </div>
+        <div class="col-3">
+          <input
+            pInputText
+            placeholder="Empresa"
+            formControlName="company"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-search"
+            class="w-full"
+            type="submit"
+            label="Buscar"
+          ></button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-12">
+      <div class="p-card p-4">
+        <p-table
+          [value]="agreement"
+          [loading]="loading"
+          [scrollable]="true"
+          [rowHover]="true"
+          [rows]="rows"
+          [paginator]="true"
+          [showCurrentPageReport]="true"
+          [lazy]="true"
+          (onLazyLoad)="search($event)"
+          [totalRecords]="totalRecords"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="w-auto"></th>
+              <th style="min-width: 4rem">
+                <div
+                  pSortableColumn="code"
+                  class="flex justify-content-between align-items-center"
+                >
+                  Código
+                  <p-sortIcon field="code"></p-sortIcon>
+                </div>
+              </th>
+              <th style="min-width: 4rem">
+                <div
+                  pSortableColumn="dateStart"
+                  class="flex justify-content-between align-items-center"
+                >
+                  Fecha inicio
+                  <p-sortIcon field="dateStart"></p-sortIcon>
+                </div>
+              </th>
+              <th style="min-width: 4rem">
+                <div
+                  pSortableColumn="dateEnd"
+                  class="flex justify-content-between align-items-center"
+                >
+                  Fecha fin
+                  <p-sortIcon field="dateEnd"></p-sortIcon>
+                </div>
+              </th>
+              <th style="min-width: 4rem">
+                <div
+                  pSortableColumn="company"
+                  class="flex justify-content-between align-items-center"
+                >
+                  Empresa
+                  <p-sortIcon field="company"></p-sortIcon>
+                </div>
+              </th>
+              <th style="min-width: 4rem">
+                <div
+                  pSortableColumn="status"
+                  class="flex justify-content-between align-items-center"
+                >
+                  Estado
+                  <p-sortIcon field="status"></p-sortIcon>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-agreement>
+            <tr>
+              <td class="w-auto flex gap-2">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-eye"
+                  class="p-button-outlined p-button-secondary"
+                  type="button"
+                  (click)="openModalProfile(agreement)"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-danger"
+                  (click)="confirm(agreement)"
+                  type="button"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-bell"
+                  class="p-button-warning"
+                  (click)="notifyByEmail(agreement.id)"
+                  type="button"
+                ></button>
+              </td>
+              <td style="min-width: 4rem">
+                {{ agreement.code }}
+              </td>
+              <td style="min-width: 4rem">
+                {{ agreement.dateStart | date : "dd/MM/yyyy" }}
+              </td>
+              <td style="min-width: 4rem">
+                {{ agreement.dateEnd | date : "dd/MM/yyyy" }}
+              </td>
+              <td style="min-width: 4rem">
+                {{ agreement.company }}
+              </td>
+              <td style="min-width: 4rem">
+                {{ agreement.status }}
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="9" class="text-center text-red-500">
+                Convenios no encontrados.
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+  <p-confirmDialog
+    header="Confirmación"
+    position="center"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
+
+  <app-profile-agreement
+    *ngIf="displayProfile"
+    [display]="displayProfile"
+    [idAgreement]="selectedAgreement.id"
+    (closeModal)="hiddenProfile()"
+    (editAgreement)="hiddenModalWithAgreement($event)"
+  ></app-profile-agreement>
+
+  <app-create-agreement
+    *ngIf="displayAgreement"
+    [displayAgreement]="displayAgreement"
+    [agreement]="selectedAgreement"
+    (closeModal)="displayAgreement = false; search()"
+  ></app-create-agreement>
+</div>

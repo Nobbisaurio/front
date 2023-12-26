@@ -1,0 +1,7 @@
+export enum StatusStudent {
+  ASIGNADO= 'ASIGNADO',
+  APROBADO= 'APROBADO',
+  RETIRADO= 'RETIRADO',
+  REPROBADO= 'REPROBADO',
+  PERDIDO= 'PERDIDO',
+}

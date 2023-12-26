@@ -1,0 +1,29 @@
+<div class="bg-white fixed h-5rem w-full left-0 top-0 px-5 flex justify-content-between align-items-center shadow-2"
+  style="z-index: 997;">
+  <a href="#/" [routerLink]="['/']" routerLinkActive="router-link-active"
+    class="flex align-items-center text-color text-2xl w-3 no-underline">
+    <img alt="logo" class="h-4rem" src="assets/img/logoYav.png">
+    <span class="mx-2 font-light">Sistema Fase Dual</span>
+  </a>
+  <div class="flex gap-2 align-items-center">
+    <div class="cursor-pointer">
+      <i class="pi pi-bell mr-4 p-text-secondary text-2xl " pBadge value="2"></i>
+    </div>
+
+    <button (click)="showModalDialog()" pButton pRipple type="button" icon="pi pi-user"
+      class="p-button-rounded p-button-text p-button-lg text-color"></button>
+
+      <button pButton pRipple type="button" icon="pi pi-sign-out" (click)="logout()"
+      class="p-button-rounded p-button-text p-button-lg text-color"></button>
+  </div>
+</div>
+
+
+<p-dialog header="Mi Perfil" [(visible)]="displayModal" [modal]="true" [style]="{width: '45vw'}" position="top"
+    [draggable]="false" [resizable]="false">
+    <p >
+      <app-profile > </app-profile>
+        </p>
+</p-dialog>
+
+

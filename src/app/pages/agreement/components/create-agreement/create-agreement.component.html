@@ -1,0 +1,96 @@
+<p-dialog
+  header="Convenios"
+  [(visible)]="displayAgreement"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  (onHide)="hiddenModal()"
+>
+  <div class="p-2">
+    <form [formGroup]="formAgreement" (ngSubmit)="saveAgreement()">
+      <div class="flex flex-column gap-2">
+        <label for="code" class="obligatory">Código</label>
+        <input
+          pInputText
+          id="code"
+          type="text"
+          formControlName="code"
+          required
+          [ngClass]="{
+            'is-invalid': f['code'].errors
+          }"
+        />
+
+        <label for="dateStart" class="obligatory">Fecha inicio</label>
+        <p-calendar
+          id="dateStart"
+          formControlName="dateStart"
+          class="w-full"
+          dateFormat="dd/mm/yy"
+          styleClass="w-full"
+        >
+        </p-calendar>
+
+        <label for="dateEnd" class="obligatory">Fecha fin</label>
+        <p-calendar
+          id="dateEnd"
+          formControlName="dateEnd"
+          class="w-full"
+          dateFormat="dd/mm/yy"
+          styleClass="w-full"
+        >
+        </p-calendar>
+
+        <label for="status" class="obligatory">Estado</label>
+        <p-dropdown
+          [options]="agreementStatusOptions"
+          styleClass="w-full"
+          placeholder="Seleccionar"
+          formControlName="status"
+          id="status"
+        ></p-dropdown>
+      </div>
+
+      <div class="flex">
+        <label for="itv" class="flex-1 obligatory mt-3"> Documento ITV </label>
+        <label for="copy" class="flex-1 mt-3"> Copia Convenio </label>
+      </div>
+
+      <div class="card flex">
+        <p-fileUpload
+          #fileUpload
+          class="flex-1 mt-2"
+          mode="basic"
+          name="itvPath"
+          [auto]="true"
+          accept="application/pdf"
+          (onSelect)="onUploadItv($event)"
+          id="itv"
+          chooseLabel="Examinar"
+        ></p-fileUpload>
+        <p-fileUpload
+          #fileUpload
+          class="flex-1 mt-2"
+          mode="basic"
+          name="agreementPath"
+          [auto]="true"
+          accept="application/pdf"
+          (onSelect)="onUploadAgreement($event)"
+          id="copy"
+          chooseLabel="Examinar"
+        ></p-fileUpload>
+      </div>
+
+      <div class="flex w-full justify-content-evenly p-4 gap-2">
+        <button
+          *ngIf="!hasData"
+          pButton
+          pRipple
+          label="Guardar"
+          class="p-button-raised p-button-success w-3"
+          [disabled]="formAgreement.invalid"
+          type="submit"
+        ></button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

@@ -1,0 +1,70 @@
+<form
+  [formGroup]="formAssigmentProjects"
+  (ngSubmit)="saveAssigment()"
+  class="grid"
+>
+  <div class="col-12">
+    <div class="p-card p-4">
+      <h2 class="m-0 mb-2">Asignamiento de Estudiantes</h2>
+      <div class="flex flex-column gap-2">
+        <label for="students">Proyectos</label>
+        <p-dropdown
+          id="students"
+          [options]="projects"
+          optionLabel="name"
+          optionValue="id"
+          class="w-6"
+          styleClass="w-6"
+          formControlName="idProject"
+          [filter]="true"
+          placeholder="Seleccionar"
+        ></p-dropdown>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-12">
+    <div class="p-card p-4">
+      <p-pickList
+        [source]="students"
+        [target]="studentsSelected"
+        sourceHeader="Disponibles"
+        targetHeader="Seleccionados"
+        [dragdrop]="true"
+        [responsive]="true"
+        [sourceStyle]="{ height: '30rem' }"
+        [targetStyle]="{ height: '30rem' }"
+        filterBy="completeNames"
+        sourceFilterPlaceholder="Buscar Estudiantes Disponibles"
+        targetFilterPlaceholder="Buscar Estudiantes Seleccionados"
+      >
+        <ng-template let-student pTemplate="item">
+          <div class="flex flex-row gap-2 justify-content-between">
+            <div class="w-10">
+              {{ student.completeNames }}
+            </div>
+            <div class="w-2">
+              <span class="p-tag p-tag-rounded p-tag-success">{{
+                student.status
+                }}</span>
+            </div>
+          </div>
+          <div class="w-12">
+            {{ student.career }} (<small>{{ student.periodAcademic }}</small
+          >)
+          </div>
+        </ng-template>
+      </p-pickList>
+      <div class="flex flex-row justify-content-end my-4">
+        <button
+          pButton
+          type="submit"
+          label="Guardar"
+          [disabled]="!formAssigmentProjects.valid"
+          class="p-button-success"
+        ></button>
+      </div>
+    </div>
+  </div>
+</form>

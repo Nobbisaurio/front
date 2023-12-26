@@ -1,0 +1,137 @@
+<div class="flex justify-content-end w-full mb-2">
+  <div class="flex">
+    <button
+      type="button"
+      pButton
+      pRipple
+      icon="pi pi-file-excel"
+      class="p-button-success mr-2"
+      pTooltip="Descargar XLS"
+      tooltipPosition="bottom"
+      [disabled]="academicTutor.invalid"
+      (click)="downloadXLSXReportTutor()"
+    ></button>
+
+    <button
+      type="button"
+      pButton
+      pRipple
+      icon="pi pi-file-pdf"
+      class="p-button-danger mr-3"
+      pTooltip="Descargar PDF"
+      tooltipPosition="bottom"
+      [disabled]="academicTutor.invalid"
+      (click)="downloadPDFReportTutor()"
+    ></button>
+  </div>
+</div>
+
+<form class="grid justify-content-end" (ngSubmit)="getDataTutor()">
+  <div class="col-3">
+    <p-dropdown
+      [options]="academicTutors"
+      [formControl]="academicTutor"
+      [showClear]="true"
+      optionLabel="completeName"
+      optionValue="id"
+      id="academicTutor"
+      class="w-full"
+      styleClass="w-full"
+      [filter]="true"
+      filterBy="completeName"
+      placeholder="Seleccionar Tutor"
+    ></p-dropdown>
+  </div>
+
+  <div class="col-3">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-search"
+      class="w-full"
+      type="submit"
+      label="Buscar"
+      [disabled]="academicTutor.invalid"
+      (click)="clearScreenn()"
+    ></button>
+  </div>
+</form>
+
+<!--contenido del reporte -->
+<div *ngIf="isVisibleReport">
+  <div class="card" id="htmlTutorReport">
+    <h2 class="text-blue-800 text-center">Reporte de empresas por tutor</h2>
+    <div
+      *ngFor="let item of tutorReport"
+      class="overflow-visible surface-overlay p-3 border-indigo-500 border-2 border-round mt-4"
+    >
+      <div class="card">
+        <div class="flex flex-row flex-wrap card-container blue-container">
+          <div
+            class="flex align-items-center justify-content-center font-bold border-round m-2"
+          >
+            Tutor Académico:
+            <div class="font-normal m-3">{{ item.academicTutor }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex flex-row flex-wrap card-container blue-container">
+          <div
+            class="flex align-items-center justify-content-center font-bold border-round m-2"
+          >
+            Empresa:
+            <div class="font-normal m-3">
+              {{ item.company || "Por asignar" }}
+            </div>
+          </div>
+          <div
+            class="flex align-items-center justify-content-center font-bold border-round m-2"
+          >
+            Tutor Empresarial:
+            <div class="font-normal m-3">
+              {{ item.businessTutor || "Por asignar" }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex card-container indigo-container mt-3">
+          <div
+            class="flex-1 h-2rem font-bold bg-indigo-500 text-white text-center p-1 border-round"
+          >
+            Estudiante
+          </div>
+          <div
+            class="flex-1 h-2rem font-bold bg-indigo-500 text-white text-center p-1 border-round mx-2"
+          >
+            Nivel
+          </div>
+          <div
+            class="flex-1 h-2rem font-bold bg-indigo-500 text-white text-center p-1 border-round"
+          >
+            Proyecto
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div
+          class="flex card-container indigo-container"
+          *ngFor="let students of item.student"
+        >
+          <div class="flex-1 h-4rem text-center p-3 border-round">
+            {{ students.completeNames }}
+          </div>
+          <div class="flex-1 h-4rem text-center p-3 border-round mx-4">
+            {{ students.periodAcademic }}
+          </div>
+          <div class="flex-1 h-4rem text-center p-3 border-round">
+            {{ students.project || "Por asignar" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

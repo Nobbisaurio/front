@@ -1,0 +1,123 @@
+<p-dialog
+  header="Detalle Convenios"
+  [(visible)]="display"
+  [style]="{ width: '65vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hidden()"
+>
+  <div class="p-grid p-dir-col flex flex-column gap-2">
+    <p-fieldset legend="Información del convenio">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Código:</label>
+            <div>{{ agreement?.code }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Fecha fin:</label>
+            <div>{{ agreement?.dateEnd | date : "dd/MM/yyyy" }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Documento ITV</label>
+            <div class="flex flex-row gap-2 my-2">
+              <button
+                pButton
+                type="button"
+                label="Descargar"
+                class="p-button-help"
+                (click)="downLoadFile(agreement?.itvPath)"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Fecha inicio:</label>
+            <div>{{ agreement?.dateStart | date : "dd/MM/yyyy" }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Estado:</label>
+            <div>{{ agreement?.status }}</div>
+          </div>
+          <div class="p-col" *ngIf="agreement?.agreementPath">
+            <label class="font-bold">Documento Convenio</label>
+            <div class="flex flex-row gap-2 my-2">
+              <button
+                pButton
+                type="button"
+                label="Descargar"
+                (click)="downLoadFile(agreement?.agreementPath)"
+                class="p-button-help"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <p-fieldset legend="Informacion de la empresa">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Ruc:</label>
+            <div>{{ agreement?.company?.ruc }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Responsable:</label>
+            <div>{{ agreement?.company?.nameRepresentLegal }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Correo electronico:</label>
+            <div>{{ agreement?.company?.email }}</div>
+          </div>
+        </div>
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Nombre de la empresa:</label>
+            <div>{{ agreement?.company?.name }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Teléfono:</label>
+            <div>{{ agreement?.company?.phone }}</div>
+          </div>
+
+          <div class="p-col">
+            <label class="font-bold">Estado:</label>
+            <div>{{ agreement?.company?.status }}</div>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+
+  <ng-template
+    class="flex flex-column gap-2 justify-content-end"
+    pTemplate="footer"
+  >
+    <button
+      pButton
+      type="button"
+      label="Cerrar"
+      icon="pi pi-times"
+      (click)="hidden()"
+      class="p-button-help"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Editar"
+      icon="pi pi-pencil"
+      (click)="hiddenModalWithAgreement()"
+      class="p-button-info"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-success"
+    ></button>
+  </ng-template>
+</p-dialog>

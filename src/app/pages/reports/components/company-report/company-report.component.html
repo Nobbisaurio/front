@@ -1,0 +1,140 @@
+<div class="flex justify-content-end w-full mb-2">
+  <div class="flex">
+    <button
+      type="button"
+      pButton
+      pRipple
+      icon="pi pi-file-excel"
+      class="p-button-success mr-2"
+      pTooltip="Descargar XLS"
+      tooltipPosition="bottom"
+      [disabled]="companyName.invalid"
+      (click)="downloadXLSXReportCompany()"
+    ></button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      icon="pi pi-file-pdf"
+      class="p-button-danger mr-3"
+      pTooltip="Descargar PDF"
+      tooltipPosition="bottom"
+      [disabled]="companyName.invalid"
+      (click)="downloadPDFReportCompany()"
+    ></button>
+  </div>
+</div>
+<form class="grid justify-content-end" (ngSubmit)="getDataCompany()">
+  <div class="col-3">
+
+
+
+    <p-dropdown
+    [options]="companies"
+    [formControl]="companyName"
+    [showClear]="true"
+    optionLabel="name"
+    optionValue="id"
+    id="companyName"
+    class="w-full"
+    styleClass="w-full"
+    [filter]="true"
+    filterBy="name"
+    placeholder="Seleccionar Empresa"
+  ></p-dropdown>
+
+  </div>
+
+  <div class="col-3">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-search"
+      class="w-full"
+      type="submit"
+      label="Buscar"
+      [disabled]="companyName.invalid"
+      (click)="clearScreen()"
+    ></button>
+  </div>
+</form>
+<!--contenido del reporte -->
+<div *ngIf="isVisibleReport">
+  <div class="card" id="htmlCompanyReport">
+    <h2 class="text-blue-800 text-center">
+      Reporte de estudiantes por empresa
+    </h2>
+    <div
+      *ngIf="objectCompany"
+      class="overflow-visible surface-overlay p-3 border-indigo-500 border-2 border-round"
+    >
+      <div class="card">
+        <div class="flex flex-row flex-wrap card-container blue-container">
+          <div
+            class="flex align-items-center justify-content-center font-bold border-round m-2"
+          >
+            Empresa:
+            <div class="font-normal m-3">{{ objectCompany.company }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex flex-row flex-wrap card-container blue-container">
+          <div
+            class="flex align-items-center justify-content-center font-bold border-round m-2"
+          >
+            Tutor Empresarial:
+            <div class="font-normal m-3">
+              {{ objectCompany.businessTutor || "Por asignar" }}
+            </div>
+          </div>
+          <div
+            class="flex align-items-center justify-content-center font-bold border-round m-2"
+          >
+            Tutor Académico:
+            <div class="font-normal m-3">
+              {{ objectCompany.academicTutor || "Por asignar" }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex card-container indigo-container mt-3">
+          <div
+            class="flex-1 h-2rem font-bold bg-indigo-500 text-white text-center p-1 border-round"
+          >
+            Estudiante
+          </div>
+          <div
+            class="flex-1 h-2rem font-bold bg-indigo-500 text-white text-center p-1 border-round mx-2"
+          >
+            Nivel
+          </div>
+          <div
+            class="flex-1 h-2rem font-bold bg-indigo-500 text-white text-center p-1 border-round"
+          >
+            Proyecto
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div
+          class="flex card-container indigo-container"
+          *ngFor="let stu of objectCompany.students"
+        >
+          <div class="flex-1 h-4rem text-center p-4 border-round">
+            {{ stu.completeNames }}
+          </div>
+          <div class="flex-1 h-4rem text-center p-4 border-round mx-4">
+            {{ stu.periodAcademic }}
+          </div>
+          <div class="flex-1 h-4rem text-center p-4 border-round">
+            {{ stu.project || "Por asignar" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,520 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="p-card p-4">
+      <h2 class="m-0 mb-2">Listado de Empresas</h2>
+      <div class="flex justify-content-end w-full mb-2 gap-2">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-plus"
+          class="p-button-success"
+          type="button"
+          label="Agregar"
+          (click)="openModelCreate()"
+        ></button>
+      </div>
+      <form [formGroup]="formSearch" class="grid" (ngSubmit)="search()">
+        <div class="col-3">
+          <input
+            pInputText
+            placeholder="RUC"
+            formControlName="identification"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <input
+            pInputText
+            placeholder="Nombres"
+            formControlName="name"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <input
+            pInputText
+            placeholder="Correo electrónico"
+            formControlName="email"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-search"
+            class="w-full"
+            type="submit"
+            label="Buscar"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="p-card p-4">
+      <p-table
+        [value]="company"
+        [loading]="loading"
+        [scrollable]="true"
+        [rowHover]="true"
+        [rows]="rows"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        [lazy]="true"
+        (onLazyLoad)="search($event)"
+        [totalRecords]="totalRecords"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-auto"></th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="ruc"
+                class="flex justify-content-between align-items-center"
+              >
+                RUC
+                <p-sortIcon field="ruc"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="name"
+                class="flex justify-content-between align-items-center"
+              >
+                Nombre empresa
+                <p-sortIcon field="name"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="nameRepresentLegal"
+                class="flex justify-content-between align-items-center"
+              >
+                Responsable
+                <p-sortIcon field="nameRepresentLegal"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="phone"
+                class="flex justify-content-between align-items-center"
+              >
+                Teléfono
+                <p-sortIcon field="phone"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="address"
+                class="flex justify-content-between align-items-center"
+              >
+                Dirección
+                <p-sortIcon field="address"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn=" email"
+                class="flex justify-content-between align-items-center"
+              >
+                Correo electrónico
+                <p-sortIcon field=" email"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="status"
+                class="flex justify-content-between align-items-center"
+              >
+                Estado
+                <p-sortIcon field="status"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-company>
+          <tr>
+            <td class="w-auto flex gap-3">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-eye"
+                class="p-button-outlined p-button-secondary"
+                type="button"
+                (click)="openModalProfile(company)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="confirm(company)"
+                type="button"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-building"
+                class="p-button-warning"
+                (click)="openModalAgreement(company)"
+                type="button"
+              ></button>
+            </td>
+            <td style="min-width: 4rem">
+              {{ company.ruc }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ company.name }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ company.nameRepresentLegal }}
+              {{ company.lastNameRepresentLegal }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ company.phone }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ company.address }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ company.email }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ company.status }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="9" class="text-center text-red-500">
+              Empresas no encontrados.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  header="Confirmación"
+  position="center"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+
+<p-dialog
+  header="Empresa"
+  [(visible)]="displayDetail"
+  [modal]="true"
+  [style]="{ width: '60vw' }"
+  (onHide)="hiddenModalDetail()"
+>
+  <div class="p-2 w-full">
+    <form
+      [formGroup]="formCompany"
+      class="flex flex-column gap-2 w-full"
+      (ngSubmit)="saveCompany()"
+    >
+      <p-fieldset legend="Datos Empresa">
+        <div class="flex flex-column gap-2">
+          <div class="flex gap-2 justify-content-between">
+            <div class="flex flex-column gap-2 w-6">
+              <label for="ruc" class="obligatory">RUC</label>
+              <input
+                pInputText
+                id="ruc"
+                type="text"
+                formControlName="ruc"
+                pKeyFilter="int"
+                required
+                [ngClass]="{
+                  'is-invalid': f['ruc'].errors
+                }"
+              />
+              <small *ngIf="f['ruc'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['ruc'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['ruc'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+            <div class="flex flex-column gap-2 w-6">
+              <label for="name" class="obligatory">Nombre Empresa</label>
+              <input
+                pInputText
+                id="name"
+                type="text"
+                formControlName="name"
+                required
+                [ngClass]="{
+                  'is-invalid': f['name'].errors
+                }"
+              />
+              <small *ngIf="f['name'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['name'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['name'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+          </div>
+          <div class="flex flex-column gap-2 w-full">
+            <label for="email" class="obligatory">Correo electrónico</label>
+            <div class="p-inputgroup">
+              <input
+                type="text"
+                id="email"
+                pInputText
+                formControlName="email"
+                required
+                [ngClass]="{
+                  'is-invalid': f['email'].errors
+                }"
+              />
+            </div>
+            <small *ngIf="f['email'].touched" class="invalid-feedback">
+              <p
+                class="p-error block my-2"
+                *ngIf="f['email'].errors?.['required']"
+              >
+                Campo es obligatorio
+              </p>
+            </small>
+          </div>
+          <div class="flex gap-2 justify-content-between">
+            <div class="flex flex-column gap-2 w-6">
+              <label for="address" class="obligatory">Dirección</label>
+              <input
+                pInputText
+                id="address"
+                type="text"
+                formControlName="address"
+                required
+                [ngClass]="{
+                  'is-invalid': f['address'].errors
+                }"
+              />
+              <small *ngIf="f['name'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['address'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['address'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+            <div class="flex flex-column gap-2 w-6">
+              <label for="status" class="obligatory">Estado</label>
+              <p-dropdown
+                id="status"
+                styleClass="w-full"
+                formControlName="status"
+                [options]="statusCompany"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </p-fieldset>
+
+      <p-fieldset
+        legend="Datos del responsable"
+        styleClass="w-full flex flex-column gap-2 "
+      >
+        <div class="grid">
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label for="dniRepresentLegal" class="obligatory"
+                >Identificación</label
+              >
+              <input
+                pInputText
+                id="dniRepresentLegal"
+                type="text"
+                formControlName="dniRepresentLegal"
+                pKeyFilter="int"
+                required
+                [ngClass]="{ 'is-invalid': f['dniRepresentLegal'].errors }"
+              />
+              <small
+                *ngIf="f['dniRepresentLegal'].touched"
+                class="invalid-feedback"
+              >
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['dniRepresentLegal'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['dniRepresentLegal'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label for="nameRepresentLegal" class="obligatory">Nombre</label>
+              <input
+                pInputText
+                id="nameRepresentLegal"
+                type="text"
+                formControlName="nameRepresentLegal"
+                required
+                [ngClass]="{ 'is-invalid': f['nameRepresentLegal'].errors }"
+              />
+              <small
+                *ngIf="f['nameRepresentLegal'].touched"
+                class="invalid-feedback"
+              >
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['nameRepresentLegal'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['nameRepresentLegal'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label for="lastNameRepresentLegal" class="obligatory"
+                >Apellido</label
+              >
+              <input
+                pInputText
+                id="lastNameRepresentLegal"
+                type="text"
+                formControlName="lastNameRepresentLegal"
+                required
+                [ngClass]="{ 'is-invalid': f['lastNameRepresentLegal'].errors }"
+              />
+              <small
+                *ngIf="f['lastNameRepresentLegal'].touched"
+                class="invalid-feedback"
+              >
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['lastNameRepresentLegal'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['lastNameRepresentLegal'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label for="phone" class="obligatory">Teléfono</label>
+              <input
+                pInputText
+                id="phone"
+                type="text"
+                formControlName="phone"
+                required
+                [ngClass]="{ 'is-invalid': f['phone'].errors }"
+              />
+              <small *ngIf="f['phone'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['phone'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['phone'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+          </div>
+        </div>
+      </p-fieldset>
+
+      <div class="flex w-full justify-content-evenly p-4 gap-2">
+        <button
+          *ngIf="hasData"
+          pButton
+          pRipple
+          label="Editar"
+          class="p-button-info w-4"
+          type="button"
+          (click)="editCompany()"
+        ></button>
+        <button
+          *ngIf="!hasData && selected"
+          pButton
+          pRipple
+          label="Cancelar"
+          class="p-button-help w-4"
+          type="button"
+          (click)="cancelEdit()"
+        ></button>
+
+        <button
+          *ngIf="!hasData"
+          pButton
+          pRipple
+          label="Guardar"
+          class="p-button-raised p-button-success w-3"
+          [disabled]="formCompany.invalid"
+          type="submit"
+        ></button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+<app-create-agreement
+  *ngIf="displayAgreement"
+  [displayAgreement]="displayAgreement"
+  [idCompany]="selected.id"
+  (closeModal)="hiddenAgreement()"
+></app-create-agreement>
+<app-profile-company
+  *ngIf="displayProfile"
+  [display]="displayProfile"
+  [idCompany]="selected.id"
+  (closeModal)="hiddenProfile()"
+  (editCompany)="hiddenModalWithCompany($event)"
+></app-profile-company>

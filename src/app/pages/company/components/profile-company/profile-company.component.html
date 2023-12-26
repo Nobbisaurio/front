@@ -1,0 +1,134 @@
+<p-dialog
+  header="Perfil de la empresa"
+  [(visible)]="display"
+  [style]="{ width: '65vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hidden()"
+>
+  <div class="p-grid p-dir-col flex flex-column gap-2">
+    <p-fieldset legend="Datos de la empresa">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">RUC:</label>
+            <div>{{ company?.ruc }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Dirección:</label>
+            <div>{{ company?.address }}</div>
+          </div>
+        </div>
+
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Nombre:</label>
+            <div>{{ company?.name }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Estado:</label>
+            <div>{{ company?.status }}</div>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <p-fieldset legend="Persona de contacto">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Identificación:</label>
+            <div>{{ company?.dniRepresentLegal }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Teléfono:</label>
+            <div>{{ company?.phone }}</div>
+          </div>
+        </div>
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Nombre:</label>
+            <div>{{ company?.nameRepresentLegal }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Correo electronico:</label>
+            <div>{{ company?.email }}</div>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <p-fieldset legend="Convenios">
+      <div class="grid w-full" *ngIf="company?.agreements.length > 0; else notFoundsAgreements">
+        <div class="col-4" *ngFor="let agreement of company?.agreements">
+          <div class="p-card border-1 p-3 border-700 justify-content-center">
+            <div><strong>Código:</strong> {{ agreement.code }}</div>
+            <div>
+              <strong>Fecha de inicio:</strong>
+              {{ agreement.dateStart | date : "dd/MM/yyyy" }}
+            </div>
+            <div>
+              <strong>Fecha de fin:</strong>
+              {{ agreement.dateEnd | date : "dd/MM/yyyy" }}
+            </div>
+            <div><strong>Estado:</strong> {{ agreement.status }}</div>
+          </div>
+        </div>
+      </div>
+      <ng-template #notFoundsAgreements>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <h3>No se encontraron convenios</h3>
+        </div>
+      </ng-template>
+    </p-fieldset>
+
+    <p-fieldset legend="Proyectos">
+      <div class="grid w-full" *ngIf="company?.projects.length > 0; else notFoundsProjects">
+        <div class="col-4" *ngFor="let project of company?.projects">
+          <div class="p-card border-1 p-3 border-700 justify-content-center">
+            <div><strong>Nombre:</strong> {{ project.name }}</div>
+            <div><strong>Descripción:</strong> {{ project.description }}</div>
+            <div><strong>Estado:</strong> {{ project.status }}</div>
+          </div>
+        </div>
+      </div>
+      <ng-template #notFoundsProjects>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <h3>No se encontraron proyectos</h3>
+        </div>
+      </ng-template>
+    </p-fieldset>
+  </div>
+
+  <ng-template
+    class="flex flex-column gap-2 justify-content-end"
+    pTemplate="footer"
+  >
+    <button
+      pButton
+      type="button"
+      label="Cerrar"
+      icon="pi pi-times"
+      (click)="hidden()"
+      class="p-button-help"
+    ></button>
+
+    <button
+      pButton
+      type="button"
+      label="Editar"
+      icon="pi pi-pencil"
+      (click)="hiddenModalWithCompany()"
+      class="p-button-info"
+    ></button>
+
+    <button
+      pButton
+      type="button"
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-success"
+    ></button>
+  </ng-template>
+</p-dialog>

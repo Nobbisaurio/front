@@ -1,0 +1,85 @@
+<div class="flex justify-content-center align-items-center min-h-screen">
+  <p-card styleClass="p-2 w-full" class="w-3">
+    <div class="flex justify-content-center w-full">
+      <img src="./assets/img/logoYav.png" alt="logo" width="150" />
+    </div>
+    <h1 class="text-2xl font-bold text-center">Iniciar Sesión</h1>
+    <form
+      class="flex flex-column my-5 gap-4"
+      [formGroup]="loginForm"
+      (ngSubmit)="login()"
+    >
+      <span class="p-float-label">
+        <input
+          id="float-input-invalid"
+          type="email"
+          pInputText
+          formControlName="email"
+          class="w-full"
+          [ngClass]="{
+            'ng-dirty': loginForm.get('email')?.touched,
+            'ng-invalid':
+              loginForm.get('email')?.touched &&
+              loginForm.get('email')?.invalid,
+            'ng-valid':
+              loginForm.get('email')?.touched && loginForm.get('email')?.valid
+          }"
+        />
+        <label for="float-input-invalid">Correo electrónico</label>
+      </span>
+      <div
+        class="p-error"
+        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']"
+      >
+        El correo electrónico es requerido.
+      </div>
+      <div
+        class="p-error"
+        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['email']"
+      >
+        Ingresa un correo electrónico válido.
+      </div>
+
+      <span class="p-float-label">
+        <input
+          id="float-input-invalid-pass"
+          type="password"
+          pInputText
+          formControlName="password"
+          class="w-full"
+          [ngClass]="{
+            'ng-dirty': loginForm.get('password')?.touched,
+            'ng-invalid':
+              loginForm.get('password')?.touched &&
+              loginForm.get('password')?.invalid,
+            'ng-valid':
+              loginForm.get('password')?.touched &&
+              loginForm.get('password')?.valid
+          }"
+        />
+        <label for="float-input-invalid-pass">Contraseña</label>
+      </span>
+      <div class="p-error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
+        Contraseña es requerido.
+      </div>
+      <div class="p-error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['minlength']">
+        Ingresa una contraseña válida.
+      </div>
+      <div class="flex justify-content-end">
+        <a
+          class="text-blue-500 hover:underline"
+          [routerLink]="['/auth/forget-password']"
+          >¿Olvidaste tu contraseña?</a
+        >
+      </div>
+
+      <button
+        type="submit"
+        pButton
+        pRipple
+        label="Ingresar"
+        [disabled]="loginForm.invalid"
+      ></button>
+    </form>
+  </p-card>
+</div>

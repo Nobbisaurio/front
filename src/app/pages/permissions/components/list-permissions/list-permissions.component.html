@@ -1,0 +1,228 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="p-card p-4">
+      <h2 class="m-0">Listado de Permisos</h2>
+
+      <div class="flex justify-content-end w-full mb-2">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-plus"
+          class="p-button-success"
+          type="button"
+          label="Agregar"
+          (click)="openModelCreate()"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="p-card p-4">
+      <p-table
+        [value]="permission"
+        [loading]="loading"
+        [scrollable]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        [totalRecords]="permission.length / 10"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-auto"></th>
+            <th pSortableColumn="name" style="min-width: 4rem">
+              <div
+                class="flex justify-content-between align-items-center"
+              >
+                Nombre
+                <p-sortIcon field="name"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"
+                  matchMode="contains"
+                  [showOperator]="false"
+                  [showMatchModes]="false"
+                  [showAddButton]="false"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="endpoint" style="min-width: 4rem">
+              <div
+                class="flex justify-content-between align-items-center"
+              >
+                Ruta
+                <p-sortIcon field="endpoint"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="endpoint"
+                  matchMode="contains"
+                  display="menu"
+                  [showOperator]="false"
+                  [showMatchModes]="false"
+                  [showAddButton]="false"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="state"
+                class="flex justify-content-between align-items-center"
+              >
+                Estado
+                <p-sortIcon field="state"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-permission>
+          <tr>
+            <td class="w-auto flex gap-2">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-eye"
+                class="p-button-outlined p-button-secondary"
+                type="button"
+                (click)="openModalDetail(permission)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="confirm(permission)"
+                type="button"
+              ></button>
+            </td>
+            <td style="min-width: 4rem">
+              {{ permission.name }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ permission.endpoint }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ permission.state ? "Activo" : "Inactivo" }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="9" class="text-center text-red-500">
+              Permisos no encontrados.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  header="Confirmación"
+  position="center"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+
+<p-dialog
+  header="Permisos"
+  [(visible)]="displayDetail"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  (onHide)="hiddenModalDetail()"
+>
+  <div class="p-2">
+    <form [formGroup]="formPermission" (ngSubmit)="savePermission()">
+      <div class="flex flex-column gap-2">
+        <label for="name" class="obligatory">Nombre</label>
+        <input
+          pInputText
+          id="nombre"
+          type="text"
+          formControlName="name"
+          required
+          [ngClass]="{
+                  'is-invalid': f['name'].errors
+                }"
+        />
+        <small *ngIf="f['name'].touched" class="invalid-feedback">
+          <p
+            class="p-error block my-2"
+            *ngIf="f['name'].errors?.['required']"
+          >
+            Campo es obligatorio
+          </p>
+          <p
+            class="p-error block my-2"
+            *ngIf="f['name'].errors?.['minlength']"
+          >
+            El campo es muy corto.
+          </p>
+        </small>
+
+        <label for="endpoint" class="obligatory">Ruta</label>
+        <input
+          pInputText
+          id="endpoint"
+          type="text"
+          formControlName="endpoint"
+          required
+          [ngClass]="{
+                  'is-invalid': f['endpoint'].errors
+                }"
+        />
+        <small *ngIf="f['endpoint'].touched" class="invalid-feedback">
+          <p
+            class="p-error block my-2"
+            *ngIf="f['endpoint'].errors?.['required']"
+          >
+            Campo es obligatorio
+          </p>
+          <p
+            class="p-error block my-2"
+            *ngIf="f['endpoint'].errors?.['minlength']"
+          >
+            El campo es muy corto.
+          </p>
+        </small>
+      </div>
+
+      <div class="flex w-full justify-content-evenly p-4 gap-2">
+        <button
+          *ngIf="hasData"
+          pButton
+          pRipple
+          label="Editar"
+          class="p-button-info w-4"
+          type="button"
+          (click)="editPermission()"
+        ></button>
+        <button
+          *ngIf="!hasData && selected"
+          pButton
+          pRipple
+          label="Cancelar"
+          class="p-button-help w-4"
+          type="button"
+          (click)="cancelEdit()"
+        ></button>
+        <button
+          *ngIf="!hasData"
+          pButton
+          pRipple
+          label="Guardar"
+          class="p-button-raised p-button-success w-3"
+          [disabled]="formPermission.invalid"
+          type="submit"
+        ></button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+

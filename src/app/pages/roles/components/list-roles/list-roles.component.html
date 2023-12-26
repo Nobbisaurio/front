@@ -1,0 +1,297 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="p-card p-4">
+      <h2 class="m-0">Listado de Roles</h2>
+
+      <div class="flex justify-content-end w-full mb-2">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-plus"
+          class="p-button-success"
+          type="button"
+          label="Agregar"
+          (click)="openModelCreate()"
+        ></button>
+      </div>
+      <form [formGroup]="formSearch" class="grid" (ngSubmit)="search()">
+        <div class="col-3">
+          <input
+            pInputText
+            placeholder="Codigo"
+            formControlName="identification"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <input
+            pInputText
+            placeholder="Nombres"
+            formControlName="name"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <p-calendar
+            placeholder="Fecha"
+            formControlName="dateStart"
+            date="dd/MM/yyyy"
+            class="w-full"
+          ></p-calendar>
+        </div>
+        <div class="col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-search"
+            class="w-full"
+            type="submit"
+            label="Buscar"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="p-card p-4">
+      <p-table
+        [value]="roles"
+        [loading]="loading"
+        [scrollable]="true"
+        [rowHover]="true"
+        [rows]="rows"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        [lazy]="true"
+        (onLazyLoad)="search($event)"
+        [totalRecords]="totalRecords"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-auto"></th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="code"
+                class="flex justify-content-between align-items-center"
+              >
+                Código
+                <p-sortIcon field="code"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="name"
+                class="flex justify-content-between align-items-center"
+              >
+                Nombre
+                <p-sortIcon field="name"></p-sortIcon>
+              </div>
+            </th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="createdAt"
+                class="flex justify-content-between align-items-center"
+              >
+                Fecha de creación
+                <p-sortIcon field="createdAt"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-roles>
+          <tr>
+            <td class="w-auto flex gap-2">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-eye"
+                class="p-button-outlined p-button-secondary"
+                type="button"
+                (click)="openModalDetail(roles)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="confirm(roles)"
+                type="button"
+              ></button>
+            </td>
+            <td style="min-width: 4rem">
+              {{ roles.code }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ roles.name }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ roles.createdAt | date : "dd/MM/yyyy" }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="9" class="text-center text-red-500">
+              Roles no encontrados.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  header="Confirmación"
+  position="center"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+
+<p-dialog
+  header="Roles"
+  [(visible)]="displayDetail"
+  [modal]="true"
+  [style]="{ width: '60vw' }"
+  (onHide)="hiddenModalDetail()"
+>
+  <div class="p-2">
+    <form [formGroup]="formRoles" (ngSubmit)="saveRoles()">
+      <div class="flex flex-column gap-2">
+        <label for="code" class="obligatory">Código</label>
+        <input
+          pInputText
+          id="code"
+          type="text"
+          formControlName="code"
+          required
+          [ngClass]="{
+            'is-invalid': f['code'].errors
+          }"
+        />
+        <small *ngIf="f['code'].touched" class="invalid-feedback">
+          <p class="p-error block my-2" *ngIf="f['code'].errors?.['required']">
+            Campo es obligatorio
+          </p>
+          <p class="p-error block my-2" *ngIf="f['code'].errors?.['minlength']">
+            El campo es muy corto.
+          </p>
+        </small>
+        <label for="name" class="obligatory">Nombre</label>
+        <input
+          pInputText
+          id="name"
+          type="text"
+          formControlName="name"
+          required
+          [ngClass]="{
+            'is-invalid': f['name'].errors
+          }"
+        />
+        <small *ngIf="f['name'].touched" class="invalid-feedback">
+          <p class="p-error block my-2" *ngIf="f['name'].errors?.['required']">
+            Campo es obligatorio
+          </p>
+          <p class="p-error block my-2" *ngIf="f['name'].errors?.['minlength']">
+            El campo es muy corto.
+          </p>
+        </small>
+        <label class="obligatory">Permisos</label>
+        <ng-container *ngIf="hasData; else notPermissions">
+          <!--TODO: hacer una lista de los permisos que tiene-->
+          <ul>
+            <ng-container *ngIf="selectedPermissions.length === 0; else permissions">
+              <li>No hay permisos</li>
+            </ng-container>
+            <ng-template #permissions>
+              <li>Nombre del permiso</li>
+              <li *ngFor="let per of selectedPermissions">
+                {{per.name}}
+              </li>
+            </ng-template>
+          </ul>
+        </ng-container>
+        <ng-template #notPermissions>
+          <p-table #dt [value]="permissions" [(selection)]="selectedPermissions" dataKey="id" [rowHover]="true"
+                   [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+                   [paginator]="true"
+                   [filterDelay]="0" [globalFilterFields]="['name','endpoint']">
+            <ng-template pTemplate="caption">
+              <div class="flex justify-content-between">
+                Lista de permisos
+                <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target['value'], 'contains')"
+                       placeholder="Buscar"/>
+              </span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 4rem">
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="name" style="min-width: 14rem">
+                  <div class="flex justify-content-between align-items-center">
+                    Nombre
+                    <p-sortIcon field="name"></p-sortIcon>
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-permission>
+              <tr class="p-selectable-row">
+                <td>
+                  <p-tableCheckbox [value]="permission"></p-tableCheckbox>
+                </td>
+                <td>
+                  <span class="p-column-title">Nombre</span>
+                  {{permission.name}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="2">Permisos no encontrados</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-template>
+
+
+      </div>
+
+      <div class="flex w-full justify-content-evenly p-4 gap-2">
+        <button
+          *ngIf="hasData"
+          pButton
+          pRipple
+          label="Editar"
+          class="p-button-info w-4"
+          type="button"
+          (click)="editRoles()"
+        ></button>
+        <button
+          *ngIf="!hasData && selected"
+          pButton
+          pRipple
+          label="Cancelar"
+          class="p-button-help w-4"
+          type="button"
+          (click)="cancelEdit()"
+        ></button>
+        <button
+          *ngIf="!hasData"
+          pButton
+          pRipple
+          label="Guardar"
+          class="p-button-raised p-button-success w-3"
+          [disabled]="formRoles.invalid"
+          type="submit"
+        ></button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

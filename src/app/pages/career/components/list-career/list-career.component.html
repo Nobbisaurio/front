@@ -1,0 +1,423 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="p-card p-4">
+      <h2 class="m-0">Listado de Carreras</h2>
+
+      <div class="flex justify-content-end w-full mb-2">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-plus"
+          class="p-button-success"
+          type="button"
+          label="Agregar"
+          (click)="openModelCreate()"
+        ></button>
+      </div>
+
+      <form [formGroup]="formSearch" class="grid" (ngSubmit)="search()">
+        <div class="col-4">
+          <input
+            pInputText
+            placeholder="Código"
+            formControlName="code"
+            class="w-full"
+          />
+        </div>
+        <div class="col-4">
+          <input
+            pInputText
+            placeholder="Nombre"
+            formControlName="name"
+            class="w-full"
+          />
+        </div>
+        <div class="col-4">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-search"
+            class="w-full"
+            type="submit"
+            label="Buscar"
+          ></button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="p-card p-4">
+      <p-table
+      [value]="careers"
+      [loading]="loading"
+      [scrollable]="true"
+      [rowHover]="true"
+      [rows]="rows"
+      [paginator]="true"
+      [showCurrentPageReport]="true"
+      (onLazyLoad)="search($event)"
+      [lazy]="true"
+      [totalRecords]="totalRecords"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-auto"></th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="code"
+                class="flex justify-content-between align-items-center"
+              >
+                Código
+                <p-sortIcon field="code"></p-sortIcon>
+              </div>
+            </th>
+
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="name"
+                class="flex justify-content-between align-items-center"
+              >
+                Nombre
+                <p-sortIcon field="name"></p-sortIcon>
+              </div>
+            </th>
+
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="state"
+                class="flex justify-content-between align-items-center"
+              >
+                Estado
+                <p-sortIcon field="state"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-career>
+          <tr>
+            <td class="w-auto flex gap-2">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-eye"
+                class="p-button-outlined p-button-secondary"
+                type="button"
+                (click)="openModalDetail(career)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="confirm(career)"
+                type="button"
+              ></button>
+            </td>
+            <td style="min-width: 4rem">
+              {{ career.code }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ career.name }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ career.state ? "Activo" : "Inactivo" }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="9" class="text-center text-red-500">
+              Carreras no encontrados.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  header="Confirmación"
+  position="center"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+
+<p-dialog
+  header="Carrera"
+  [(visible)]="displayDetail"
+  [modal]="true"
+  [style]="{ width: '60vw' }"
+  [blockScroll]="true"
+  (onHide)="hiddenModalDetail()"
+>
+  <div class="p-2 w-full">
+    <form
+      [formGroup]="formCareer"
+      class="flex flex-column gap-2 w-full"
+      (ngSubmit)="saveCareer()"
+    >
+      <div class="grid">
+        <p-fieldset
+          legend="Datos Generales"
+          class="col-12"
+        >
+          <div class="grid">
+            <div class="col-12 md:col-6 flex flex-column gap-2">
+              <label for="code" class="obligatory">Código</label>
+              <input
+                pInputText
+                id="code"
+                type="text"
+                formControlName="code"
+                required
+                [ngClass]="{
+                      'is-invalid': f['code'].errors
+                    }"
+              />
+              <small *ngIf="f['code'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['code'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['code'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+
+            <div class="col-12 md:col-6 flex flex-column gap-2">
+              <label for="name" class="obligatory">Nombre</label>
+              <input
+                pInputText
+                id="name"
+                type="text"
+                formControlName="name"
+                required
+                [ngClass]="{
+                      'is-invalid': f['name'].errors
+                    }"
+              />
+              <small *ngIf="f['name'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['name'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['name'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+
+            <div
+              class="p-fluid col-12 md:col-6 flex flex-column gap-2"
+            >
+              <label for="dateStart" class="obligatory"
+              >Fecha de Inicio Fase Práctica</label
+              >
+              <p-calendar id="dateStart" class="w-full" formControlName="dateStart"></p-calendar>
+            </div>
+
+            <div
+              class="p-fluid col-12 md:col-6 flex flex-column gap-2"
+            >
+              <label for="dateEnd" class="obligatory"
+              >Fecha Fin de la Fase Práctica</label
+              >
+              <p-calendar id="dateEnd" class="w-full" formControlName="dateEnd"></p-calendar>
+            </div>
+
+            <div class="col-12 flex flex-column gap-2">
+              <label for="timeRenovationAgreement" class="obligatory"
+              >Tiempo de Alerta para la Renovación del Convenio (En semanas)</label
+              >
+              <input
+                pInputText
+                id="timeRenovationAgreement"
+                type="text"
+                formControlName="timeRenovationAgreement"
+                pKeyFilter="int"
+                required
+                [ngClass]="{
+                      'is-invalid': f['timeRenovationAgreement'].errors
+                    }"
+              />
+              <small
+                *ngIf="f['timeRenovationAgreement'].touched"
+                class="invalid-feedback"
+              >
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['timeRenovationAgreement'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['timeRenovationAgreement'].errors?.['min']"
+                >
+                  El tiempo es muy corto.
+                </p>
+              </small>
+            </div>
+
+
+          </div>
+        </p-fieldset>
+
+        <p-fieldset
+          legend="Responsables"
+          class="col-12"
+        >
+          <div class="grid">
+            <div class="col-12 md:col-6 flex flex-column gap-2">
+              <label for="coordinator" class="obligatory"
+              >Coordinador</label
+              >
+              <p-dropdown
+                styleClass="w-full"
+                formControlName="idCoordinator"
+                optionLabel="name"
+                optionValue="id"
+                id="coordinator"
+                placeholder="Seleccionar"
+                [options]="coordinatorOptions"
+              >
+              </p-dropdown>
+              <small
+                *ngIf="f['idCoordinator'].touched"
+                class="invalid-feedback"
+              >
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['idCoordinator'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['idCoordinator'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+
+            <div class="col-12 md:col-6 flex flex-column gap-2">
+              <label for="viceCoordinator" class="obligatory"
+              >Vicecoordinador</label
+              >
+              <p-dropdown
+                styleClass="w-full"
+                formControlName="idViceCoordinator"
+                optionLabel="name"
+                optionValue="id"
+                id="viceCoordinator"
+                [options]="coordinatorOptions"
+                placeholder="Seleccionar"
+
+              >
+              </p-dropdown>
+              <small
+                *ngIf="f['idViceCoordinator'].touched"
+                class="invalid-feedback"
+              >
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['idViceCoordinator'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['idViceCoordinator'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+
+            <div class="col-12 md:col-6 flex flex-column gap-2">
+              <label for="respStepDual" class="obligatory"
+              >Responsable de la fase Dual
+              </label>
+              <p-dropdown
+                styleClass="w-full"
+                formControlName="idRespStepDual"
+                optionLabel="name"
+                optionValue="id"
+                id="respStepDual"
+                [options]="coordinatorOptions"
+                placeholder="Seleccionar"
+
+              >
+              </p-dropdown>
+              <small
+                *ngIf="f['idRespStepDual'].touched"
+                class="invalid-feedback"
+              >
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['idRespStepDual'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['idRespStepDual'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+          </div>
+        </p-fieldset>
+        <div class="flex w-full justify-content-evenly p-4 gap-2">
+          <button
+            *ngIf="hasData"
+            pButton
+            pRipple
+            label="Editar"
+            class="p-button-info w-4"
+            type="button"
+            (click)="editCareer()"
+          ></button>
+
+          <button
+            *ngIf="!hasData && selected"
+            pButton
+            pRipple
+            label="Cancelar"
+            class="p-button-help w-4"
+            type="button"
+            (click)="cancelEdit()"
+          ></button>
+
+          <button
+            *ngIf="!hasData"
+            pButton
+            pRipple
+            label="Guardar"
+            class="p-button-raised p-button-success w-3"
+            [disabled]="formCareer.invalid"
+            type="submit"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+

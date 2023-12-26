@@ -1,0 +1,246 @@
+<p-dialog
+  header="Perfil del estudiante"
+  [(visible)]="display"
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hidden()"
+>
+  <div class="p-grid p-dir-col flex flex-column gap-2">
+    <p-fieldset legend="Datos del estudiante">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Identificación:</label>
+            <div>{{ student?.dni }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Nombre:</label>
+            <div>
+              {{ student?.firstName }} {{ student?.secondName }}
+              {{ student?.lastName }} {{ student?.secondLastName }}
+            </div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Correo Institucional:</label>
+            <div>{{ student?.email }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Estado:</label>
+            <div>{{ student?.status }}</div>
+          </div>
+        </div>
+
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Carrera:</label>
+            <div>{{ student?.career }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Paralelo:</label>
+            <div>{{ student?.parallel }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Periodo académico:</label>
+            <div>{{ student?.academicPeriod }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Periodo lectivo:</label>
+            <div>{{ student?.electivePeriod }}</div>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <p-fieldset legend="Datos de la fase dual">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Empresa Formadora:</label>
+            <div>{{ student?.company || "N/A" }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Proyecto Asignado:</label>
+            <div>{{ student?.project || "N/A" }}</div>
+          </div>
+        </div>
+        <div class="flex flex-column gap-2 w-6">
+          <div class="p-col">
+            <label class="font-bold">Tutor Académico:</label>
+            <div>{{ student?.academicTutor || "N/A" }}</div>
+          </div>
+          <div class="p-col">
+            <label class="font-bold">Tutor Empresarial:</label>
+            <div>{{ student?.businessTutor || "N/A" }}</div>
+          </div>
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+  <ng-template
+    class="flex flex-column gap-2 justify-content-end"
+    pTemplate="footer"
+  >
+    <button
+      pButton
+      type="button"
+      label="Cerrar"
+      icon="pi pi-times"
+      (click)="hidden()"
+      class="p-button-help"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Editar"
+      icon="pi pi-pencil"
+      (click)="hiddenModalWithStudent()"
+      class="p-button-info"
+      *appShowForRoles="['ADMIN', 'CA', 'TA']"
+    ></button>
+    <ng-container *appShowForRoles="['ADMIN', 'CA']">
+      <button
+        *ngIf="!student?.company && student?.status !== statusStudent.REPROBADO"
+        pButton
+        type="button"
+        label="Asignar Empresa"
+        icon="pi pi-building"
+        (click)="showAssignCompanyModal()"
+        class="p-button-success"
+      ></button>
+      <button
+        class="p-button-warning"
+        *ngIf="student?.company && student?.status !== statusStudent.REPROBADO"
+        pButton
+        type="button"
+        label="Reasignar Empresa"
+        icon="pi pi-building"
+        (click)="showAssignCompanyModal()"
+      ></button>
+    </ng-container>
+
+    <ng-container *appShowForRoles="['TE', 'CE']">
+      <button
+        *ngIf="!student?.project"
+        pButton
+        type="button"
+        label="Asignar Projecto"
+        icon="pi pi-building"
+        (click)="showAssignProjectModal()"
+        class="p-button-success"
+      ></button>
+      <button
+        class="p-button-warning"
+        *ngIf="student?.project"
+        pButton
+        type="button"
+        label="Reasignar Projecto"
+        icon="pi pi-building"
+        (click)="showAssignProjectModal()"
+      ></button>
+    </ng-container>
+
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Asignar Empresa"
+  [(visible)]="assignCompanyDisplay"
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hiddenAssignCompanyModal()"
+>
+  <p-fieldset legend="Selecciona empresa">
+    <form [formGroup]="formAssigment" (ngSubmit)="saveAssignment()">
+      <div class="flex flex-column gap-2">
+        <div class="p-col" *ngIf="student?.company">
+          <label class="font-bold">Empresa Actual:</label>
+          <div>{{ student?.company || "N/A" }}</div>
+        </div>
+        <label for="company" class="obligatory">Empresas</label>
+        <p-dropdown
+          styleClass="w-full"
+          formControlName="idCompany"
+          optionLabel="name"
+          optionValue="id"
+          [options]="companyOptions"
+          id="company"
+          [filter]="true"
+          filterBy="name"
+          placeholder="Seleccione una empresa"
+        ></p-dropdown>
+      </div>
+      <div class="flex gap-2 justify-content-end my-4">
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          (click)="hiddenAssignCompanyModal()"
+          class="p-button-secondary"
+        ></button>
+        <button
+          pButton
+          type="submit"
+          [disabled]="formAssigment.invalid"
+          label="Guardar"
+          icon="pi pi-check"
+          class="p-button-success"
+        ></button>
+      </div>
+    </form>
+  </p-fieldset>
+</p-dialog>
+<p-dialog
+  header="Asignar Proyecto"
+  [(visible)]="assignProjectDisplay"
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="hiddenAssignCompanyModal()"
+>
+  <p-fieldset legend="Selecciona proyecto">
+    <form [formGroup]="formAssigmentProject" (ngSubmit)="saveAssignmentProject()">
+      <div class="flex flex-column gap-2">
+        <div class="p-col" *ngIf="student?.company">
+          <label class="font-bold">Proyecto Actual:</label>
+          <div>{{ student?.project || "N/A" }}</div>
+        </div>
+        <label for="project" class="obligatory">Proyectos</label>
+        <p-dropdown
+          styleClass="w-full"
+          formControlName="idProject"
+          optionLabel="name"
+          optionValue="id"
+          [options]="projects"
+          [filter]="true"
+          filterBy="name"
+          id="project"
+          placeholder="Seleccione un proyecto"
+        ></p-dropdown>
+      </div>
+      <div class="flex gap-2 justify-content-end my-4">
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          (click)="hiddenAssignCompanyModal()"
+          class="p-button-secondary"
+        ></button>
+        <button
+          pButton
+          type="submit"
+          [disabled]="formAssigmentProject.invalid"
+          label="Guardar"
+          icon="pi pi-check"
+          class="p-button-success"
+        ></button>
+      </div>
+    </form>
+  </p-fieldset>
+</p-dialog>

@@ -1,0 +1,353 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="p-card p-4">
+      <h2 class="m-0">Lista de Proyectos</h2>
+      <div class="my-2 flex justify-content-end w-full gap-2">
+        <a
+          href="#"
+          pButton
+          pRipple
+          icon="pi pi-building"
+          class="p-button-secondary p-button-raised no-underline"
+          *appShowForRoles="['CE','TE']"
+          label="Asignar Estudiante"
+          [routerLink]="[rootAppService.projectsAssigmentPath]"
+        ></a>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-plus"
+          class="p-button-success"
+          *appShowForRoles="['CE','TE']"
+          type="button"
+          label="Agregar"
+          (click)="openModelCreate()"
+        ></button>
+      </div>
+
+      <form [formGroup]="formSearch" class="grid" (ngSubmit)="search()">
+        <div class="col-2">
+          <input
+            pInputText
+            placeholder="Nombre"
+            formControlName="name"
+            class="w-full"
+          />
+        </div>
+        <div class="col-2">
+          <input
+            pInputText
+            placeholder="Tutor Academico "
+            formControlName="academicTutor"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <input
+            pInputText
+            placeholder="Tutor Empresarial "
+            formControlName="businessTutor"
+            class="w-full"
+          />
+        </div>
+        <div class="col-2">
+          <input
+            pInputText
+            placeholder="Empresa "
+            formControlName="company"
+            class="w-full"
+          />
+        </div>
+        <div class="col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-search"
+            class="w-full"
+            type="submit"
+            label="Buscar"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="p-card p-4">
+      <p-table
+        [value]="projects"
+        [loading]="loading"
+        [scrollable]="true"
+        [rowHover]="true"
+        [rows]="rows"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        [lazy]="true"
+        (onLazyLoad)="search($event)"
+        [totalRecords]="totalRecords"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-auto"></th>
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="name"
+                class="flex justify-content-between align-items-center"
+              >
+                Nombre
+                <p-sortIcon field="name"></p-sortIcon>
+              </div>
+            </th>
+
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="idAcademicTutor"
+                class="flex justify-content-between align-items-center"
+              >
+                Tutor Academico
+                <p-sortIcon field="idAcademicTutor"></p-sortIcon>
+              </div>
+            </th>
+
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="idTutorBusiness"
+                class="flex justify-content-between align-items-center"
+              >
+                Tutor Empresarial
+                <p-sortIcon field="idTutorBusiness"></p-sortIcon>
+              </div>
+            </th>
+
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="idCompany"
+                class="flex justify-content-between align-items-center"
+              >
+                Empresa
+                <p-sortIcon field="idCompany"></p-sortIcon>
+              </div>
+            </th>
+
+            <th style="min-width: 4rem">
+              <div
+                pSortableColumn="status"
+                class="flex justify-content-between align-items-center"
+              >
+                Estado
+                <p-sortIcon field="status"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-projects>
+          <tr>
+            <td class="w-auto flex gap-2">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-eye"
+                class="p-button-outlined p-button-secondary"
+                type="button"
+                (click)="openModalProfile(projects)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="confirm(projects)"
+                type="button"
+              ></button>
+            </td>
+            <td style="min-width: 4rem">
+              {{ projects?.name }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ projects?.academicTutor || "S/N" }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ projects?.businessTutor }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ projects?.company }}
+            </td>
+            <td style="min-width: 4rem">
+              {{ projects?.status }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="9" class="text-center text-red-500">
+              Proyecto no encontrados.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<p-dialog
+  header="Registrar Proyecto"
+  [(visible)]="displayDetail"
+  [modal]="true"
+  [style]="{ width: '60vw' }"
+  (onHide)="hiddenModalDetail()"
+>
+  <div class="p-2 w-full">
+    <form
+      [formGroup]="formProjects"
+      class="flex flex-column gap-2 w-full"
+      (ngSubmit)="saveProjects()"
+    >
+      <p-fieldset legend="Datos del Proyecto">
+        <div class="flex flex-column gap-2">
+          <div class="flex gap-2 justify-content-between">
+            <div class="flex flex-column gap-2 w-6">
+              <label for="name" class="obligatory">Nombre</label>
+              <input
+                pInputText
+                id="name"
+                type="text"
+                formControlName="name"
+                required
+                [ngClass]="{
+                  'is-invalid': f['name'].errors
+                }"
+              />
+              <small *ngIf="f['name'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['name'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['name'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+
+            <div class="w-6 flex flex-column gap-2">
+              <label for="idTutorBusiness" class="obligatory"
+                >Tutor Empresarial
+              </label>
+              <p-dropdown
+                styleClass="w-full"
+                formControlName="idBusinessTutor"
+                optionLabel="completeName"
+                optionValue="id"
+                [options]="tutorBusinessOptions"
+                id="idTutorBusiness"
+              ></p-dropdown>
+            </div>
+          </div>
+          <div class="flex flex-column gap-2 w-full">
+            <div class="w-6 flex flex-column gap-2">
+              <label for="status" class="obligatory"
+                >Estado</label
+              >
+              <p-dropdown
+                styleClass="w-full"
+                formControlName="status"
+                [options]="statusProject"
+                id="status"
+              ></p-dropdown>
+              <small *ngIf="f['status'].touched" class="invalid-feedback">
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['status'].errors?.['required']"
+                >
+                  Campo es obligatorio
+                </p>
+                <p
+                  class="p-error block my-2"
+                  *ngIf="f['status'].errors?.['minlength']"
+                >
+                  El campo es muy corto.
+                </p>
+              </small>
+            </div>
+          </div>
+
+          <div class="flex flex-column gap-2 w-full">
+            <label for="description" class="obligatory"
+              >Descripcion del Proyecto</label
+            >
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              id="description"
+              formControlName="description"
+            ></textarea>
+            <small *ngIf="f['description']" class="invalid-feedback">
+              <p
+                class="p-error block my-2"
+                *ngIf="f['description'].errors?.['required']"
+              >
+                Campo es obligatorio
+              </p>
+              <p
+                class="p-error block my-2"
+                *ngIf="f['description'].errors?.['minlength']"
+              >
+                El campo es muy corto.
+              </p>
+            </small>
+          </div>
+        </div>
+      </p-fieldset>
+
+      <div class="flex w-full justify-content-evenly p-4 gap-2">
+        <button
+          *ngIf="hasData"
+          pButton
+          pRipple
+          label="Editar"
+          class="p-button-info w-4"
+          type="button"
+          (click)="editProject()"
+        ></button>
+        <button
+          *ngIf="!hasData && selected"
+          pButton
+          pRipple
+          label="Cancelar"
+          class="p-button-help w-4"
+          type="button"
+          (click)="cancelEdit()"
+        ></button>
+
+        <button
+          *ngIf="!hasData"
+          pButton
+          pRipple
+          label="Guardar"
+          class="p-button-raised p-button-success w-3"
+          [disabled]="formProjects.invalid"
+          type="submit"
+        ></button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<p-confirmDialog
+  header="Confirmación"
+  position="center"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+
+<app-profile-project
+  *ngIf="displayProfile"
+  [display]="displayProfile"
+  [idProject]="selected.id"
+  (closeModal)="hiddenProfile()"
+  (editProjects)="openModalDetail($event)"
+></app-profile-project>
