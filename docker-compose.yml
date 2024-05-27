@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  dockerfrontend:
+    container_name: frontend
+    # image: fronttest:v2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 4800:4300
