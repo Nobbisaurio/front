@@ -76,6 +76,7 @@ export class AuthService {
           this.localStorageService.setItem('accessToken', res.accessToken);
           const payload = this.decodeToken(res.accessToken);
           this.userService.getUserById(payload.id).subscribe((user: UserAuth) => {
+            console.log('user: ', user)
             this.localStorageService.setItem('currentUser', user);
             this.rootAppService.redirectDashboard();
           });

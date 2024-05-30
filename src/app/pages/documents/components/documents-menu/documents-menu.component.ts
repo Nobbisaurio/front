@@ -11,8 +11,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   styleUrls: ['./documents-menu.component.css'],
 })
 export class DocumentsMenuComponent implements OnInit {
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   header = 'Documentos Fase Práctica';
 
   Namefiles = [
@@ -39,8 +38,7 @@ export class DocumentsMenuComponent implements OnInit {
   ];
 
   // pdf
-  createPdf() {
-    pdfMake.createPdf(letterOfEngagement).open()
+   createPdf() {
+    letterOfEngagement();
   }
-
 }
