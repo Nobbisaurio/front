@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   // urlBase: 'http://localhost:3000/api',
   // urlBaseTest: 'http://localhost:3000/api',
-  urlBase: 'http://158.220.125.115:4900/api',
+  // urlBase: 'http://158.220.125.115:4900/api',
+  urlBase: 'http://158.220.125.115:3000/api',
 
 };
 

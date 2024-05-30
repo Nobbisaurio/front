@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RootAppService {
   readonly dashboardPath = '/dashboard';
@@ -25,11 +25,10 @@ export class RootAppService {
   readonly reportsPath = '/reports';
   readonly projectsAssigmentPath = this.projectsPath + '/assigment';
 
+  // documents
+  readonly studentsDocumentsPath = '/student-files'
 
-  constructor(
-    private router: Router,
-  ) {
-  }
+  constructor(private router: Router) {}
 
   redirectDashboard() {
     this.router.navigate([this.dashboardPath]);
@@ -70,7 +69,6 @@ export class RootAppService {
   redirectProjects() {
     this.router.navigate([this.projectsPath]);
   }
-
 
   redirectReports() {
     this.router.navigate([this.reportsPath]);

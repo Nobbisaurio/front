@@ -4,7 +4,7 @@ import { LayoutComponent } from '@shared/components/layout/layout.component';
 import { hasRole } from './auth/guards/has-role.guard';
 import { NoAuthGuard } from './auth/guards/no-auth.guard';
 import { rolEnum } from '@core/enum/rol.enum';
-import {AuthGuard} from "@app/auth/guards/auth.guard";
+import { AuthGuard } from '@app/auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -39,7 +39,15 @@ const routes: Routes = [
       },
       {
         path: 'students',
-        canActivate: [hasRole([rolEnum.ADMIN, rolEnum.CA, rolEnum.CE, rolEnum.TA, rolEnum.TE])],
+        canActivate: [
+          hasRole([
+            rolEnum.ADMIN,
+            rolEnum.CA,
+            rolEnum.CE,
+            rolEnum.TA,
+            rolEnum.TE,
+          ]),
+        ],
         loadChildren: () =>
           import('./pages/students/students.module').then(
             (m) => m.StudentsModule
@@ -71,8 +79,20 @@ const routes: Routes = [
       },
       {
         path: 'projects',
-        canActivate: [hasRole([rolEnum.ADMIN, rolEnum.EST, rolEnum.CA, rolEnum.CE, rolEnum.TA, rolEnum.TE])],
-        loadChildren: () => import('./pages/project/projects.module').then(m => m.ProjectsModule),
+        canActivate: [
+          hasRole([
+            rolEnum.ADMIN,
+            rolEnum.EST,
+            rolEnum.CA,
+            rolEnum.CE,
+            rolEnum.TA,
+            rolEnum.TE,
+          ]),
+        ],
+        loadChildren: () =>
+          import('./pages/project/projects.module').then(
+            (m) => m.ProjectsModule
+          ),
       },
       {
         path: 'reports',
@@ -85,9 +105,19 @@ const routes: Routes = [
         path: 'agreement',
         canActivate: [hasRole([rolEnum.ADMIN, rolEnum.CA, rolEnum.CE])],
         loadChildren: () =>
-          import('./pages/agreement/agreement.module').then((m) => m.AgreementModule),
+          import('./pages/agreement/agreement.module').then(
+            (m) => m.AgreementModule
+          ),
       },
-    
+      // students documents
+      {
+        path: 'student-files',
+        canActivate: [hasRole([rolEnum.EST])],
+        loadChildren: () =>
+          import('./pages/documents/documents.module').then(
+            (m) => m.DocumentsModule
+          ),
+      },
 
       {
         path: '',

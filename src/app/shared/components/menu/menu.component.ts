@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-home',
         routerLink: [this.rootAuthService.dashboardPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.ADMIN, rolEnum.CA, rolEnum.CE, rolEnum.TA, rolEnum.TE]
+        roles: [rolEnum.ADMIN, rolEnum.CA, rolEnum.CE, rolEnum.TA, rolEnum.TE],
       },
       {
         label: 'Estudiantes',
@@ -58,73 +58,79 @@ export class MenuComponent implements OnInit {
             label: 'Asignación',
             icon: 'pi pi-fw pi-plus',
             routerLink: [this.rootAuthService.studentsAssigmentPath],
-          }
-        ]
+          },
+        ],
       },
       {
         label: 'Empresas',
         icon: 'pi pi-fw pi-shopping-bag',
         routerLink: [this.rootAuthService.companyPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.CA]
+        roles: [rolEnum.CA],
       },
       {
         label: 'Tutores',
         icon: 'pi pi-fw pi-users',
         routerLink: [this.rootAuthService.tutorPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.CA, rolEnum.CE]
+        roles: [rolEnum.CA, rolEnum.CE],
       },
       {
         label: 'Carreras',
         icon: 'pi pi-fw pi-book',
         routerLink: [this.rootAuthService.careerPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.ADMIN]
+        roles: [rolEnum.ADMIN],
       },
       {
         label: 'Proyectos',
         icon: 'pi pi-fw pi-book',
         routerLink: [this.rootAuthService.projectsPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.CA, rolEnum.CE, rolEnum.TA, rolEnum.TE]
+        roles: [rolEnum.CA, rolEnum.CE, rolEnum.TA, rolEnum.TE],
       },
       {
         label: 'Reportes',
         icon: 'pi pi-fw pi-download',
         routerLink: [this.rootAuthService.reportsPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.CA, rolEnum.TA]
+        roles: [rolEnum.CA, rolEnum.TA],
       },
       {
         label: 'Convenios',
         icon: 'pi pi-fw pi-check-circle',
         routerLink: [this.rootAuthService.agreementPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.CA]
+        roles: [rolEnum.CA],
       },
       {
         label: 'Usuarios',
         icon: 'pi pi-fw pi-users',
         routerLink: [this.rootAuthService.usersPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.ADMIN]
+        roles: [rolEnum.ADMIN],
       },
       {
         label: 'Permisos',
         icon: 'pi pi-fw pi-lock-open',
         routerLink: [this.rootAuthService.permissionPath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.ADMIN]
+        roles: [rolEnum.ADMIN],
       },
       {
         label: 'Roles',
         icon: 'pi pi-fw pi-cog',
         routerLink: [this.rootAuthService.rolePath],
         routerLinkActiveOptions: { exact: true },
-        roles: [rolEnum.ADMIN]
+        roles: [rolEnum.ADMIN],
       },
-
+      {
+        label: 'Documentos Fase Práctica',
+        icon: 'pi pi-file',
+        routerLink: [this.rootAuthService.studentsDocumentsPath],
+        routerLinkActiveOptions: { exact: true },
+        roles: [rolEnum.EST],
+      },
     ];
     this.menuComplete.forEach((item) => {
       if (item!.roles.includes(this.userCharge)) {
