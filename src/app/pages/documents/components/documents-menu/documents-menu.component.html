@@ -1,12 +1,14 @@
-<!-- <p-card [header]="header" class="w-full h-screen bg-red-500">
+<!-- <p-card [header]="header" class="w-full h-screen">
   <div class="flex flex-wrap align-items-center justify-content-center gap-1">
-    <p-card *ngFor="let item of Namefiles" class="w-5 mx-2 my-2 shadow-2">
-      <ng-template pTemplate="header" class="bg-red-500 w-full">
+    <p-card *ngFor="let item of Namefiles" class="w-5 m-2 bg-red-500 shadow-2">
+      <ng-template pTemplate="header" class="bg-red-500 w-full"> 
+        <h1>hola com estas</h1>
       </ng-template>
 
-      <ng-template pTemplate="footer">
-        <div class="flex align-items-center">
+      <ng-template pTemplate="content">
+        <div class="flex align-items-stretch">
           <p-button
+            (click)="item.document()"
             [label]="item.label"
             class="w-full"
             styleClass="w-full"
@@ -17,15 +19,39 @@
   </div>
 </p-card> -->
 
+<p-card [header]="header" class="w-full h-screen">
+  <div class="grid">
+    <p-card *ngFor="let item of Namefiles" class="w-4 border-round-md col-4">
+      <ng-template pTemplate="header">
+        <p
+          class="font-bold text-xl h-4rem m-0 text-center text-600 p-3 border-round-md"
+        >
+          {{ item.label }}
+        </p>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="flex justify-items-between w-full gap-1">
+          <p-button
+            (click)="item.document()"
+            class="w-6 flex-grow-1"
+            styleClass="w-full"
+            label="See"
+          ></p-button>
+          <p-button
+            (click)="item.document()"
+            class="w-6 flex-grow-1"
+            styleClass="w-full"
+            label="Download"
+          ></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</p-card>
 
-<!-- <pdf-viewer [src]="createPdf()">
-
-</pdf-viewer>
- -->
-
-<p-button
+<!-- <p-button
   (click)="createPdf()"
   label="hola"
 >
-  
-</p-button>
+
+</p-button> -->

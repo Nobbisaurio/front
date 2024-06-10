@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { letterOfEngagement } from '../../helpers/letterOfEngagement';
+import { letterOfEngagement, realWorkEnviromentAct, secutiryInductionAct } from '../../helpers/';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -14,31 +14,30 @@ export class DocumentsMenuComponent implements OnInit {
   ngOnInit(): void {}
   header = 'Documentos Fase Práctica';
 
-  Namefiles = [
+  Namefiles: {
+    label: string;
+    icon: string;
+    document: () => Promise<void>;
+  }[] = [
     {
       label: 'Carta de Compromiso',
       icon: 'pi pi-check',
+      document: letterOfEngagement,
     },
     {
-      label: 'Carta de Compromiso 1',
+      label: 'Acta De Inducción De Seguridad Y Medios De Protección',
       icon: 'pi pi-check',
+      document: secutiryInductionAct,
     },
     {
-      label: 'Carta de Compromiso 2',
+      label: 'Acta De Formación Práctica En El Entorno Laboral Real',
       icon: 'pi pi-check',
+      document: realWorkEnviromentAct,
     },
     {
-      label: 'Carta de Compromiso 3',
+      label: 'Acta De Formación Práctica En El Entorno Laboral Real',
       icon: 'pi pi-check',
-    },
-    {
-      label: 'Carta de Compromiso 4',
-      icon: 'pi pi-check',
+      document: realWorkEnviromentAct,
     },
   ];
-
-  // pdf
-   createPdf() {
-    letterOfEngagement();
-  }
 }
