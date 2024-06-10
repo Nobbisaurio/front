@@ -21,6 +21,7 @@
     "@angular/router": "^14.2.0",
     "@datorama/akita": "^8.0.1",
     "chart.js": "^4.3.3",
+    "docx": "^8.5.0",
     "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.31",

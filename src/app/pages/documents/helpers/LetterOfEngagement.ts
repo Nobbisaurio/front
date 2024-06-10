@@ -15,7 +15,7 @@ const instituteName =
 const studentEnterpriseName = 'HSB SOFTECUADOR';
 
 export const letterOfEngagement = async () => {
-  const documentDefinitio: TDocumentDefinitions = {
+  const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
     pageMargins: [41, 41, 41, 41],
     content: [
@@ -68,16 +68,19 @@ export const letterOfEngagement = async () => {
                 bold: true,
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
               {
                 text: 'ELABORACIÓN',
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
               {
-                text: ' 06-06-2023',
+                text: '06-06-2023',
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
             ],
             [
@@ -92,11 +95,13 @@ export const letterOfEngagement = async () => {
                 text: 'ACTUALIZACIÓN',
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
               {
                 text: '06-06-2023',
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
             ],
             [
@@ -106,16 +111,19 @@ export const letterOfEngagement = async () => {
                 bold: true,
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
               {
                 text: 'CÓDIGO',
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
               {
                 text: 'DS-010201',
                 fontSize: 8,
                 alignment: 'center',
+                margin: [0, 5],
               },
             ],
           ],
@@ -201,33 +209,21 @@ export const letterOfEngagement = async () => {
         ul: [
           {
             text: 'Prohibición de consumo de alcohol.',
-            fontSize: 9,
-            alignment: 'justify',
-            lineHeight: 1.5,
-            bold: true,
           },
           {
             text: 'Prohibición de consumo de sustancias estupefacientes, psicotrópicos y estimulantes.',
-            fontSize: 9,
-            alignment: 'justify',
-            lineHeight: 1.5,
-            bold: true,
           },
           {
             text: 'Prohibición de tratos groseros e irrespetuosos a compañeros y del entorno (compañeros y demás personas involucradas).',
-            fontSize: 9,
-            alignment: 'justify',
-            lineHeight: 1.5,
-            bold: true,
           },
           {
             text: 'Prohibición de desacatar las directrices de tutores empresariales y también de tutores académicos del instituto.',
-            fontSize: 9,
-            alignment: 'justify',
-            lineHeight: 1.5,
-            bold: true,
           },
         ],
+        fontSize: 9,
+        alignment: 'justify',
+        lineHeight: 1.5,
+        bold: true,
         margin: [0, 0, 0, 4],
       },
       {
@@ -322,5 +318,5 @@ export const letterOfEngagement = async () => {
     ],
   };
 
-  pdfMake.createPdf(documentDefinitio).open();
+  pdfMake.createPdf(documentDefinition).open();
 };
