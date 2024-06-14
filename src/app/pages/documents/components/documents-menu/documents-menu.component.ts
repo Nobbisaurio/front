@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { letterOfEngagement, realWorkEnviromentAct, secutiryInductionAct } from '../../helpers/';
+import { letterOfEngagement, realWorkEnviromentAct, secutiryInductionAct,downloadFile} from '../../helpers/';
 
-import * as pdfMake from 'pdfmake/build/pdfmake';
+import { docxd } from '../../helpers/EnterpriseProjectSchema';
+
+import * as fs from 'file-saver';
+
+
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import { Packer } from 'docx';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -13,6 +19,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 export class DocumentsMenuComponent implements OnInit {
   ngOnInit(): void {}
   header = 'Documentos Fase Práctica';
+
+
 
   Namefiles: {
     label: string;
@@ -35,9 +43,9 @@ export class DocumentsMenuComponent implements OnInit {
       document: realWorkEnviromentAct,
     },
     {
-      label: 'Acta De Formación Práctica En El Entorno Laboral Real',
+      label: 'Esquema Proyecto Empresarial',
       icon: 'pi pi-check',
-      document: realWorkEnviromentAct,
+      document: downloadFile
     },
   ];
 }
