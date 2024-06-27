@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Router } from "@angular/router";
 
-@Injectable({
+@Injectable( {
   providedIn: 'root',
-})
+} )
 export class RootAppService {
   readonly dashboardPath = '/dashboard';
   readonly authPath = '/auth';
@@ -26,51 +26,53 @@ export class RootAppService {
   readonly projectsAssigmentPath = this.projectsPath + '/assigment';
 
   // documents
-  readonly studentsDocumentsPath = '/student-files'
+  readonly studentsDocumentsPath = '/docs';
+  readonly docsHeaderPath = this.studentsDocumentsPath + '/docs-header';
 
-  constructor(private router: Router) {}
+
+  constructor( private router: Router ) { }
 
   redirectDashboard() {
-    this.router.navigate([this.dashboardPath]);
+    this.router.navigate( [ this.dashboardPath ] );
   }
 
   redirectLogin() {
-    this.router.navigate([this.loginPath]);
+    this.router.navigate( [ this.loginPath ] );
   }
 
   redirectForgetPassword() {
-    this.router.navigate([this.forgetPasswordPath]);
+    this.router.navigate( [ this.forgetPasswordPath ] );
   }
 
   redirectStudents() {
-    this.router.navigate([this.studentsPath]);
+    this.router.navigate( [ this.studentsPath ] );
   }
 
   redirectUsers() {
-    this.router.navigate([this.usersPath]);
+    this.router.navigate( [ this.usersPath ] );
   }
 
   redirectCompanies() {
-    this.router.navigate([this.companyPath]);
+    this.router.navigate( [ this.companyPath ] );
   }
 
   redirectTutor() {
-    this.router.navigate([this.tutorPath]);
+    this.router.navigate( [ this.tutorPath ] );
   }
 
   redirectCareer() {
-    this.router.navigate([this.careerPath]);
+    this.router.navigate( [ this.careerPath ] );
   }
 
   redirectAgreement() {
-    this.router.navigate([this.agreementPath]);
+    this.router.navigate( [ this.agreementPath ] );
   }
 
   redirectProjects() {
-    this.router.navigate([this.projectsPath]);
+    this.router.navigate( [ this.projectsPath ] );
   }
 
   redirectReports() {
-    this.router.navigate([this.reportsPath]);
+    this.router.navigate( [ this.reportsPath ] );
   }
 }

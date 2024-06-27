@@ -1,63 +1,62 @@
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { getBase64ImageFromURL } from './Base64Image';
+import { getBase64ImageFromURL, backgroundImage } from './Base64Image';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+import { DocumentProps } from '../models/documents-Props';
+( pdfMake as any ).vfs = pdfFonts.pdfMake.vfs;
 
-const studentName = 'MICHAEL SEBASTIAN MICHAEL SEBASTIAN';
-const studentCredential = '1754253142';
-const studentCareerLevel = '5to';
-const studentCareerName = 'TÉCNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE';
-const studentCareerModality = 'dual';
-const instituteName =
-  'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC';
-const studentEnterpriseName = 'HSB SOFTECUADOR';
+// const studentName = 'MICHAEL SEBASTIAN MICHAEL SEBASTIAN';
+// const studentCredential = '1754253142';
+// const studentCareerLevel = '5to';
+// const studentCareerName = 'TÉCNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE';
+// const studentCareerModality = 'dual';
+// const instituteName =
+//   'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC';
+// const studentEnterpriseName = 'HSB SOFTECUADOR';
 
-export const letterOfEngagement = async () => {
+export function createDocument1( { logoImage, bgImage, instituteName, studentCareerLevel, studentCareerName, studentCredential, studentName, studentEnterpriseName, }: DocumentProps ) {
+
   const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
-    pageMargins: [41, 41, 41, 41],
+    pageMargins: [ 41, 41, 41, 41 ],
     content: [
-      // imagen  marca de agua
-      {
-        image: await getBase64ImageFromURL('./assets/img/docTemplate.png'),
-        width: 595,
-        height: 842,
-        absolutePosition: { y: 0, x: 0 },
-      },
+      // {
+      //   image: await bgImage,
+      //   width: 595,
+      //   height: 842,
+      //   absolutePosition: { y: 0, x: 0 },
+      // },
       {
         marginTop: 70,
         table: {
-          widths: ['auto', 300, '*', '*'],
+          widths: [ 'auto', 300, '*', '*' ],
           body: [
             [
-              {
-                image: await getBase64ImageFromURL(
-                  './assets/img/yaviLogoForDocs.png'
-                ),
-                fit: [65, 65],
-                rowSpan: 4,
-                alignment: 'center',
-                margin: [0, 20],
-              },
+              // {
+              //   image: await logoImage,
+              //   fit: [65, 65],
+              //   rowSpan: 4,
+              //   alignment: 'center',
+              //   margin: [0, 20],
+              // },
               {
                 text: 'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC',
                 alignment: 'center',
-                margin: [0, 2],
+                margin: [ 0, 2 ],
                 fontSize: 8,
                 bold: true,
               },
               {
                 text: 'VERSIÓN ',
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
                 fontSize: 8,
               },
               {
                 text: '1.0',
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
                 fontSize: 8,
               },
             ],
@@ -68,19 +67,19 @@ export const letterOfEngagement = async () => {
                 bold: true,
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'ELABORACIÓN',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: '06-06-2023',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
             [
@@ -95,13 +94,13 @@ export const letterOfEngagement = async () => {
                 text: 'ACTUALIZACIÓN',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: '06-06-2023',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
             [
@@ -111,70 +110,68 @@ export const letterOfEngagement = async () => {
                 bold: true,
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'CÓDIGO',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'DS-010201',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
           ],
         },
       },
 
-      //primera hoja
       {
         text: 'D.M. Quito  martes, enero 02, 2024',
-        margin: [0, 10],
+        margin: [ 0, 10 ],
         alignment: 'left',
         bold: false,
         fontSize: 9,
       },
-      //primer parrafo
+
       {
         text: [
           'Yo ',
-          { text: `${studentName} `, bold: true },
+          { text: `${ studentName } `, bold: true },
           'con C.C. ',
-          { text: `${studentCredential} `, bold: true },
+          { text: `${ studentCredential } `, bold: true },
           'estudiante de ',
-          { text: `${studentCareerLevel} `, bold: true },
+          { text: `${ studentCareerLevel } `, bold: true },
           'de la carrera de ',
-          { text: `${studentCareerName} `, bold: true },
-          'en modalidad ',
-          { text: `${studentCareerModality}`, bold: true },
+          { text: `${ studentCareerName } `, bold: true },
+          { text: `en modalidad dual `, bold: true },
           'del ',
-          { text: `${instituteName}, `, bold: true },
+          { text: `${ instituteName }, `, bold: true },
           'asignado/a a su Entidad Receptora Formadora ',
-          { text: `${studentEnterpriseName}.`, bold: true },
+          { text: `${ studentEnterpriseName }.`, bold: true },
         ],
         fontSize: 9,
         alignment: 'justify',
         lineHeight: 1.5,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
-        text: `De acuerdo con el proyecto de carrera aprobado y vigente, en cumplimiento del currículo de la carrera, y en el marco del convenio firmado, me presento y, expreso mi interés y predisposición de realizar prácticas de formación ${studentCareerModality}, con el fin de cumplir con la planificación, ejecución, control y evaluación del proceso de desarrollo de las competencias laborales como estudiante de la carrera.\n`,
+        text: `De acuerdo con el proyecto de carrera aprobado y vigente, en cumplimiento del currículo de la carrera, y en el marco del convenio firmado, me presento y, expreso mi interés y predisposición de realizar prácticas de formación dual, con el fin de cumplir con la planificación, ejecución, control y evaluación del proceso de desarrollo de las competencias laborales como estudiante de la carrera.\n`,
 
         fontSize: 9,
         alignment: 'justify',
         lineHeight: 1.5,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         text: 'Soy una persona que cumple con el perfil de ingreso de la carrera, y busco aprender y desarrollar los conocimientos, habilidades-destrezas y actitudes del perfil de egreso, y lograr las competencias como profesional de mi carrera.\n',
         fontSize: 9,
         alignment: 'justify',
         lineHeight: 1.5,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
 
       {
@@ -182,7 +179,7 @@ export const letterOfEngagement = async () => {
         fontSize: 9,
         alignment: 'justify',
         lineHeight: 1.5,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         text: [
@@ -191,7 +188,7 @@ export const letterOfEngagement = async () => {
         fontSize: 9,
         alignment: 'justify',
         lineHeight: 1.5,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         text: [
@@ -203,7 +200,7 @@ export const letterOfEngagement = async () => {
         fontSize: 9,
         alignment: 'justify',
         lineHeight: 1.5,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         ul: [
@@ -224,7 +221,7 @@ export const letterOfEngagement = async () => {
         alignment: 'justify',
         lineHeight: 1.5,
         bold: true,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         text: 'También me comprometo en:',
@@ -232,26 +229,24 @@ export const letterOfEngagement = async () => {
         alignment: 'justify',
         lineHeight: 1.5,
         bold: true,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         ul: [
           {
             text: 'Garantizar la confidencialidad, reserva y protección de los datos e información proporcionados por la entidad receptora formadora, durante y después de mi fase práctica.',
-            fontSize: 9,
-            alignment: 'justify',
-            lineHeight: 1.5,
-            bold: true,
+
           },
           {
             text: 'Y, promover un entorno social armónico, precautelar y salvaguardar la propiedad ajena y los bienes que pertenecen al sitio.',
-            fontSize: 9,
-            alignment: 'justify',
-            lineHeight: 1.5,
-            bold: true,
+
           },
         ],
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
+        fontSize: 9,
+        alignment: 'justify',
+        lineHeight: 1.5,
+        bold: true,
       },
       {
         text: 'Y así mismo, me comprometo en elaborar y presentar todos los documentos necesarios para validar el proceso de formación en modalidad dual, de acuerdo con lo establecido por la entidad receptora formadora y/o el Instituto, los cuáles deberán estar correctamente llenados y firmados.',
@@ -259,7 +254,7 @@ export const letterOfEngagement = async () => {
         alignment: 'justify',
         lineHeight: 1.5,
         bold: true,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         text: 'El incumplimiento a lo comprometido con la entidad receptora formadora y/o del Instituto, será causal para la toma de medidas disciplinarias conforme a las responsabilidades del proceso de formación en modalidad dual .',
@@ -267,7 +262,7 @@ export const letterOfEngagement = async () => {
         alignment: 'justify',
         lineHeight: 1.5,
         bold: true,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
         text: 'De no dar cumplimiento con lo antes citado, puede conllevar bajo el debido proceso a la pérdida de la fase práctica. ',
@@ -275,13 +270,13 @@ export const letterOfEngagement = async () => {
         alignment: 'justify',
         lineHeight: 1.5,
         bold: true,
-        margin: [0, 0, 0, 4],
+        margin: [ 0, 0, 0, 4 ],
       },
       {
-        margin: [10, 3, 0, 0],
+        margin: [ 10, 3, 0, 0 ],
         table: {
-          widths: [200, 200],
-          heights: [10, 15, 15],
+          widths: [ 200, 200 ],
+          heights: [ 10, 15, 15 ],
           body: [
             [
               {
@@ -299,24 +294,27 @@ export const letterOfEngagement = async () => {
             ],
             [
               {
-                text: `${studentName}`,
+                text: `${ studentName }`,
                 rowSpan: 2,
                 fontSize: 9,
                 alignment: 'center',
                 bold: true,
-                margin: [0, 15, 0, 0],
+                margin: [ 0, 15, 0, 0 ],
               },
               {
                 text: '',
                 rowSpan: 2,
               },
             ],
-            [{}, {}],
+            [ {}, {} ],
           ],
         },
       },
     ],
   };
 
-  pdfMake.createPdf(documentDefinition).open();
+  // pdfMake.createPdf(documentDefinition).open();
 };
+
+
+

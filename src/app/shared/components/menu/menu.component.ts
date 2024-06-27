@@ -131,6 +131,14 @@ export class MenuComponent implements OnInit {
         routerLinkActiveOptions: { exact: true },
         roles: [rolEnum.EST],
       },
+      {
+        label: 'Encabezado Documentos',
+        icon: 'pi pi-file',
+        routerLink: [this.rootAuthService.docsHeaderPath],
+        routerLinkActiveOptions: { exact: true },
+        roles: [rolEnum.ADMIN],
+      },
+
     ];
     this.menuComplete.forEach((item) => {
       if (item!.roles.includes(this.userCharge)) {

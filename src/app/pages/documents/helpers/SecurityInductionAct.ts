@@ -3,6 +3,7 @@ import { getBase64ImageFromURL } from './Base64Image';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DocumentProps } from '../models/documents-Props';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 const studentName = 'MICHAEL SEBASTIAN MICHAEL SEBASTIAN';
@@ -13,32 +14,32 @@ const instituteName =
 const studentCareerName = 'TÉCNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE';
 const studentEnterpriseName = 'HSB SOFTECUADOR';
 
-export const secutiryInductionAct = async () => {
+export function createDocument2  (
+  { logoImage, bgImage, instituteName, studentCareerLevel, studentCareerName, studentCredential, studentName, studentEnterpriseName, }: DocumentProps
+)  {
   const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
     pageMargins: [41, 41, 41, 41],
     content: [
-      {
-        image: await getBase64ImageFromURL('./assets/img/docTemplate.png'),
-        width: 595,
-        height: 842,
-        absolutePosition: { y: 0, x: 0 },
-      },
+      // {
+      //   image: await bgImage,
+      //   width: 595,
+      //   height: 842,
+      //   absolutePosition: { y: 0, x: 0 },
+      // },
       {
         marginTop: 70,
         table: {
           widths: ['auto', 300, '*', '*'],
           body: [
             [
-              {
-                image: await getBase64ImageFromURL(
-                  './assets/img/yaviLogoForDocs.png'
-                ),
-                fit: [65, 65],
-                rowSpan: 4,
-                alignment: 'center',
-                margin: [0, 20],
-              },
+              // {
+              //   image: await logoImage,
+              //   fit: [65, 65],
+              //   rowSpan: 4,
+              //   alignment: 'center',
+              //   margin: [0, 20],
+              // },
               {
                 text: 'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC',
                 alignment: 'center',
@@ -133,7 +134,6 @@ export const secutiryInductionAct = async () => {
         margin: [0, 10],
         alignment: 'center',
       },
-      // primera hoja
       {
         text: 'Quito D.M. 02/01/2024',
         margin: [0, 10],
@@ -141,7 +141,6 @@ export const secutiryInductionAct = async () => {
         fontSize: 10,
       },
 
-      // primer párrafo
       {
         text: [
           'Yo ',
@@ -205,5 +204,5 @@ export const secutiryInductionAct = async () => {
     ],
   };
 
-  pdfMake.createPdf(documentDefinition).open();
+  // pdfMake.createPdf(documentDefinition).open();
 };

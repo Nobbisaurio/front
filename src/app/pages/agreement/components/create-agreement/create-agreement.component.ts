@@ -127,7 +127,7 @@ export class CreateAgreementComponent implements OnInit {
                 this.fileUpload.clear();
 
             }
-            
+
 
         });
 

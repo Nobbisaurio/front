@@ -111,14 +111,13 @@ const routes: Routes = [
       },
       // students documents
       {
-        path: 'student-files',
-        canActivate: [hasRole([rolEnum.EST])],
+        path: 'docs',
+        canActivate: [hasRole([rolEnum.EST, rolEnum.ADMIN])],
         loadChildren: () =>
           import('./pages/documents/documents.module').then(
             (m) => m.DocumentsModule
           ),
       },
-
       {
         path: '',
         redirectTo: 'dashboard',

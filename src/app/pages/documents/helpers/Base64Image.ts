@@ -23,3 +23,25 @@ export const getBase64ImageFromURL = (url:string):Promise<string>|undefined => {
       img.src = url;
     });
   }
+
+  export const backgroundImage = async () => {
+    try {
+      const promiseImg = await getBase64ImageFromURL( './assets/img/docTemplate.png' );
+      const img = promiseImg;
+      return img;
+    } catch ( error ) {
+      console.log( error );
+      return '';
+    }
+  };
+
+  export const logoImage = async () => {
+    try {
+      const promiseImg = await getBase64ImageFromURL( './assets/img/logoYav.png' );
+      const img = promiseImg;
+      return img;
+    } catch ( error ) {
+      console.log( error );
+      return '';
+    }
+  };

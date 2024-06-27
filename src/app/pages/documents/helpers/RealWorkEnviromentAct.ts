@@ -1,53 +1,53 @@
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { getBase64ImageFromURL } from './Base64Image';
+import { getBase64ImageFromURL, } from './Base64Image';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+import { DocumentProps } from '../models/documents-Props';
+( pdfMake as any ).vfs = pdfFonts.pdfMake.vfs;
 
-export const realWorkEnviromentAct = async () => {
+export function createDocument3( { logoImage, bgImage }: DocumentProps
+) {
   const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
-    pageMargins: [41, 41, 41, 41],
+    pageMargins: [ 41, 41, 41, 41 ],
     content: [
-      {
-        image: await getBase64ImageFromURL('./assets/img/docTemplate.png'),
-        width: 595,
-        height: 842,
-        absolutePosition: { y: 0, x: 0 },
-      },
+      // {
+      //   image: await bgImage,
+      //   width: 595,
+      //   height: 842,
+      //   absolutePosition: { y: 0, x: 0 },
+      // },
       {
         marginTop: 70,
         table: {
-          widths: ['auto', 300, '*', '*'],
+          widths: [ 'auto', 300, '*', '*' ],
           body: [
             [
-              {
-                image: await getBase64ImageFromURL(
-                  './assets/img/yaviLogoForDocs.png'
-                ),
-                fit: [65, 65],
-                rowSpan: 4,
-                alignment: 'center',
-                margin: [0, 20],
-              },
+              // {
+              //   image:await logoImage,
+              //   fit: [65, 65],
+              //   rowSpan: 4,
+              //   alignment: 'center',
+              //   margin: [0, 20],
+              // },
               {
                 text: 'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC',
                 alignment: 'center',
-                margin: [0, 2],
+                margin: [ 0, 2 ],
                 fontSize: 8,
                 bold: true,
               },
               {
                 text: 'VERSIÓN ',
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
                 fontSize: 8,
               },
               {
                 text: '1.0',
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
                 fontSize: 8,
               },
             ],
@@ -58,19 +58,19 @@ export const realWorkEnviromentAct = async () => {
                 bold: true,
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'ELABORACIÓN',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: '19-06-2023',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
             [
@@ -85,13 +85,13 @@ export const realWorkEnviromentAct = async () => {
                 text: 'ACTUALIZACIÓN',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: '19-06-2023',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
             [
@@ -101,19 +101,19 @@ export const realWorkEnviromentAct = async () => {
                 bold: true,
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'CÓDIGO',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'DS-010211',
                 fontSize: 8,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
           ],
@@ -122,13 +122,13 @@ export const realWorkEnviromentAct = async () => {
       {
         text: 'ACTA DE FORMACIÓN PRÁCTICA EN EL ENTORNO LABORAL REAL',
         alignment: 'center',
-        margin: [0, 10],
+        margin: [ 0, 10 ],
         bold: true,
       },
       {
-        margin: [50, 0],
+        margin: [ 50, 0 ],
         table: {
-          heights: [20, 20],
+          heights: [ 20, 20 ],
           body: [
             [
               {
@@ -136,26 +136,26 @@ export const realWorkEnviromentAct = async () => {
                 bold: true,
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: '2/01/2024',
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'Carrera:',
                 bold: true,
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'Desarrollo de Software:',
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
             [
@@ -164,26 +164,26 @@ export const realWorkEnviromentAct = async () => {
                 bold: true,
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: '2023-2P',
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'Entidad receptora formadora:',
                 bold: true,
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
               {
                 text: 'HSBCAD',
                 fontSize: 10,
                 alignment: 'center',
-                margin: [0, 5],
+                margin: [ 0, 5 ],
               },
             ],
           ],
@@ -242,7 +242,7 @@ export const realWorkEnviromentAct = async () => {
           },
         ],
         marginLeft: 20,
-        fontSize:10
+        fontSize: 10
       },
       {
         text: 'Los estudiantes han demostrado, durante el desarrollo de la fase práctica, responsabilidad académica, aplicando conocimientos técnicos y experiencia comprobada en cada actividad acorde a la planificación del aprendizaje laboral real. Por tanto, suscriben, el presente documento, el tutor académico, el tutor de la entidad receptora formadora y el coordinador / vicecoordinador de carrera respectivo, y el estudiante aceptando su nota.',
@@ -253,8 +253,9 @@ export const realWorkEnviromentAct = async () => {
       },
     ],
 
-    //TODO: tabla de estudiantes segun empresa y proyecto
   };
 
-  pdfMake.createPdf(documentDefinition).open();
+  // pdfMake.createPdf(documentDefinition).open();
 };
+
+////TODO: tabla de estudiantes segun empresa y proyecto

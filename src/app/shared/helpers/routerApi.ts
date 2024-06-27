@@ -17,6 +17,9 @@ export class RouterApi {
   static readonly urlUploadFile = this.urlBase + '/upload-files';
   static readonly urlProjects = this.urlBase + '/project';
   static readonly urlReports = this.urlBase + '/report';
+  // documents
+  static readonly urlDocuments = this.urlBase + '/documents'
+
 
   static readonly urlRoleActive = this.urlRoles + '/active';
   static readonly urlAllStudents = this.urlStudents + '/all';
@@ -58,8 +61,6 @@ export class RouterApi {
   static readonly urlStudentsUnassign = this.urlStudents + '/unassign-to-project/';
   static readonly urlReportByAcademicTutor = this.urlReports + '/byAcademicTutor/';
   static readonly urlReportByCompany = this.urlReports + '/byCompany/';
-
-
 
 }
 
