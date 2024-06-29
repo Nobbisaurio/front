@@ -78,7 +78,7 @@ export class DocumentsMenuComponent implements OnInit {
 
           const respuesta = new Function( `
               ${ documentDefinition }
-                return createDocument7;
+                return createDocument8;
             `)();
 
           this.Namefiles.push( {

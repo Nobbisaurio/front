@@ -6,3 +6,5 @@ export { createDocument4 } from './EnterpriseProjectSchema';
 export { createDocument5 } from './EnterpriceCertificate'
 export { createDocument6 } from './LearningReport'
 export { createDocument7 } from './BusinessEvaluation'
+export { createDocument8 } from './InstituteEvaluation'
+export { createDocument9 } from './AttendanceRecord'

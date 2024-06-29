@@ -476,23 +476,6 @@ export function createDocument7( { exceljs, fileSaver, logoImage, instituteName 
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   workBook.xlsx.writeBuffer()
     .then( ( buffer ) => {
       const blob = new Blob( [ buffer ], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' } );
