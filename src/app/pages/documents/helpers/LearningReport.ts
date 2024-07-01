@@ -1,7 +1,7 @@
 import { DocumentProps } from '../models/documents-Props';
 import * as exceljs from 'exceljs';
 
-export function createDocument6( { exceljs, fileSaver, logoImage, instituteName }: DocumentProps ) {
+export function createDocument6( { exceljs, fileSaver, logoImage, instituteName, company, firstName, secondName, lastName, secondLastName, dni, academicTutor, businessTutor, electivePeriod, academicPeriod, career }: DocumentProps ) {
     const workBook = new exceljs.Workbook();
     const workSheet = workBook.addWorksheet( 'Informe de Aprendizaje' );
     workSheet.pageSetup = {
@@ -82,6 +82,7 @@ export function createDocument6( { exceljs, fileSaver, logoImage, instituteName 
     workSheet.getCell( 'I6' ).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
     workSheet.mergeCells( 'L6:S6' );
 
+
     workSheet.mergeCells( 'A7:C7' );
     workSheet.getCell( 'A7' ).value = 'ESTUDIANTE:';
     workSheet.getCell( 'A7' ).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
@@ -130,8 +131,29 @@ export function createDocument6( { exceljs, fileSaver, logoImage, instituteName 
             applyBorder( workSheet.getCell( row, col ) );
             const cell = workSheet.getCell( row, col );
             cell.alignment = { vertical: 'middle', horizontal: 'left' };
+
         }
     }
+
+    workSheet.getCell( 'D6' ).value = company;
+    workSheet.getCell( 'D7' ).value = [ firstName, secondName, lastName, secondLastName ].join( ' ' );
+    workSheet.getCell( 'D8' ).value = dni;
+    workSheet.getCell( 'D6' ).value = academicTutor;
+    workSheet.getCell( 'D6' ).value = businessTutor;
+    workSheet.getCell( 'L6' ).value = academicPeriod;
+    workSheet.getCell( 'L7' ).value = electivePeriod;
+    workSheet.getCell( 'L10' ).value = career;
+
+    workSheet.getCell( 'D6' ).alignment = { horizontal: 'center', vertical: 'middle' };
+    workSheet.getCell( 'D7' ).alignment = { horizontal: 'center', vertical: 'middle' };
+    workSheet.getCell( 'D8' ).alignment = { horizontal: 'center', vertical: 'middle' };
+    workSheet.getCell( 'D6' ).alignment = { horizontal: 'center', vertical: 'middle' };
+    workSheet.getCell( 'D6' ).alignment = { horizontal: 'center', vertical: 'middle' };
+    workSheet.getCell( 'L6' ).alignment = { horizontal: 'center', vertical: 'middle' };
+    workSheet.getCell( 'L7' ).alignment = { horizontal: 'center', vertical: 'middle' };
+    workSheet.getCell( 'L10' ).alignment = { horizontal: 'center', vertical: 'middle' };
+
+
 
     workSheet.getRow( 11 ).height = 10;
 
@@ -239,3 +261,4 @@ export function createDocument6( { exceljs, fileSaver, logoImage, instituteName 
             console.error( 'Error al guardar el archivo:', error );
         } );
 }
+

@@ -2,7 +2,7 @@ import { DocumentProps } from '../models/documents-Props';
 
 
 
-export function createDocument5( { docx, fileSaver, studentName, studentCredential, studentCareerLevel, instituteName, studentCareerName, studentEnterpriseName }: DocumentProps ) {
+export function createDocument5( { docx, fileSaver, dni, instituteName, firstName, secondName, lastName, secondLastName, career, academicPeriod, company, parallel, electivePeriod, businessTutor }: DocumentProps ) {
     const doc = new docx.Document( {
         sections: [ {
             properties: {
@@ -38,22 +38,22 @@ export function createDocument5( { docx, fileSaver, studentName, studentCredenti
                 } ),
                 new docx.Paragraph( {
                     children: [
-                        new docx.TextRun( { text: studentName, size: 24, bold: true } )
+                        new docx.TextRun( { text: [ firstName, secondName, lastName, secondLastName ].join( ' ' ), size: 24, bold: true } )
                     ], alignment: 'left'
                 } ),
                 new docx.Paragraph( {
                     children: [
-                        new docx.TextRun( { text: studentCredential, size: 24 } )
+                        new docx.TextRun( { text: dni, size: 24 } )
                     ], alignment: 'left'
                 } ),
                 new docx.Paragraph( {
                     children: [
                         new docx.TextRun( { text: 'Nivel: ', size: 24, bold: true } ),
-                        new docx.TextRun( { text: `${ studentCareerLevel } `, size: 24 } ),
+                        new docx.TextRun( { text: `${ academicPeriod } `, size: 24 } ),
                         new docx.TextRun( { text: 'Paralelo: ', size: 24, bold: true } ),
-                        new docx.TextRun( { text: `${ '"Paralelo"' } `, size: 24, } ),
+                        new docx.TextRun( { text: `${ parallel.charAt( 0 ) } `, size: 24, } ),
                         new docx.TextRun( { text: 'Jornada: ', size: 24, bold: true } ),
-                        new docx.TextRun( { text: `${ '"Jornada"' } `, size: 24, } ),
+                        new docx.TextRun( { text: `${ '"Jornada"' } `, size: 24, highlight: 'yellow' } ),
                     ], alignment: 'left'
                 } ),
                 new docx.Paragraph( {
@@ -63,23 +63,23 @@ export function createDocument5( { docx, fileSaver, studentName, studentCredenti
                 } ),
                 new docx.Paragraph( {
                     children: [
-                        new docx.TextRun( { text: `Tecnología en ${ studentCareerName }`, size: 24 } )
+                        new docx.TextRun( { text: `Tecnología en ${ career }`, size: 24 } )
                     ], alignment: 'left', spacing: { line: 1.5 * 240, after: 300 }
                 } ),
                 new docx.Paragraph( {
                     children: [
                         new docx.TextRun( { text: 'Por la presente, la empresa ', size: 24 } ),
-                        new docx.TextRun( { text: `${ studentEnterpriseName } `, size: 24, bold: true } ),
+                        new docx.TextRun( { text: `${ company } `, size: 24, bold: true } ),
                         new docx.TextRun( { text: `se complace en certificar que el estudiante antes mencionado completó exitosamente sus prácticas profesionales en nuestras instalaciones durante el período comprendido entre `, size: 24 } ),
                         new docx.TextRun( { text: `02/01/2024 y 23/02/2024, `, size: 24, highlight: 'yellow' } ),
-                        new docx.TextRun( { text: `totalizando un tiempo de 296 horas, más 10 horas autónomas. Estas fechas son correspondientes al periodo lectivo `, size: 24 } ),
-                        new docx.TextRun( { text: `${ '"2023-2"' }`, size: 24, highlight: 'yellow' } ),
+                        new docx.TextRun( { text: `totalizando un tiempo de 280 horas, más 10 horas autónomas. Estas fechas son correspondientes al periodo lectivo `, size: 24 } ),
+                        new docx.TextRun( { text: `${ electivePeriod }`, size: 24 } ),
                     ], alignment: 'left', spacing: { line: 1.5 * 240, after: 300 }
                 } ),
                 new docx.Paragraph( {
                     children: [
                         new docx.TextRun( { text: 'Durante su estadía con nosotros, el estudiante demostró un alto nivel de compromiso, entusiasmo y dedicación hacia sus responsabilidades asignadas. Participó activamente en diversas actividades relacionadas con ', size: 24 } ),
-                        new docx.TextRun( { text: `${ studentCareerName },, `, size: 24, bold: true } ),
+                        new docx.TextRun( { text: `${ career }, `, size: 24, bold: true } ),
                         new docx.TextRun( { text: 'lo que contribuyó significativamente a su propio crecimiento y al logro de nuestros objetivos corporativos.', size: 24 } ),
                     ], alignment: 'left', spacing: { line: 1.5 * 240, after: 300 }
                 } ),
@@ -95,12 +95,12 @@ export function createDocument5( { docx, fileSaver, studentName, studentCredenti
                 } ),
                 new docx.Paragraph( {
                     children: [
-                        new docx.TextRun( { text: `${ '"Tutor Empresarial"' }`, size: 24, highlight: 'yellow' } ),
+                        new docx.TextRun( { text: `${ businessTutor }`, size: 24 } ),
                     ], alignment: 'left'
                 } ),
                 new docx.Paragraph( {
                     children: [
-                        new docx.TextRun( { text: studentEnterpriseName, size: 24 } ),
+                        new docx.TextRun( { text: company, size: 24 } ),
                     ], alignment: 'left'
                 } ),
             ]

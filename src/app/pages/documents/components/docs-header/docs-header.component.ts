@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DocumentsService } from '../../service/service.service';
 import { CreateDocument } from '../../models/create-document';
 import { baseDocuments } from '../../models/base-documents';
+import { Observable, catchError, concatMap, from, of, toArray } from 'rxjs';
 
 @Component( {
   selector: 'app-docs-header',
@@ -14,32 +15,44 @@ export class DocsHeaderComponent implements OnInit {
 
   header = 'Encabezado de Documentos';
 
-  hasBaseDocuments() {
+  documents:CreateDocument[] = []
 
-    this.documentsService.getDocuments().subscribe( {
-      next: async ( res ) => {
-        const hasDocs = res.length < 1;
-        if ( hasDocs ) {
+  hasBaseDocuments(): Observable<CreateDocument[]> {
+    return this.documentsService.getDocuments().pipe(
+      concatMap((res) => {
+        if (res.length === 0) {
           const docs: CreateDocument[] = baseDocuments;
-          for ( let i = 0; i < docs.length; i++ ) {
-            this.documentsService.createDocument( docs[ i ] ).subscribe()
-          }
+          return from(docs).pipe(
+            concatMap((doc) => this.documentsService.createDocument(doc)),
+            toArray(),
+            concatMap(() => this.documentsService.getDocuments())
+          );
         }
+        return of(res);
+      }),
+      catchError((error) => {
+        console.error('Error managing documents:', error);
+        return of([]); // Devuelve un array vacío en caso de error
+      })
+    );
+  }
 
-        return 'xd';
-      },
-      error: ( error ) => {
-        return false;
-      }
-    } );
-    return "xd";
-  };
+
+
+
+
+
+
 
 
 
   ngOnInit(): void {
 
-    this.hasBaseDocuments();
+     this.hasBaseDocuments().subscribe({
+      next: (docs) => {
+        this.documents = docs
+      },
+     });
 
     // this.documentsService.getDocuments().subscribe( {
     //   next: ( res ) => console.log( res ),

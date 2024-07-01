@@ -5,7 +5,7 @@ import * as fs from 'file-saver';
 
 import * as docx from 'docx';
 
-import * as fsxd from 'fs-web'
+import * as fsxd from 'fs-web';
 
 import * as exceljs from 'exceljs';
 
@@ -19,6 +19,8 @@ import { backgroundImage, logoImage } from '../../helpers/Base64Image';
 import { LocalStorageService } from '../../../../core/storage/storage.service';
 import { UserAuth } from '@app/core/models/user-auth';
 import { DocumentProps } from '../../models/documents-Props';
+import { UserStudent } from '@app/pages/students/models/user-student';
+import { StudentsService } from '../../../students/service/students.service';
 
 
 
@@ -30,13 +32,15 @@ import { DocumentProps } from '../../models/documents-Props';
 export class DocumentsMenuComponent implements OnInit {
   header = 'Documentos Fase Práctica';
 
-  constructor( private documentsService: DocumentsService, private localStorageService: LocalStorageService ) { }
+  constructor( private documentsService: DocumentsService, private localStorageService: LocalStorageService, private studentsService: StudentsService ) { }
 
   Namefiles: {
     label: string;
     icon: string;
-    document: ( ) => any;
+    document: () => any;
   }[] = [];
+
+  currentStudent: UserStudent;
 
   studentData = {
     studentName: '',
@@ -48,11 +52,10 @@ export class DocumentsMenuComponent implements OnInit {
   };
 
   setData = () => {
-    const { student: { firstName, lastName, career }, dni, company }: UserAuth = this.localStorageService.getItem( 'currentUser' );
-    this.studentData.studentName = firstName + ' ' + lastName;
-    this.studentData.studentCredential = dni;
-    this.studentData.studentCareerName = ` ${ career.name.toUpperCase() }`;
-    // this.studentData.studentEnterpriseName = company.name
+    const { student: { id } }: UserAuth = this.localStorageService.getItem( 'currentUser' );
+    return this.studentsService.getStudentProfile( Number( id ) ).subscribe( {
+      next: student => this.currentStudent = student
+    } );
   };
   //TECNOLOGIA SUPERIOR EN
 
@@ -63,39 +66,29 @@ export class DocumentsMenuComponent implements OnInit {
 
     this.documentsService.getDocuments().subscribe( {
       next: ( res ) => {
-        // const documentProps = {
-        //     docx,
-        //     fileSaver: fs,
-        //     backgroundImage,
-        //     logoImage,
-        //   ...this.studentData
-        // }
-        console.log(res)
         res.sort( ( a, b ) => a[ 'id' ] - b[ 'id' ] );
+        console.log( this.currentStudent );
 
         for ( let i = 0; i < res.length; i++ ) {
-          const { docName, documentDefinition, process } = res[ i ];
+          const { docName, documentDefinition, } = res[ i ];
 
-          const respuesta = new Function( `
+          const executeDocuments = new Function( `
               ${ documentDefinition }
-                return createDocument8;
+                return createDocument${ i + 1 };
             `)();
 
+
           this.Namefiles.push( {
-            document: async () => await respuesta(
+            document: async () => await executeDocuments(
               // documentProps
               {
                 bgImage: backgroundImage(),
                 logoImage: logoImage(),
-                studentName: this.studentData.studentName,
-                studentCredential: this.studentData.studentCredential,
-                studentCareerLevel: this.studentData.studentCareerLevel,
-                studentCareerName: this.studentData.studentCareerName,
                 instituteName: this.studentData.instituteName,
-                studentEnterpriseName: this.studentData.studentEnterpriseName,
                 docx,
                 fileSaver: fs,
-                exceljs: exceljs
+                exceljs: exceljs,
+                ...this.currentStudent
               }
             ),
             label: docName,

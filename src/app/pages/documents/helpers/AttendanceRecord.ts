@@ -1,7 +1,8 @@
+import * as fs from 'file-saver';
 import { DocumentProps } from '../models/documents-Props';
 import * as exceljs from 'exceljs';
 
-export function createDocument9( { fileSaver, exceljs, instituteName, logoImage, studentEnterpriseName, studentName, studentCredential }: DocumentProps ) {
+export function createDocument8( { fileSaver, exceljs, instituteName, logoImage, company, dni, firstName, secondName, lastName, secondLastName, academicTutor, businessTutor, email, career, academicPeriod, electivePeriod }: DocumentProps ) {
   const workBook = new exceljs.Workbook();
   const workSheet = workBook.addWorksheet( 'Informe de Aprendizaje' );
   workSheet.pageSetup = {
@@ -101,17 +102,19 @@ export function createDocument9( { fileSaver, exceljs, instituteName, logoImage,
   workSheet.getCell( 'A7' ).value = 'TUTOR(A) ACADÉMICO:';
   workSheet.getCell( 'A8' ).value = 'TUTOR(A) EMPRESARIAL:';
   workSheet.getCell( 'A9' ).value = 'NOMBRE DEL ESTUDIANTE:';
+  workSheet.getRow( 9 ).height = 40;
+
   workSheet.getCell( 'A10' ).value = 'E-MAIL INSTITUCIONAL:';
   workSheet.getCell( 'A11' ).value = 'TELÉFONO / MÓVIL:';
   workSheet.getCell( 'A12' ).value = 'CÉDULA:';
 
-  workSheet.getCell( 'D6' ).value = studentEnterpriseName;
-  workSheet.getCell( 'D7' ).value = 'TUTOR(A) ACADÉMICO:';
-  workSheet.getCell( 'D8' ).value = 'TUTOR(A) EMPRESARIAL:';
-  workSheet.getCell( 'D9' ).value = studentName;
-  workSheet.getCell( 'D10' ).value = 'E-MAIL INSTITUCIONAL:';
+  workSheet.getCell( 'D6' ).value = company;
+  workSheet.getCell( 'D7' ).value = academicTutor;
+  workSheet.getCell( 'D8' ).value = businessTutor;
+  workSheet.getCell( 'D9' ).value = [ firstName, secondName, lastName, secondLastName ].join( ' ' );
+  workSheet.getCell( 'D10' ).value = email;
   workSheet.getCell( 'D11' ).value = 'TELÉFONO / MÓVIL:';
-  workSheet.getCell( 'D12' ).value = studentCredential;
+  workSheet.getCell( 'D12' ).value = dni;
 
   workSheet.getCell( 'G6' ).value = 'CARRERA:';
   workSheet.getCell( 'G7' ).value = 'PERÍODO ACADÉMICO:';
@@ -120,6 +123,14 @@ export function createDocument9( { fileSaver, exceljs, instituteName, logoImage,
   workSheet.getCell( 'G10' ).value = 'TELÉFONO DE EMERGENCIA:';
   workSheet.getCell( 'G11' ).value = 'CONTACTO DE EMERGENCIA:';
   workSheet.getCell( 'G12' ).value = 'TIPO DE SANGRE:';
+
+  workSheet.getCell( 'J6' ).value = career;
+  workSheet.getCell( 'J7' ).value = academicPeriod;
+  workSheet.getCell( 'J8' ).value = electivePeriod;
+  workSheet.getCell( 'J9' ).value = 'NÚCLEO ESTRUCTURANTE:';
+  workSheet.getCell( 'J10' ).value = 'TELÉFONO DE EMERGENCIA:';
+  workSheet.getCell( 'J11' ).value = 'CONTACTO DE EMERGENCIA:';
+  workSheet.getCell( 'J12' ).value = 'TIPO DE SANGRE:';
 
   workSheet.getRow( 13 ).height = 10;
 
