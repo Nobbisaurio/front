@@ -4,7 +4,7 @@ import { createDocument1, createDocument2, createDocument3, createDocument4, cre
 export const baseDocuments = [
   {
     process: "proces1",
-    docName: "docname1",
+    docName: "Carta de Compromiso",
     version: "1.0",
     elaborationDate: "123.123.23",
     updateDate: "123.123.23",
@@ -13,7 +13,7 @@ export const baseDocuments = [
   },
   {
     process: "proces2",
-    docName: "docname1",
+    docName: "Acta Inducción de Seguridad",
     version: "1.0",
     elaborationDate: "123.123.23",
     updateDate: "123.123.23",

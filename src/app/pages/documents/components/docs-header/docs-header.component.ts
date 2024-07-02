@@ -10,30 +10,40 @@ import { Observable, catchError, concatMap, from, of, toArray } from 'rxjs';
   styleUrls: [ './docs-header.component.scss' ]
 } )
 export class DocsHeaderComponent implements OnInit {
+  selected!: CreateDocument;
+  displayDocumentInfo = false;
+  visible = false;
+  loading: boolean = false;
+  rowData: CreateDocument;
 
   constructor( private readonly documentsService: DocumentsService ) { }
 
   header = 'Encabezado de Documentos';
 
-  documents:CreateDocument[] = []
+  documents: CreateDocument[] = [];
+
+  openModalDocument( document: CreateDocument ) {
+    this.visible = true;
+    this.rowData = document;
+  }
 
   hasBaseDocuments(): Observable<CreateDocument[]> {
     return this.documentsService.getDocuments().pipe(
-      concatMap((res) => {
-        if (res.length === 0) {
+      concatMap( ( res ) => {
+        if ( res.length === 0 ) {
           const docs: CreateDocument[] = baseDocuments;
-          return from(docs).pipe(
-            concatMap((doc) => this.documentsService.createDocument(doc)),
+          return from( docs ).pipe(
+            concatMap( ( doc ) => this.documentsService.createDocument( doc ) ),
             toArray(),
-            concatMap(() => this.documentsService.getDocuments())
+            concatMap( () => this.documentsService.getDocuments() )
           );
         }
-        return of(res);
-      }),
-      catchError((error) => {
-        console.error('Error managing documents:', error);
-        return of([]); // Devuelve un array vacío en caso de error
-      })
+        return of( res );
+      } ),
+      catchError( ( error ) => {
+        console.error( 'Error managing documents:', error );
+        return of( [] );
+      } )
     );
   }
 
@@ -48,11 +58,14 @@ export class DocsHeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-     this.hasBaseDocuments().subscribe({
-      next: (docs) => {
-        this.documents = docs
+    this.hasBaseDocuments().subscribe( {
+      next: ( docs ) => {
+        this.documents = docs;
+        console.log( this.documents );
       },
-     });
+    } );
+
+
 
     // this.documentsService.getDocuments().subscribe( {
     //   next: ( res ) => console.log( res ),

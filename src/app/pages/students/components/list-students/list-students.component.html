@@ -3,75 +3,30 @@
     <div class="p-card p-4">
       <h2 class="m-0">Listado de Estudiantes</h2>
       <div class="my-2 flex justify-content-end w-full gap-2">
-        <p-fileUpload
-          #fileUpload
-          mode="basic"
-          name="demo"
-          accept=".xlsx, .xls, .csv"
-          (onSelect)="uploadFile($event)"
-          *appShowForRoles="['ADMIN', 'CA']"
-          [auto]="true"
-          chooseLabel="Subir Excel"
-        ></p-fileUpload>
+        <p-fileUpload #fileUpload mode="basic" name="demo" accept=".xlsx, .xls, .csv" (onSelect)="uploadFile($event)"
+          *appShowForRoles="['ADMIN', 'CA']" [auto]="true" chooseLabel="Subir Excel"></p-fileUpload>
 
-        <button
-          pButton
-          pRipple
-          icon="pi pi-plus"
-          class="p-button-success"
-          type="button"
-          label="Registrar Estudiante"
-          *appShowForRoles="['ADMIN', 'CA']"
-          (click)="openModelCreate()"
-        ></button>
+        <button pButton pRipple icon="pi pi-plus" class="p-button-success" type="button" label="Registrar Estudiante"
+          *appShowForRoles="['ADMIN', 'CA']" (click)="openModelCreate()"></button>
 
-        <a
-          href="#"
-          pButton
-          pRipple
-          icon="pi pi-building"
-          class="p-button-secondary p-button-raised no-underline"
-          label="Asignar Empresa"
-          *appShowForRoles="['ADMIN', 'CA']"
-          [routerLink]="[rootAppService.studentsAssigmentPath]"
-        ></a>
+        <a href="#" pButton pRipple icon="pi pi-building" class="p-button-secondary p-button-raised no-underline"
+          label="Asignar Empresa" *appShowForRoles="['ADMIN', 'CA']"
+          [routerLink]="[rootAppService.studentsAssigmentPath]"></a>
 
 
       </div>
       <form [formGroup]="formSearch" class="grid" (ngSubmit)="search()">
         <div class="col-3">
-          <input
-            pInputText
-            placeholder="Identificación"
-            formControlName="identification"
-            class="w-full"
-          />
+          <input pInputText placeholder="Identificación" formControlName="identification" class="w-full" />
         </div>
         <div class="col-3">
-          <input
-            pInputText
-            placeholder="Nombres"
-            formControlName="name"
-            class="w-full"
-          />
+          <input pInputText placeholder="Nombres" formControlName="name" class="w-full" />
         </div>
         <div class="col-3">
-          <input
-            pInputText
-            placeholder="Correo electrónico"
-            formControlName="email"
-            class="w-full"
-          />
+          <input pInputText placeholder="Correo electrónico" formControlName="email" class="w-full" />
         </div>
         <div class="col-3">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-search"
-            class="w-full"
-            type="submit"
-            label="Buscar"
-          ></button>
+          <button pButton pRipple icon="pi pi-search" class="w-full" type="submit" label="Buscar"></button>
         </div>
       </form>
     </div>
@@ -79,89 +34,56 @@
 
   <div class="col-12">
     <div class="p-card p-4">
-      <p-table
-        [value]="students"
-        [loading]="loading"
-        [scrollable]="true"
-        [rowHover]="true"
-        [rows]="rows"
-        [paginator]="true"
-        [showCurrentPageReport]="true"
-        [lazy]="true"
-        (onLazyLoad)="search($event)"
-        [totalRecords]="totalRecords"
-      >
+      <p-table [value]="students" [loading]="loading" [scrollable]="true" [rowHover]="true" [rows]="rows"
+        [paginator]="true" [showCurrentPageReport]="true" [lazy]="true" (onLazyLoad)="search($event)"
+        [totalRecords]="totalRecords">
         <ng-template pTemplate="header">
           <tr>
             <th class="w-auto"></th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn="dni"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn="dni" class="flex justify-content-between align-items-center">
                 Identificación
                 <p-sortIcon field="dni"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn=" completeNames"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn=" completeNames" class="flex justify-content-between align-items-center">
                 Nombres
                 <p-sortIcon field=" completeNames"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn="career"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn="career" class="flex justify-content-between align-items-center">
                 Carrera
                 <p-sortIcon field="career"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn="parallel"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn="parallel" class="flex justify-content-between align-items-center">
                 Paralelo
                 <p-sortIcon field="parallel"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn=" email"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn=" email" class="flex justify-content-between align-items-center">
                 Correo electrónico
                 <p-sortIcon field=" email"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn="periodElective"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn="periodElective" class="flex justify-content-between align-items-center">
                 Periodo lectivo
                 <p-sortIcon field="periodElective"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn="periodAcademic"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn="periodAcademic" class="flex justify-content-between align-items-center">
                 Periodo académico
                 <p-sortIcon field="periodAcademic"></p-sortIcon>
               </div>
             </th>
             <th style="min-width: 4rem">
-              <div
-                pSortableColumn="status"
-                class="flex justify-content-between align-items-center"
-              >
+              <div pSortableColumn="status" class="flex justify-content-between align-items-center">
                 Estado
                 <p-sortIcon field="status"></p-sortIcon>
               </div>
@@ -172,22 +94,10 @@
         <ng-template pTemplate="body" let-students>
           <tr>
             <td class="w-auto flex gap-2">
-              <button
-                pButton
-                pRipple
-                icon="pi pi-eye"
-                class="p-button-outlined p-button-secondary"
-                type="button"
-                (click)="openModalProfile(students)"
-              ></button>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-trash"
-                class="p-button-danger"
-                (click)="confirm(students)"
-                type="button"
-              ></button>
+              <button pButton pRipple icon="pi pi-eye" class="p-button-outlined p-button-secondary" type="button"
+                (click)="openModalProfile(students)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-danger" (click)="confirm(students)"
+                type="button"></button>
             </td>
             <td style="min-width: 4rem">
               {{ students.dni }}
@@ -228,173 +138,86 @@
   </div>
 </div>
 
-<p-confirmDialog
-  header="Confirmación"
-  position="center"
-  icon="pi pi-exclamation-triangle"
-></p-confirmDialog>
+<p-confirmDialog header="Confirmación" position="center" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
-<p-dialog
-  header="Estudiante"
-  [(visible)]="displayDetail"
-  [modal]="true"
-  [style]="{ width: '60vw' }"
-  (onHide)="hiddenModalDetail()"
->
+<p-dialog header="Estudiante" [(visible)]="displayDetail" [modal]="true" [style]="{ width: '60vw' }"
+  (onHide)="hiddenModalDetail()">
   <div class="p-2 w-full">
-    <form
-      [formGroup]="formStudents"
-      class="flex flex-column gap-2 w-full"
-      (ngSubmit)="saveStudents()"
-    >
+    <form [formGroup]="formStudents" class="flex flex-column gap-2 w-full" (ngSubmit)="saveStudents()">
       <p-fieldset legend="Datos Personales" styleClass="w-full">
         <div class="grid">
           <div class="col-12 md:col-6 flex flex-column gap-2">
             <label for="typeDni">Tipo de Identificación</label>
-            <p-dropdown
-              [options]="typeDni"
-              formControlName="typeDni"
-              id="typeDni"
-              placeholder="Selecionar"
-              styleClass="w-full"
-              [showClear]="true"
-            >
+            <p-dropdown [options]="typeDni" formControlName="typeDni" id="typeDni" placeholder="Selecionar"
+              styleClass="w-full" [showClear]="true">
             </p-dropdown>
           </div>
           <div class="col-12 md:col-6 flex flex-column gap-2">
             <label for="dni" class="obligatory">Identificación</label>
-            <input
-              pInputText
-              id="dni"
-              type="text"
-              formControlName="dni"
-              pKeyFilter="int"
-              required
-              [ngClass]="{
+            <input pInputText id="dni" type="text" formControlName="dni" pKeyFilter="int" required [ngClass]="{
                 'is-invalid': f['dni'].errors
-              }"
-            />
+              }" />
             <small *ngIf="f['dni'].touched" class="invalid-feedback">
-              <p
-                class="p-error block my-2"
-                *ngIf="f['dni'].errors?.['required']"
-              >
+              <p class="p-error block my-2" *ngIf="f['dni'].errors?.['required']">
                 Campo es obligatorio
               </p>
-              <p
-                class="p-error block my-2"
-                *ngIf="f['dni'].errors?.['minlength']"
-              >
+              <p class="p-error block my-2" *ngIf="f['dni'].errors?.['minlength']">
                 El campo es muy corto.
               </p>
             </small>
           </div>
           <div class="col-12 md:col-6 flex flex-column gap-2">
             <label for="firstName" class="obligatory">Primer Nombre</label>
-            <input
-              pInputText
-              id="firstName"
-              type="text"
-              formControlName="firstName"
-              required
-              [ngClass]="{
+            <input pInputText id="firstName" type="text" formControlName="firstName" required [ngClass]="{
                 'is-invalid': f['firstName'].errors
-              }"
-            />
+              }" />
             <small *ngIf="f['firstName'].touched" class="invalid-feedback">
-              <p
-                class="p-error block my-2"
-                *ngIf="f['firstName'].errors?.['required']"
-              >
+              <p class="p-error block my-2" *ngIf="f['firstName'].errors?.['required']">
                 Campo es obligatorio
               </p>
-              <p
-                class="p-error block my-2"
-                *ngIf="f['firstName'].errors?.['minlength']"
-              >
+              <p class="p-error block my-2" *ngIf="f['firstName'].errors?.['minlength']">
                 El campo es muy corto.
               </p>
             </small>
           </div>
           <div class="col-12 md:col-6 flex flex-column gap-2">
             <label for="secondName" class="obligatory">Segundo Nombre</label>
-            <input
-              pInputText
-              id="secondName"
-              type="text"
-              formControlName="secondName"
-              required
-              [ngClass]="{
+            <input pInputText id="secondName" type="text" formControlName="secondName" required [ngClass]="{
                 'is-invalid': f['secondName'].errors
-              }"
-            />
+              }" />
             <small *ngIf="f['secondName'].touched" class="invalid-feedback">
-              <p
-                class="p-error block my-2"
-                *ngIf="f['secondName'].errors?.['required']"
-              >
+              <p class="p-error block my-2" *ngIf="f['secondName'].errors?.['required']">
                 Campo es obligatorio
               </p>
-              <p
-                class="p-error block my-2"
-                *ngIf="f['secondName'].errors?.['minlength']"
-              >
+              <p class="p-error block my-2" *ngIf="f['secondName'].errors?.['minlength']">
                 El campo es muy corto.
               </p>
             </small>
           </div>
           <div class="col-12 md:col-6 flex flex-column gap-2">
             <label for="lastName" class="obligatory">Primer Apellido</label>
-            <input
-              pInputText
-              id="lastName"
-              type="text"
-              formControlName="lastName"
-              required
-              [ngClass]="{
+            <input pInputText id="lastName" type="text" formControlName="lastName" required [ngClass]="{
                 'is-invalid': f['lastName'].errors
-              }"
-            />
+              }" />
             <small *ngIf="f['lastName'].touched" class="invalid-feedback">
-              <p
-                class="p-error block my-2"
-                *ngIf="f['lastName'].errors?.['required']"
-              >
+              <p class="p-error block my-2" *ngIf="f['lastName'].errors?.['required']">
                 Campo es obligatorio
               </p>
-              <p
-                class="p-error block my-2"
-                *ngIf="f['lastName'].errors?.['minlength']"
-              >
+              <p class="p-error block my-2" *ngIf="f['lastName'].errors?.['minlength']">
                 El campo es muy corto.
               </p>
             </small>
           </div>
           <div class="col-12 md:col-6 flex flex-column gap-2">
-            <label for="secondLastName" class="obligatory"
-              >Segundo Apellido</label
-            >
-            <input
-              pInputText
-              id="secondLastName"
-              type="text"
-              formControlName="secondLastName"
-              required
-              [ngClass]="{
+            <label for="secondLastName" class="obligatory">Segundo Apellido</label>
+            <input pInputText id="secondLastName" type="text" formControlName="secondLastName" required [ngClass]="{
                 'is-invalid': f['secondLastName'].errors
-              }"
-            />
+              }" />
             <small *ngIf="f['secondLastName'].touched" class="invalid-feedback">
-              <p
-                class="p-error block my-2"
-                *ngIf="f['secondLastName'].errors?.['required']"
-              >
+              <p class="p-error block my-2" *ngIf="f['secondLastName'].errors?.['required']">
                 Campo es obligatorio
               </p>
-              <p
-                class="p-error block my-2"
-                *ngIf="f['secondLastName'].errors?.['minlength']"
-              >
+              <p class="p-error block my-2" *ngIf="f['secondLastName'].errors?.['minlength']">
                 El campo es muy corto.
               </p>
             </small>
@@ -405,109 +228,54 @@
         <div class="flex flex-column gap-2 w-full">
           <label for="email" class="obligatory">Correo Institucional</label>
           <div class="p-inputgroup">
-            <input
-              type="text"
-              id="email"
-              pInputText
-              formControlName="email"
-              required
-              [ngClass]="{
+            <input type="text" id="email" pInputText formControlName="email" required [ngClass]="{
                 'is-invalid': f['email'].errors
-              }"
-            />
+              }" />
             <span class="p-inputgroup-addon">
               {{ emailDomain }}
             </span>
           </div>
           <small *ngIf="f['email'].touched" class="invalid-feedback">
-            <p
-              class="p-error block my-2"
-              *ngIf="f['email'].errors?.['required']"
-            >
+            <p class="p-error block my-2" *ngIf="f['email'].errors?.['required']">
               Campo es obligatorio
             </p>
           </small>
           <div class="flex flex-row gap-2 w-full">
             <div class="w-4 flex flex-column gap-2">
-              <label for="electivePeriod" class="obligatory"
-                >Periodo lectivo</label
-              >
-              <input
-                pInputText
-                id="electivePeriod"
-                type="text"
-                formControlName="electivePeriod"
-                required
-                [ngClass]="{ 'is-invalid': f['electivePeriod'].errors }"
-              />
-              <small
-                *ngIf="f['electivePeriod'].touched"
-                class="invalid-feedback"
-              >
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['electivePeriod'].errors?.['required']"
-                >
+              <label for="electivePeriod" class="obligatory">Periodo lectivo</label>
+              <input pInputText id="electivePeriod" type="text" formControlName="electivePeriod" required
+                [ngClass]="{ 'is-invalid': f['electivePeriod'].errors }" />
+              <small *ngIf="f['electivePeriod'].touched" class="invalid-feedback">
+                <p class="p-error block my-2" *ngIf="f['electivePeriod'].errors?.['required']">
                   Campo es obligatorio
                 </p>
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['electivePeriod'].errors?.['minlength']"
-                >
+                <p class="p-error block my-2" *ngIf="f['electivePeriod'].errors?.['minlength']">
                   El campo es muy corto.
                 </p>
               </small>
             </div>
             <div class="w-4 flex flex-column gap-2">
-              <label for="academicPeriod" class="obligatory"
-                >Periodo académico</label
-              >
-              <p-dropdown
-                styleClass="w-full"
-                formControlName="academicPeriod"
-                id="academicPeriod"
-                [options]="academicPeriodOptions"
-              ></p-dropdown>
-              <small
-                *ngIf="f['academicPeriod'].touched"
-                class="invalid-feedback"
-              >
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['academicPeriod'].errors?.['required']"
-                >
+              <label for="academicPeriod" class="obligatory">Periodo académico</label>
+              <p-dropdown styleClass="w-full" formControlName="academicPeriod" id="academicPeriod"
+                [options]="academicPeriodOptions"></p-dropdown>
+              <small *ngIf="f['academicPeriod'].touched" class="invalid-feedback">
+                <p class="p-error block my-2" *ngIf="f['academicPeriod'].errors?.['required']">
                   Campo es obligatorio
                 </p>
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['academicPeriod'].errors?.['minlength']"
-                >
+                <p class="p-error block my-2" *ngIf="f['academicPeriod'].errors?.['minlength']">
                   El campo es muy corto.
                 </p>
               </small>
             </div>
             <div class="w-4 flex flex-column gap-2">
               <label for="parallel" class="obligatory">Paralelo</label>
-              <p-dropdown
-                styleClass="w-full"
-                id="parallel"
-                formControlName="parallel"
-                [options]="parallelOptions"
-              ></p-dropdown>
-              <small
-                *ngIf="f['academicPeriod'].touched"
-                class="invalid-feedback"
-              >
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['academicPeriod'].errors?.['required']"
-                >
+              <p-dropdown styleClass="w-full" id="parallel" formControlName="parallel"
+                [options]="parallelOptions"></p-dropdown>
+              <small *ngIf="f['academicPeriod'].touched" class="invalid-feedback">
+                <p class="p-error block my-2" *ngIf="f['academicPeriod'].errors?.['required']">
                   Campo es obligatorio
                 </p>
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['academicPeriod'].errors?.['minlength']"
-                >
+                <p class="p-error block my-2" *ngIf="f['academicPeriod'].errors?.['minlength']">
                   El campo es muy corto.
                 </p>
               </small>
@@ -516,50 +284,26 @@
           <div class="flex flex-row gap-2 w-full">
             <div class="w-6 flex flex-column gap-2">
               <label for="status" class="obligatory">Estado</label>
-              <p-dropdown
-                styleClass="w-full"
-                formControlName="status"
-                [options]="statusStudent"
-                id="status"
-              ></p-dropdown>
+              <p-dropdown styleClass="w-full" formControlName="status" [options]="statusStudent"
+                id="status"></p-dropdown>
               <small *ngIf="f['status'].touched" class="invalid-feedback">
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['status'].errors?.['required']"
-                >
+                <p class="p-error block my-2" *ngIf="f['status'].errors?.['required']">
                   Campo es obligatorio
                 </p>
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['status'].errors?.['minlength']"
-                >
+                <p class="p-error block my-2" *ngIf="f['status'].errors?.['minlength']">
                   El campo es muy corto.
                 </p>
               </small>
             </div>
             <div class="w-6 flex flex-column gap-2" *appShowForRoles="['ADMIN']">
               <label for="academicPeriod" class="obligatory">Carrera</label>
-              <p-dropdown
-                styleClass="w-full"
-                formControlName="idCareer"
-                optionLabel="name"
-                optionValue="id"
-                [options]="careerOptions"
-              ></p-dropdown>
-              <small
-                *ngIf="f['idCareer'].touched"
-                class="invalid-feedback"
-              >
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['idCareer'].errors?.['required']"
-                >
+              <p-dropdown styleClass="w-full" formControlName="idCareer" optionLabel="name" optionValue="id"
+                [options]="careerOptions"></p-dropdown>
+              <small *ngIf="f['idCareer'].touched" class="invalid-feedback">
+                <p class="p-error block my-2" *ngIf="f['idCareer'].errors?.['required']">
                   Campo es obligatorio
                 </p>
-                <p
-                  class="p-error block my-2"
-                  *ngIf="f['idCareer'].errors?.['minlength']"
-                >
+                <p class="p-error block my-2" *ngIf="f['idCareer'].errors?.['minlength']">
                   El campo es muy corto.
                 </p>
               </small>
@@ -569,43 +313,17 @@
       </p-fieldset>
 
       <div class="flex w-full justify-content-evenly p-4 gap-2">
-        <button
-          *ngIf="hasData"
-          pButton
-          pRipple
-          label="Editar"
-          class="p-button-info w-4"
-          type="button"
-          (click)="editStudents()"
-        ></button>
-        <button
-          *ngIf="!hasData && selected"
-          pButton
-          pRipple
-          label="Cancelar"
-          class="p-button-help w-4"
-          type="button"
-          (click)="cancelEdit()"
-        ></button>
+        <button *ngIf="hasData" pButton pRipple label="Editar" class="p-button-info w-4" type="button"
+          (click)="editStudents()"></button>
+        <button *ngIf="!hasData && selected" pButton pRipple label="Cancelar" class="p-button-help w-4" type="button"
+          (click)="cancelEdit()"></button>
 
-        <button
-          *ngIf="!hasData"
-          pButton
-          pRipple
-          label="Guardar"
-          class="p-button-raised p-button-success w-3"
-          [disabled]="formStudents.invalid"
-          type="submit"
-        ></button>
+        <button *ngIf="!hasData" pButton pRipple label="Guardar" class="p-button-raised p-button-success w-3"
+          [disabled]="formStudents.invalid" type="submit"></button>
       </div>
     </form>
   </div>
 </p-dialog>
 
-<app-profile-student
-  *ngIf="displayProfile"
-  [display]="displayProfile"
-  [idStudent]="selected.id"
-  (closeModal)="hiddenProfile()"
-  (editStudent)="hiddenModalWithStudent($event)"
-></app-profile-student>
+<app-profile-student *ngIf="displayProfile" [display]="displayProfile" [idStudent]="selected.id"
+  (closeModal)="hiddenProfile()" (editStudent)="hiddenModalWithStudent($event)"></app-profile-student>

@@ -1,19 +1,10 @@
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { getBase64ImageFromURL, backgroundImage } from './Base64Image';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DocumentProps } from '../models/documents-Props';
 ( pdfMake as any ).vfs = pdfFonts.pdfMake.vfs;
 
-// const studentName = 'MICHAEL SEBASTIAN MICHAEL SEBASTIAN';
-// const studentCredential = '1754253142';
-// const studentCareerLevel = '5to';
-// const studentCareerName = 'TÉCNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE';
-// const studentCareerModality = 'dual';
-// const instituteName =
-//   'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC';
-// const studentEnterpriseName = 'HSB SOFTECUADOR';
 
 export function createDocument1( { logoImage, bgImage, instituteName, academicPeriod, career, dni, firstName, secondName, lastName, secondLastName, company, }: DocumentProps ) {
 

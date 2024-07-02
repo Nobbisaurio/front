@@ -5,6 +5,9 @@ import { DocumentsMenuComponent } from './components/documents-menu/documents-me
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DocsHeaderComponent } from './components/docs-header/docs-header.component';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { FieldsetModule } from 'primeng/fieldset';
 
 
 @NgModule({
@@ -13,6 +16,9 @@ import { DocsHeaderComponent } from './components/docs-header/docs-header.compon
     DocumentsRoutingModule,
     CardModule,
     ButtonModule,
+    TableModule,
+    DialogModule,
+    FieldsetModule
   ],
   declarations: [DocumentsMenuComponent, DocsHeaderComponent],
 })
