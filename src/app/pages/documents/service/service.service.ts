@@ -4,28 +4,34 @@ import { RouterApi } from '@app/shared/helpers/routerApi';
 import { Observable } from 'rxjs';
 import { CreateDocument } from '../models/create-document';
 
-@Injectable( {
+@Injectable({
   providedIn: 'root'
-} )
+})
 export class DocumentsService {
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  private headers = new HttpHeaders( {
+  private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-  } );
+  });
 
   getDocuments(): Observable<CreateDocument[]> {
-    return this.http.get<CreateDocument[]>( RouterApi.urlDocuments, {
+    return this.http.get<CreateDocument[]>(RouterApi.urlDocuments, {
       headers: this.headers
-    } );
+    });
   }
 
-  createDocument( document: CreateDocument ): Observable<CreateDocument> {
-    return this.http.post<CreateDocument>( RouterApi.urlDocuments, document, {
+  createDocument(document: CreateDocument): Observable<CreateDocument> {
+    return this.http.post<CreateDocument>(RouterApi.urlDocuments, document, {
       headers: this.headers
-    } );
+    });
+  }
+
+  updateDocument(id: number, document: CreateDocument): Observable<CreateDocument> {
+    return this.http.patch<CreateDocument>(RouterApi.urlDocuments.concat(`/${id}`), document, {
+      headers: this.headers
+    })
   }
 }

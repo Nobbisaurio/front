@@ -70,13 +70,13 @@ export class DocumentsMenuComponent implements OnInit {
         console.log( this.currentStudent );
 
         for ( let i = 0; i < res.length; i++ ) {
-          const { docName, documentDefinition, } = res[ i ];
+          console.log("resi: ", res[i])
+          const { docName, documentDefinition } = res[ i ];
 
           const executeDocuments = new Function( `
               ${ documentDefinition }
                 return createDocument${ i + 1 };
             `)();
-
 
           this.Namefiles.push( {
             document: async () => await executeDocuments(
@@ -88,7 +88,8 @@ export class DocumentsMenuComponent implements OnInit {
                 docx,
                 fileSaver: fs,
                 exceljs: exceljs,
-                ...this.currentStudent
+                ...this.currentStudent,
+                ...res[i]
               }
             ),
             label: docName,

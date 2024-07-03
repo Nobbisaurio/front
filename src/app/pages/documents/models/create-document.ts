@@ -6,4 +6,5 @@ export interface CreateDocument  {
   updateDate: string;
   code: string;
   documentDefinition: string;
+  id?: number;
 }

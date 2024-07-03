@@ -3,84 +3,75 @@ import { createDocument1, createDocument2, createDocument3, createDocument4, cre
 
 export const baseDocuments = [
   {
-    process: "proces1",
+    process: "Carta de Compromiso",
     docName: "Carta de Compromiso",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument1.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument1.toString().replace(/(\/\/)/gm, ' '))
   },
   {
-    process: "proces2",
+    process: "Acta Inducción de Seguridad",
     docName: "Acta Inducción de Seguridad",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument2.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument2.toString().replace(/(\/\/)/gm, ' '))
   },
   {
-    process: "proces3",
-    docName: "docname1",
+    process: "Acta de entono laboral real",
+    docName: "Acta de entono laboral real",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument3.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument3.toString().replace(/(\/\/)/gm, ' '))
   },
   {
-    process: "proces4",
-    docName: "docname1",
+    process: "Esquema del proyecto empresarial",
+    docName: "Esquema del proyecto empresarial",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument4.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument4.toString().replace(/(\/\/)/gm, ' '))
   },
   {
-    process: "proces5",
-    docName: "docname1",
+    process: "Certificado empresarial",
+    docName: "Certificado empresarial",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument5.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument5.toString().replace(/(\/\/)/gm, ' '))
   },
   {
-    process: "proces6",
-    docName: "docname1",
+    process: "Reporte de aprendizaje",
+    docName: "Reporte de aprendizaje",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument6.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument6.toString().replace(/(\/\/)/gm, ' '))
   },
   {
-    process: "proces7",
-    docName: "docname1",
+    process: "Evaluación institucional y empresarial",
+    docName: "Evaluación institucional y empresarial",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument7.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument7.toString().replace(/(\/\/)/gm, ' '))
   },
   {
-    process: "proces8",
-    docName: "docname1",
+    process: "Registro de asistencia",
+    docName: "Registro de asistencia",
     version: "1.0",
-    elaborationDate: "123.123.23",
-    updateDate: "123.123.23",
+    elaborationDate: "10-07-2023",
+    updateDate: "10-07-2023",
     code: "123123",
-    documentDefinition: 'async '.concat( createDocument8.toString().replace( /(\/\/)/gm, ' ' ) )
+    documentDefinition: 'async '.concat(createDocument8.toString().replace(/(\/\/)/gm, ' '))
   },
-  // {
-  //   process: "proces1",
-  //   docName: "docname1",
-  //   version: "1.0",
-  //   elaborationDate: "123.123.23",
-  //   updateDate: "123.123.23",
-  //   code: "123123",
-  //   documentDefinition: 'async '.concat( createDocument9.toString().replace( /(\/\/)/gm, ' ' ) )
-  // },
 ];
