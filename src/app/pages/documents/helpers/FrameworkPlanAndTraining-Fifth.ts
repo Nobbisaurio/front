@@ -1,10 +1,10 @@
 import { DocumentProps } from '../models/documents-Props';
 import * as exceljs from 'exceljs';
 
-export function createDocument13( { exceljs, fileSaver, instituteName, logoImage, career, company, electivePeriod, academicPeriod, firstName, secondName, lastName, secondLastName, businessTutor, academicTutor }: DocumentProps ) {
+export function createDocument13( { exceljs, fileSaver, instituteName, logoImage, structuringCore, career, company, electivePeriod, academicPeriod, firstName, secondName, lastName, secondLastName, businessTutor, academicTutor }: DocumentProps ) {
 
   const workBook = new exceljs.Workbook();
-  const workSheet1 = workBook.addWorksheet( 'PLAN MARCO' );
+  const workSheet1 = workBook.addWorksheet('PLAN MARCO');
   workSheet1.pageSetup = {
     paperSize: 9,
     fitToPage: true,
@@ -124,7 +124,7 @@ export function createDocument13( { exceljs, fileSaver, instituteName, logoImage
 
   workSheet1.getCell( 'Q7' ).value = academicPeriod;
   workSheet1.getCell( 'Q8' ).value = 290;
-  workSheet1.getCell( 'Q9' ).value = 'FUNDAMENTOS DE PROGRAMACIÓN';
+  workSheet1.getCell('Q9').value = structuringCore;
 
   for ( let row = 10; row <= 14; row++ ) {
     workSheet1.mergeCells( `A${ row }:S${ row }` );
@@ -638,7 +638,7 @@ export function createDocument13( { exceljs, fileSaver, instituteName, logoImage
   workBook.xlsx.writeBuffer()
     .then( ( buffer ) => {
       const blob = new Blob( [ buffer ], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' } );
-      fileSaver.saveAs( blob, 'InformeApredizaje.xlsx' );
+      fileSaver.saveAs(blob, 'QUINTO-Plan Marco Formación y Rotación.xlsx');
     } )
     .catch( ( error ) => {
       console.error( 'Error al guardar el archivo:', error );

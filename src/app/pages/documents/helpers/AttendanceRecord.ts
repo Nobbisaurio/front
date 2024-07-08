@@ -28,7 +28,7 @@ export function createDocument8({
   electivePeriod,
 }: DocumentProps) {
   const workBook = new exceljs.Workbook();
-  const workSheet = workBook.addWorksheet('Informe de Aprendizaje');
+  const workSheet = workBook.addWorksheet('Registro de Asistencia');
   workSheet.pageSetup = {
     paperSize: 9,
     fitToPage: true,
@@ -170,8 +170,8 @@ export function createDocument8({
   workSheet.getCell('G12').value = 'TIPO DE SANGRE:';
 
   workSheet.getCell('J6').value = career;
-  workSheet.getCell('J7').value = academicPeriod;
-  workSheet.getCell('J8').value = electivePeriod;
+  workSheet.getCell('J7').value = electivePeriod;
+  workSheet.getCell('J8').value = academicPeriod;
   workSheet.getCell('J9').value = structuringCore;
   workSheet.getCell('J10').value = 'TELÉFONO DE EMERGENCIA:';
   workSheet.getCell('J11').value = 'CONTACTO DE EMERGENCIA:';
@@ -267,7 +267,7 @@ export function createDocument8({
       const blob = new Blob([buffer], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
-      fileSaver.saveAs(blob, 'InformeApredizaje.xlsx');
+      fileSaver.saveAs(blob, 'Registro de Asistencia.xlsx');
     })
     .catch((error) => {
       console.error('Error al guardar el archivo:', error);

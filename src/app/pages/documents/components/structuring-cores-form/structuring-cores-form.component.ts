@@ -54,10 +54,13 @@ export class StructuringCoresFormComponent implements OnInit {
 
   saveStructuringcore() {
     return this.documentsService
-      .createOrEditStructuringcode(this.formCores.value)
+      .createOrEditStructuringcode({
+        careerCode: this.formCores.value.careerCode.toUpperCase(),
+        careerLevel: this.formCores.value.careerLevel.toUpperCase(),
+        coreName: this.formCores.value.coreName.toUpperCase(),
+      })
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.clerarForm();
           this.visible = false;
         },

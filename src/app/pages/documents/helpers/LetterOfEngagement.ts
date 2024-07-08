@@ -6,7 +6,7 @@ import { DocumentProps } from '../models/documents-Props';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
-export function createDocument1({ version, logoImage, bgImage, instituteName, elaborationDate, docName, updateDate, code, academicPeriod, career, dni, firstName, secondName, lastName, secondLastName, company, }: DocumentProps) {
+export function createDocument1({ version, logoImage, bgImage, process, instituteName, elaborationDate, docName, updateDate, code, academicPeriod, career, dni, firstName, secondName, lastName, secondLastName, company, }: DocumentProps) {
 
   const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
@@ -76,7 +76,7 @@ export function createDocument1({ version, logoImage, bgImage, instituteName, el
             [
               {},
               {
-                text: docName,
+                text: process,
                 bold: true,
                 fontSize: 8,
                 alignment: 'center',

@@ -129,7 +129,6 @@ export function createDocument7({ fileSaver, exceljs, process, version, structur
   workSheet1.getCell('I9').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
   workSheet1.mergeCells('L9:S9');
   workSheet1.getCell('L9').value = structuringCore;
-  workSheet1.getCell('L9').alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
 
   workSheet1.mergeCells('A10:C10');
   workSheet1.getCell('A10').value = 'TUTOR(A) EMPRESARIAL:';
@@ -147,6 +146,13 @@ export function createDocument7({ fileSaver, exceljs, process, version, structur
       cell.alignment = { vertical: 'middle', horizontal: 'left' };
     }
   }
+
+  workSheet1.getCell('L9').alignment = {
+    vertical: 'middle',
+    horizontal: 'center',
+    wrapText: true,
+  };
+
 
   workSheet1.getCell('D6').alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
   workSheet1.getCell('D7').alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
@@ -611,7 +617,6 @@ export function createDocument7({ fileSaver, exceljs, process, version, structur
   workSheet2.getCell('I9').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
   workSheet2.mergeCells('L9:S9');
   workSheet2.getCell('L9').value = structuringCore;
-  workSheet2.getCell('L9').alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
 
 
   workSheet2.mergeCells('A10:C10');
@@ -630,6 +635,12 @@ export function createDocument7({ fileSaver, exceljs, process, version, structur
       cell.alignment = { vertical: 'middle', horizontal: 'left', wrapText: true };
     }
   }
+
+  workSheet2.getCell('L9').alignment = {
+    vertical: 'middle',
+    horizontal: 'center',
+    wrapText: true,
+  };
 
   workSheet2.getCell('D6').alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
   workSheet2.getCell('D7').alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
@@ -954,7 +965,7 @@ export function createDocument7({ fileSaver, exceljs, process, version, structur
   workBook.xlsx.writeBuffer()
     .then((buffer) => {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      fileSaver.saveAs(blob, 'InformeApredizaje.xlsx');
+      fileSaver.saveAs(blob, 'Evaluacion Empresarial - Institucional.xlsx');
     })
     .catch((error) => {
       console.error('Error al guardar el archivo:', error);

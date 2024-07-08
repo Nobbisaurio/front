@@ -117,7 +117,6 @@ export function createDocument6({ exceljs, fileSaver, logoImage, structuringCore
   workSheet.getCell('I9').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
   workSheet.mergeCells('L9:S9');
   workSheet.getCell('L9').value = structuringCore;
-  workSheet.getCell('L9').alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
 
 
   workSheet.mergeCells('A10:C10');
@@ -137,6 +136,12 @@ export function createDocument6({ exceljs, fileSaver, logoImage, structuringCore
 
     }
   }
+
+  workSheet.getCell('L9').alignment = {
+    vertical: 'middle',
+    horizontal: 'center',
+    wrapText: true,
+  };
 
   workSheet.getCell('D6').value = company;
   workSheet.getCell('D7').value = [firstName, secondName, lastName, secondLastName].join(' ');

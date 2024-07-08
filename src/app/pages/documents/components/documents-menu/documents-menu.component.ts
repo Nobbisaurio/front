@@ -50,6 +50,8 @@ export class DocumentsMenuComponent implements OnInit {
     studentEnterpriseName: 'HSB SOFT ECUADOR', // HACER CAMBIOS
   };
   structuringCoreByCarrerAndLevel: string;
+  currentAcademicPeriod: string;
+  careerCode: string;
 
   setData = () => {
     const {
@@ -61,8 +63,10 @@ export class DocumentsMenuComponent implements OnInit {
     this.studentsService.getStudentProfile(Number(id)).subscribe({
       next: (student) => {
         this.currentStudent = student;
+        this.currentAcademicPeriod = student.academicPeriod;
+        this.careerCode = code;
+
         // structuring core
-        const careerCode = code;
         this.documentsService.getAllstructuringCores().subscribe({
           next: (res) => {
             this.structuringCoreByCarrerAndLevel = res.filter((core) => {
@@ -71,8 +75,6 @@ export class DocumentsMenuComponent implements OnInit {
                 core.careerLevel === student.academicPeriod
               );
             })[0].coreName;
-
-            console.log(this.structuringCoreByCarrerAndLevel);
           },
         });
       },
@@ -109,6 +111,7 @@ export class DocumentsMenuComponent implements OnInit {
                   structuringCore: this.structuringCoreByCarrerAndLevel,
                   ...this.currentStudent,
                   ...res[i],
+                  code: this.careerCode.concat('-', res[i].code),
                 }
               ),
             label: docName,
