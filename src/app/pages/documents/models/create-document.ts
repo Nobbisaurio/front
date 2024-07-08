@@ -7,4 +7,5 @@ export interface CreateDocument  {
   code: string;
   documentDefinition: string;
   id?: number;
+  structuringCore?: string;
 }

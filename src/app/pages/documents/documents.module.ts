@@ -11,7 +11,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
-
+import { StructuringCoresFormComponent } from './components/structuring-cores-form/structuring-cores-form.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -25,8 +26,9 @@ import { CalendarModule } from 'primeng/calendar';
     CardModule,
     TableModule,
     DialogModule,
-    FieldsetModule
+    FieldsetModule,
+    DropdownModule
   ],
-  declarations: [DocumentsMenuComponent, DocsHeaderComponent],
+  declarations: [DocumentsMenuComponent, DocsHeaderComponent, StructuringCoresFormComponent],
 })
 export class DocumentsModule {}

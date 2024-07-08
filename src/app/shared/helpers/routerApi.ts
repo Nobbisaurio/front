@@ -19,7 +19,8 @@ export class RouterApi {
   static readonly urlReports = this.urlBase + '/report';
   // documents
   static readonly urlDocuments = this.urlBase + '/documents'
-
+  // structuring cores
+  static readonly urlStructuringCores = this.urlBase + '/structuringCore'
 
   static readonly urlRoleActive = this.urlRoles + '/active';
   static readonly urlAllStudents = this.urlStudents + '/all';
@@ -37,6 +38,7 @@ export class RouterApi {
   static readonly urlUsersByRole = this.urlUsers + '/byRole/';
 
   static readonly urlCareerActive = this.urlCareer + '/active';
+  static readonly urlAllCareers = this.urlCareer + '/all'
 
   static readonly urlCompanyProfile = this.urlCompany + '/getCompanyInfo';
 

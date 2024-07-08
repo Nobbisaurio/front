@@ -1,7 +1,7 @@
 import { DocumentProps } from '../models/documents-Props';
 import * as exceljs from 'exceljs';
 
-export function createDocument7({ fileSaver, exceljs, process, version, elaborationDate, updateDate, code, instituteName, docName, logoImage, company, dni, firstName, secondName, lastName, secondLastName, academicTutor, businessTutor, email, career, academicPeriod, electivePeriod }: DocumentProps) {
+export function createDocument7({ fileSaver, exceljs, process, version, structuringCore, elaborationDate, updateDate, code, instituteName, docName, logoImage, company, dni, firstName, secondName, lastName, secondLastName, academicTutor, businessTutor, email, career, academicPeriod, electivePeriod }: DocumentProps) {
 
 
   const workBook = new exceljs.Workbook();
@@ -128,6 +128,8 @@ export function createDocument7({ fileSaver, exceljs, process, version, elaborat
   workSheet1.getCell('I9').value = 'NÚCLEO ESTRUCTURANTE:';
   workSheet1.getCell('I9').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
   workSheet1.mergeCells('L9:S9');
+  workSheet1.getCell('L9').value = structuringCore;
+  workSheet1.getCell('L9').alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
 
   workSheet1.mergeCells('A10:C10');
   workSheet1.getCell('A10').value = 'TUTOR(A) EMPRESARIAL:';
@@ -608,6 +610,9 @@ export function createDocument7({ fileSaver, exceljs, process, version, elaborat
   workSheet2.getCell('I9').value = 'NÚCLEO ESTRUCTURANTE:';
   workSheet2.getCell('I9').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
   workSheet2.mergeCells('L9:S9');
+  workSheet2.getCell('L9').value = structuringCore;
+  workSheet2.getCell('L9').alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+
 
   workSheet2.mergeCells('A10:C10');
   workSheet2.getCell('A10').value = 'TUTOR(A) EMPRESARIAL:';

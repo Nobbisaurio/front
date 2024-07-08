@@ -2,7 +2,31 @@ import * as fs from 'file-saver';
 import { DocumentProps } from '../models/documents-Props';
 import * as exceljs from 'exceljs';
 
-export function createDocument8({ fileSaver, exceljs, version, elaborationDate, code, process, updateDate, docName, instituteName, logoImage, company, dni, firstName, secondName, lastName, secondLastName, academicTutor, businessTutor, email, career, academicPeriod, electivePeriod }: DocumentProps) {
+export function createDocument8({
+  fileSaver,
+  exceljs,
+  version,
+  elaborationDate,
+  code,
+  process,
+  updateDate,
+  docName,
+  instituteName,
+  structuringCore,
+  logoImage,
+  company,
+  dni,
+  firstName,
+  secondName,
+  lastName,
+  secondLastName,
+  academicTutor,
+  businessTutor,
+  email,
+  career,
+  academicPeriod,
+  electivePeriod,
+}: DocumentProps) {
   const workBook = new exceljs.Workbook();
   const workSheet = workBook.addWorksheet('Informe de Aprendizaje');
   workSheet.pageSetup = {
@@ -10,14 +34,14 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
     fitToPage: true,
     fitToWidth: 1,
     fitToHeight: 1,
-    orientation: 'portrait'
+    orientation: 'portrait',
   };
   const applyBorder = (cell: exceljs.Cell) => {
     cell.border = {
       top: { style: 'thin', color: { argb: 'FF000000' } },
       left: { style: 'thin', color: { argb: 'FF000000' } },
       bottom: { style: 'thin', color: { argb: 'FF000000' } },
-      right: { style: 'thin', color: { argb: 'FF000000' } }
+      right: { style: 'thin', color: { argb: 'FF000000' } },
     };
   };
 
@@ -30,23 +54,29 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
   // workSheet.addImage( logo, 'A1:C4')
   workSheet.getColumn('A').width = 5;
 
-
   workSheet.mergeCells('D1:J1');
   workSheet.getCell('D1').value = instituteName;
   workSheet.getRow(1).height = 40;
-  workSheet.getCell('D1').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '3366ff' } };
+  workSheet.getCell('D1').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: '3366ff' },
+  };
 
   workSheet.mergeCells('D2:J2');
   workSheet.getCell('D2').value = 'MACROPROCESO 01 DOCENCIA';
 
   workSheet.mergeCells('D3:J3');
   workSheet.getCell('D3').value = process;
-  workSheet.getCell('D3').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'e6802c' } };
+  workSheet.getCell('D3').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'e6802c' },
+  };
   workSheet.getRow(3).height = 40;
 
   workSheet.mergeCells('D4:J4');
   workSheet.getCell('D4').value = docName;
-
 
   workSheet.getColumn('K').width = 15;
   workSheet.getColumn('L').width = 15;
@@ -62,15 +92,17 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
   workSheet.getCell('K4').value = 'CÓDIGO';
   workSheet.getCell('L4').value = code;
 
-
   const usedCells = workSheet.getSheetValues();
-
 
   for (let row = 1; row <= 4; row++) {
     for (let col = 1; col <= 12; col++) {
       applyBorder(workSheet.getCell(row, col));
       const cell = workSheet.getCell(row, col);
-      cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+      cell.alignment = {
+        vertical: 'middle',
+        horizontal: 'center',
+        wrapText: true,
+      };
     }
   }
 
@@ -78,14 +110,22 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
 
   for (let row = 6; row <= 12; row++) {
     workSheet.mergeCells(`A${row}:C${row}`);
-    workSheet.getCell(`A${row}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
+    workSheet.getCell(`A${row}`).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'bfbfbf' },
+    };
     workSheet.getCell(`A${row}`).font = { bold: true };
 
     workSheet.mergeCells(`D${row}:F${row}`);
     workSheet.getCell(`D${row}`).alignment = { horizontal: 'center' };
 
     workSheet.mergeCells(`G${row}:I${row}`);
-    workSheet.getCell(`G${row}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'bfbfbf' } };
+    workSheet.getCell(`G${row}`).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'bfbfbf' },
+    };
     workSheet.getCell(`G${row}`).font = { bold: true };
 
     workSheet.mergeCells(`J${row}:L${row}`);
@@ -111,7 +151,12 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
   workSheet.getCell('D6').value = company;
   workSheet.getCell('D7').value = academicTutor;
   workSheet.getCell('D8').value = businessTutor;
-  workSheet.getCell('D9').value = [firstName, secondName, lastName, secondLastName].join(' ');
+  workSheet.getCell('D9').value = [
+    firstName,
+    secondName,
+    lastName,
+    secondLastName,
+  ].join(' ');
   workSheet.getCell('D10').value = email;
   workSheet.getCell('D11').value = 'TELÉFONO / MÓVIL:';
   workSheet.getCell('D12').value = dni;
@@ -127,7 +172,7 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
   workSheet.getCell('J6').value = career;
   workSheet.getCell('J7').value = academicPeriod;
   workSheet.getCell('J8').value = electivePeriod;
-  workSheet.getCell('J9').value = 'NÚCLEO ESTRUCTURANTE:';
+  workSheet.getCell('J9').value = structuringCore;
   workSheet.getCell('J10').value = 'TELÉFONO DE EMERGENCIA:';
   workSheet.getCell('J11').value = 'CONTACTO DE EMERGENCIA:';
   workSheet.getCell('J12').value = 'TIPO DE SANGRE:';
@@ -151,14 +196,22 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
     for (let col = 1; col <= 12; col++) {
       applyBorder(workSheet.getCell(row, col));
       const cell = workSheet.getCell(row, col);
-      cell.alignment = { vertical: 'middle', wrapText: true, horizontal: 'center' };
+      cell.alignment = {
+        vertical: 'middle',
+        wrapText: true,
+        horizontal: 'center',
+      };
     }
   }
   for (let row = 15, i = 1; row <= 50; row++) {
     workSheet.getCell(`A${row}`).value = i++;
 
     workSheet.getCell(`B${row}`).value = '02/01/2024';
-    workSheet.getCell(`B${row}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF000' } };
+    workSheet.getCell(`B${row}`).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFF000' },
+    };
 
     workSheet.getCell(`D${row}`).value = '8:00';
 
@@ -170,15 +223,16 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
 
     workSheet.getRow(row).height = 30;
 
-
     for (let col = 1; col <= 12; col++) {
       applyBorder(workSheet.getCell(row, col));
       const cell = workSheet.getCell(row, col);
-      cell.alignment = { vertical: 'middle', wrapText: true, horizontal: 'center' };
+      cell.alignment = {
+        vertical: 'middle',
+        wrapText: true,
+        horizontal: 'center',
+      };
     }
   }
-
-
 
   workSheet.getCell('B50').value = '12/02/2024 – 23/02/2024';
   workSheet.getCell(`D50`).value = '8:00';
@@ -191,7 +245,11 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
     for (let col = 4; col <= 7; col++) {
       applyBorder(workSheet.getCell(row, col));
       const cell = workSheet.getCell(row, col);
-      cell.alignment = { vertical: 'middle', wrapText: true, horizontal: 'center' };
+      cell.alignment = {
+        vertical: 'middle',
+        wrapText: true,
+        horizontal: 'center',
+      };
     }
   }
 
@@ -203,17 +261,15 @@ export function createDocument8({ fileSaver, exceljs, version, elaborationDate, 
   workSheet.mergeCells('G51:G52');
   workSheet.getCell('G51').value = { formula: 'Sum(G15:G50)' };
 
-
-
-
-
-  workBook.xlsx.writeBuffer()
+  workBook.xlsx
+    .writeBuffer()
     .then((buffer) => {
-      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const blob = new Blob([buffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
       fileSaver.saveAs(blob, 'InformeApredizaje.xlsx');
     })
     .catch((error) => {
       console.error('Error al guardar el archivo:', error);
     });
-
 }
