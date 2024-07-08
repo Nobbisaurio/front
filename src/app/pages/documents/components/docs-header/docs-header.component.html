@@ -1,7 +1,12 @@
 <p-card class="h-screen bg-red-400" [header]="header">
   <ng-template pTemplate="content">
-
-    <p-table [value]="documents" [scrollable]="true" [rowHover]="true" [lazy]="true" [loading]="loading">
+    <p-table
+      [value]="documents"
+      [scrollable]="true"
+      [rowHover]="true"
+      [lazy]="true"
+      [loading]="loading"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th class="w-auto"></th>
@@ -16,55 +21,148 @@
       <ng-template pTemplate="body" let-documents>
         <tr>
           <td>
-            <button pButton pRipple icon="pi pi-eye" class="p-button-outlined p-button-secondary" type="button"
-              (click)="openModalDocument(documents)"></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-eye"
+              class="p-button-outlined p-button-secondary"
+              type="button"
+              (click)="openModalDocument(documents)"
+            ></button>
           </td>
           <td style="min-width: 4rem">
-            {{documents.docName}}
+            {{ documents.docName }}
           </td>
         </tr>
       </ng-template>
     </p-table>
   </ng-template>
 
-  <p-dialog header="Editar encabezado del documento" [modal]="true" [(visible)]="visible"  [style]="{ width: '50vw' }">
-    <div class="p-grid p-dir-col flex flex-column gap-2">
-      <p-fieldset legend="Encabezado del documento">
-        <div class="flex flex-row gap-2">
-          <div class="flex flex-column gap-2 w-6">
-            <div class="p-col">
-              <label class="font-bold">Process:</label>
-              <div>{{ rowData?.process }}</div>
+  <p-dialog
+    header="Editar encabezado del documento"
+    [(visible)]="visible"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    (onHide)="cancelEdit()"
+  >
+    <form
+      [formGroup]="formHeader"
+      class="flex flex-column gap-2 w-full"
+      (ngSubmit)="saveDocument()"
+    >
+      <div class="p-grid p-dir-col flex flex-column gap-2">
+        <p-fieldset legend="Encabezado del documento">
+          <div class="flex flex-row gap-2">
+            <div class="flex flex-column gap-2 w-6">
+              <div class="p-col">
+                <label for="process" class="obligatory">Process</label>
+                <input
+                  pInputText
+                  id="process"
+                  placeholder="Código"
+                  formControlName="process"
+                  class="w-full"
+                  [value]="rowData?.process"
+                />
+              </div>
+              <div class="p-col">
+                <label for="docName" class="obligatory"
+                  >Nombre del documento</label
+                >
+                <input
+                  pInputText
+                  id="docName"
+                  placeholder="Nombre del documento"
+                  formControlName="docName"
+                  class="w-full"
+                  [value]="rowData?.docName"
+                />
+              </div>
+              <div class="p-col">
+                <label for="version" class="obligatory">Versión</label>
+                <input
+                  pInputText
+                  id="version"
+                  placeholder="Versión"
+                  formControlName="version"
+                  class="w-full"
+                  [value]="rowData?.version"
+                />
+              </div>
+            </div>
 
-            </div>
-            <div class="p-col">
-              <label class="font-bold">Nombre del documento:</label>
-              <div>{{ rowData?.docName }}</div>
-            </div>
-            <div class="p-col">
-              <label class="font-bold">Versión:</label>
-              <div>{{ rowData?.version }}</div>
+            <div class="flex flex-column gap-2 w-6">
+              <div class="p-col">
+                <label for="code" class="obligatory"
+                  >Código del documento</label
+                >
+                <input
+                  pInputText
+                  id="code"
+                  placeholder="Código"
+                  formControlName="code"
+                  class="w-full"
+                  [value]="rowData?.code"
+                />
+              </div>
+              <div class="p-col">
+                <label for="elaborationDate" class="obligatory"
+                  >Fecha de elaboración</label
+                >
+                <p-calendar
+                  [showOnFocus]="false"
+                  id="elaborationDate"
+                  formControlName="elaborationDate"
+                  class="w-full"
+                  dateFormat="dd-mm-yy"
+                ></p-calendar>
+              </div>
+              <div class="p-col">
+                <label for="updateDate" class="obligatory"
+                  >Fecha de actualización</label
+                >
+                <p-calendar
+                  [showOnFocus]="false"
+                  id="updateDate"
+                  formControlName="updateDate"
+                  class="w-full"
+                  dateFormat="dd-mm-yy"
+                ></p-calendar>
+              </div>
             </div>
           </div>
+        </p-fieldset>
+        <div class="flex w-full justify-content-evenly p-4 gap-2">
+          <button
+            *ngIf="!hasData"
+            pButton
+            pRipple
+            label="Editar"
+            class="p-button-info w-4"
+            type="button"
+            (click)="editDocument()"
+          ></button>
 
-          <div class="flex flex-column gap-2 w-6">
-            <div class="p-col">
-              <label class="font-bold">Código del documento:</label>
-              <div>{{ rowData?.code }}</div>
-            </div>
-            <div class="p-col">
-              <label class="font-bold">Fecha de elaboración:</label>
-              <div>{{ rowData?.elaborationDate }}</div>
-            </div>
-            <div class="p-col">
-              <label class="font-bold">Fecha de actualización:</label>
-              <div>{{ rowData?.updateDate }}</div>
-            </div>
-          </div>
+          <button
+            *ngIf="hasData"
+            pButton
+            pRipple
+            label="Cancelar"
+            class="p-button-help w-4"
+            type="button"
+            (click)="cancelEdit()"
+          ></button>
 
+          <button
+            *ngIf="hasData"
+            pButton
+            pRipple
+            label="Guardar"
+            class="p-button-raised p-button-success w-4"
+            type="submit"
+          ></button>
         </div>
-      </p-fieldset>
-    </div>
+      </div>
+    </form>
   </p-dialog>
-
 </p-card>

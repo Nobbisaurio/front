@@ -8,14 +8,21 @@ import { DocsHeaderComponent } from './components/docs-header/docs-header.compon
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
   imports: [
     CommonModule,
     DocumentsRoutingModule,
-    CardModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    CalendarModule,
     ButtonModule,
+    CardModule,
     TableModule,
     DialogModule,
     FieldsetModule
