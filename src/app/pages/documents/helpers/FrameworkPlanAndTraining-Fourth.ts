@@ -440,7 +440,7 @@ export function createDocument12( { exceljs, fileSaver, instituteName, structuri
 
   workSheet2.getCell( 'Q7' ).value = academicPeriod;
   workSheet2.getCell( 'Q8' ).value = 290;
-  workSheet2.getCell( 'Q9' ).value = 'FUNDAMENTOS DE PROGRAMACIÓN';
+  workSheet2.getCell('Q9').value = structuringCore;
 
   workSheet2.mergeCells( 'A10:S10' );
   workSheet2.getRow( 10 ).height = 10;
