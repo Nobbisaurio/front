@@ -45,6 +45,7 @@ export class StructuringCoresFormComponent implements OnInit {
     this.visible = true;
     this.formCores.get('careerLevel').disable();
     this.formCores.get('coreName').disable();
+    this.getStructuringCores();
   }
 
   cancelEdit() {
@@ -90,6 +91,14 @@ export class StructuringCoresFormComponent implements OnInit {
     });
   }
 
+  getStructuringCores() {
+    this.documentsService.getAllstructuringCores().subscribe({
+      next: (res) => {
+        this.structuringCores = res.sort((a, b) => a.id - b.id);
+      },
+    });
+  }
+
   ngOnInit(): void {
     this.formCores = this.fb.group({
       careerCode: ['', [Validators.required, Validators.minLength(1)]],
@@ -103,11 +112,6 @@ export class StructuringCoresFormComponent implements OnInit {
       },
     });
 
-    this.documentsService.getAllstructuringCores().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.structuringCores = res;
-      },
-    });
+    this.getStructuringCores();
   }
 }

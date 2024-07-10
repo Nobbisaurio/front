@@ -1,59 +1,55 @@
-<button
-  pButton
-  pRipple
-  label="Nucleo Estructurante"
-  (click)="openModal()"
-></button>
+<button pButton pRipple label="Nucleo Estructurante" (click)="openModal()"></button>
 
-<p-dialog
-  header="Núcleo Estructurante"
-  [(visible)]="visible"
-  [modal]="true"
-  (onHide)="cancelEdit()"
-  class="h-18rem w-screen"
-  [style]="{ height: '80%', width: '60%' }"
->
-  <form
-    [formGroup]="formCores"
-    (ngSubmit)="saveStructuringcore()"
-    class="flex flex-column gap-2 w-full"
-  >
+<p-dialog header="Núcleo Estructurante" [(visible)]="visible" [modal]="true" (onHide)="cancelEdit()"
+  class="h-18rem w-screen" [style]="{ height: '80%', width: '60%' }">
+  <form [formGroup]="formCores" (ngSubmit)="saveStructuringcore()" class="flex flex-column gap-2 w-full">
     <div class="flex flex-column gap-3">
       <div class="flex flex-column">
         <label for="careerCode" class="obligatory">Carrera</label>
-        <p-dropdown
-          formControlName="careerCode"
-          optionLabel="name"
-          optionValue="code"
-          placeholder="Selecciona una Carrera"
-          [options]="careerList"
-          (onChange)="filterSC()"
-        ></p-dropdown>
+        <p-dropdown formControlName="careerCode" optionLabel="name" optionValue="code"
+          placeholder="Selecciona una Carrera" [options]="careerList" (onChange)="filterSC()"></p-dropdown>
       </div>
       <div class="flex flex-column">
         <label for="careerLevel" class="obligatory">Nivel</label>
-        <p-dropdown
-          formControlName="careerLevel"
-          optionLabel="name"
-          optionValue="name"
-          placeholder="Selecciona un Nivel"
-          [options]="careerLevels"
-          (onChange)="setPrevSC()"
-        ></p-dropdown>
+        <p-dropdown formControlName="careerLevel" optionLabel="name" optionValue="name"
+          placeholder="Selecciona un Nivel" [options]="careerLevels" (onChange)="setPrevSC()"></p-dropdown>
       </div>
       <div class="flex flex-column">
         <label for="coreName" class="obligatory">Núcleo estrucutrante</label>
-        <p-dropdown
-          formControlName="coreName"
-          optionLabel="coreName"
-          optionValue="coreName"
-          placeholder="Selecciona el núcleo estructurante"
-          [options]="structuringCoresByCareer"
-          [editable]="true"
-          [filter]="true"
-        ></p-dropdown>
+        <p-dropdown formControlName="coreName" optionLabel="coreName" optionValue="coreName"
+          placeholder="Selecciona el núcleo estructurante" [options]="structuringCoresByCareer" [editable]="true"
+          [filter]="true"></p-dropdown>
       </div>
     </div>
+
+    <p-table class="mt-6" [value]="structuringCores" rowGroupMode="rowspan" groupRowsBy="careerCode"
+      sortField="careerCode" sortMode="single">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Carrera</th>
+          <th>Semestre</th>
+          <th>Nucleo estructurante</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-score let-rowIndex="rowIndex" let-rowgroup="rowgroup" let-rowspan="rowspan">
+        <tr>
+          <td class="font-bold" *ngIf="rowgroup" [attr.rowspan]="rowspan">
+            {{score.careerCode}}
+          </td>
+          <td>
+            {{score.careerLevel}}
+          </td>
+          <td>
+            {{score.coreName}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
     <button pButton pRipple type="submit" label="Guardar"></button>
   </form>
+
+
+
 </p-dialog>
