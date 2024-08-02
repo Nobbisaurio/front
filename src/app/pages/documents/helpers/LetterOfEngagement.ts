@@ -8,6 +8,16 @@ import { DocumentProps } from '../models/documents-Props';
 
 export function createDocument1({ version, logoImage, bgImage, process, instituteName, elaborationDate, docName, updateDate, code, academicPeriod, career, dni, firstName, secondName, lastName, secondLastName, company, }: DocumentProps) {
 
+
+  const day = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+
+  const formattedDay = day < 10 ? `0${day}` : day;
+  const formattedMonth = month < 10 ? `0${month}` : month;
+
+
   const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
     pageMargins: [41, 41, 41, 41],
@@ -121,7 +131,7 @@ export function createDocument1({ version, logoImage, bgImage, process, institut
       },
 
       {
-        text: 'D.M. Quito  martes, enero 02, 2024',
+        text: `Quito D.M. ${formattedDay}/${formattedMonth}/${year}  `,
         margin: [0, 10],
         alignment: 'left',
         bold: false,

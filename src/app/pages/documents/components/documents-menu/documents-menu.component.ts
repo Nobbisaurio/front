@@ -18,6 +18,13 @@ import { UserAuth } from '@app/core/models/user-auth';
 import { DocumentProps } from '../../models/documents-Props';
 import { UserStudent } from '@app/pages/students/models/user-student';
 import { StudentsService } from '../../../students/service/students.service';
+import { CompanyService } from '../../../company/service/company.service';
+import { ProjectsService } from '@app/pages/project/service/projects.service';
+import { studentList } from '@app/pages/project/models/list-projects';
+import { Content } from 'pdfmake/interfaces';
+import { UsersService } from '@app/pages/users/service/users.service';
+import { TutorService } from '../../../tutor/service/tutor.service';
+import { CareerService } from '@app/pages/career/service/career.service';
 
 @Component({
   selector: 'app-documents-menu',
@@ -30,7 +37,12 @@ export class DocumentsMenuComponent implements OnInit {
   constructor(
     private documentsService: DocumentsService,
     private localStorageService: LocalStorageService,
-    private studentsService: StudentsService
+    private studentsService: StudentsService,
+    private companyService:CompanyService,
+    private projectsService:ProjectsService,
+    private tutorService:TutorService,
+    private careerService:CareerService,
+    private usersService:UsersService,
   ) {}
 
   Namefiles: {
@@ -40,18 +52,94 @@ export class DocumentsMenuComponent implements OnInit {
   }[] = [];
 
   currentStudent: UserStudent;
-  studentData = {
-    studentName: '',
-    studentCredential: '',
-    studentCareerLevel: '5to', // HACER CAMBIOS
-    studentCareerName: '',
-    instituteName:
-      'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC',
-    studentEnterpriseName: 'HSB SOFT ECUADOR', // HACER CAMBIOS
-  };
+  instituteName = 'INSTITUTO SUPERIOR TECNOLÓGICO DE TURISMO Y PATRIMONIO YAVIRAC'
   structuringCoreByCarrerAndLevel: string;
   currentAcademicPeriod: string;
   careerCode: string;
+  studentCompanyId:number;
+  studentProjectName:string;
+  bussinesTutorDni :number
+  academicTutorDni :number
+  careerCoordinator : string
+  careerCoordinatorDni : string
+
+  getStudentsByProject (id:number){
+    return  this.companyService.getCompanyProfile(id)
+  }
+
+  getProyectById(id:number) {
+    return this.projectsService.getProjectsById(id)
+  }
+  getBussinesTutorDni(userId:number){
+    return this.tutorService.getTutorByID(userId).subscribe({
+      next: (res)=>{
+        this.bussinesTutorDni = res.dni
+        this.currentStudent.businessTutor =`${res.firstName} ${res.lastName}`
+      }
+    })
+  }
+  getAcademicTutorDni(userId:number){
+    return this.tutorService.getTutorByID(userId).subscribe({
+      next: (res)=>{
+        this.academicTutorDni = res.dni
+        this.currentStudent.academicTutor =`${res.firstName}`
+      }
+    })
+  }
+  getCoordinador(idCarrer:number){
+    return this.careerService.getCareerById(idCarrer).subscribe({
+      next:(res)=>{
+        this.usersService.getUserById(res.idCoordinator).subscribe({
+          next:({dni,tutor})=>{
+            this.careerCoordinator = `${tutor.firstName}`
+            this.careerCoordinatorDni = dni
+          }
+        })
+      }
+    })
+  }
+
+  projectStudentsList = (students:studentList[]):{} | Content=>{
+
+    let i = 0
+    const studentTable = students.map(student =>{
+      i++
+      return [
+        {
+          text:i,
+          alignment:'center',
+          fontSize:9,
+        },
+        {
+          text:student.fullName,
+          alignment:'center',
+          fontSize:9,
+        },
+        {
+          text:student.dni,
+          alignment:'center',
+          fontSize:9,
+        },
+        {
+          text:student.academicPeriod,
+          alignment:'center',
+          fontSize:9,
+        },
+        {
+
+        },
+        {
+
+        }
+      ]
+    })
+
+    return studentTable
+
+  };
+
+  studentProjectTable:{} | Content
+
 
   setData = () => {
     const {
@@ -65,6 +153,8 @@ export class DocumentsMenuComponent implements OnInit {
         this.currentStudent = student;
         this.currentAcademicPeriod = student.academicPeriod;
         this.careerCode = code;
+        this.studentCompanyId = student.idCompany
+        this.studentProjectName = student.project
 
         // structuring core
         this.documentsService.getAllstructuringCores().subscribe({
@@ -77,6 +167,26 @@ export class DocumentsMenuComponent implements OnInit {
             })[0].coreName;
           },
         });
+
+        this.getStudentsByProject(this.studentCompanyId).subscribe({
+          next:(res) =>{
+            const projects =  res.projects
+
+            projects.map(project =>{
+              if(project.name !== this.studentProjectName){
+                return false
+              }
+              return this.getProyectById(project.id).subscribe({
+                next:(res)=>{
+                  this.studentProjectTable = this.projectStudentsList(res.students)
+                  this.getBussinesTutorDni(res.businessTutor.id)
+                  this.getAcademicTutorDni(res.academicTutor.id)
+                },
+              })
+            })
+          }
+        })
+        this.getCoordinador(student.idCareer)
       },
     });
   };
@@ -84,7 +194,6 @@ export class DocumentsMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.setData();
-
     this.documentsService.getDocuments().subscribe({
       next: (res) => {
         res.sort((a, b) => a['id'] - b['id']);
@@ -104,7 +213,7 @@ export class DocumentsMenuComponent implements OnInit {
                 {
                   bgImage: backgroundImage(),
                   logoImage: logoImage(),
-                  instituteName: this.studentData.instituteName,
+                  instituteName: this.instituteName,
                   docx,
                   fileSaver: fs,
                   exceljs: exceljs,
@@ -112,6 +221,11 @@ export class DocumentsMenuComponent implements OnInit {
                   ...this.currentStudent,
                   ...res[i],
                   code: this.careerCode.concat('-', res[i].code),
+                  studentProjectTable:this.studentProjectTable,
+                  bussinesTutorDni:this.bussinesTutorDni,
+                  academicTutorDni:this.academicTutorDni,
+                  careerCoordinator: this.careerCoordinator,
+                  careerCoordinatorDni:this.careerCoordinatorDni
                 }
               ),
             label: docName,
@@ -119,6 +233,7 @@ export class DocumentsMenuComponent implements OnInit {
           });
         }
       },
+
     });
   }
 }

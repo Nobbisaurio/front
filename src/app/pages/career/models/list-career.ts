@@ -3,5 +3,7 @@ export interface ListCareer {
   id:             number,
   code:           string,
   name:           string,
-  state:          boolean
+  state:          boolean,
+  idCoordinator:  number
+
 }

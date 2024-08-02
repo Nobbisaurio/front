@@ -6,8 +6,18 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DocumentProps } from '../models/documents-Props';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
-export function createDocument3({ logoImage, bgImage, code, docName, updateDate, process, elaborationDate, version, electivePeriod, career, company }: DocumentProps
+export function createDocument3({ logoImage, bgImage, code, docName, updateDate, process, elaborationDate, version, electivePeriod, career, company,studentProjectTable,academicTutor,businessTutor,bussinesTutorDni, academicTutorDni, careerCoordinator,careerCoordinatorDni }: DocumentProps
 ) {
+  const day = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+
+  const formattedDay = day < 10 ? `0${day}` : day;
+  const formattedMonth = month < 10 ? `0${month}` : month;
+
+
+
   const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
     pageMargins: [41, 41, 41, 41],
@@ -139,7 +149,7 @@ export function createDocument3({ logoImage, bgImage, code, docName, updateDate,
                 margin: [0, 5],
               },
               {
-                text: '2/01/2024',
+                text: `${formattedDay}/${formattedMonth}/${year}`,
                 fontSize: 10,
                 alignment: 'center',
                 margin: [0, 5],
@@ -251,6 +261,149 @@ export function createDocument3({ logoImage, bgImage, code, docName, updateDate,
         marginTop: 7,
         lineHeight: 1.2,
       },
+      // {
+        // pageBreak:'before',
+      //   image: await bgImage,
+      //   width: 595,
+      //   height: 842,
+      //   absolutePosition: { y: 0, x: 0 },
+      // },
+      {
+        text: 'Listado de Estudiantes',
+        fontSize:12,
+        alignment:'center',
+        marginTop:80,
+        bold:true
+      },
+      {
+        marginTop:20,
+        marginLeft:10,
+        table:{
+          widths:[10,'*','*','*',40,100],
+          body:[
+            [
+              {
+                text:'N°',
+                alignment:'center',
+                fontSize:9,
+                bold:true
+              },
+              {
+                text:'NOMBRE Y APELLIDO',
+                alignment:'center',
+                fontSize:9,
+                bold:true
+              },
+              {
+                text:'CÉDULA DE IDENTIDAD',
+                alignment:'center',
+                fontSize:9,
+                bold:true
+              },
+              {
+                text:'NIVEL',
+                alignment:'center',
+                fontSize:9,
+                bold:true
+              },
+              {
+                text:'NOTA',
+                alignment:'center',
+                fontSize:9,
+                bold:true
+              },
+              {
+                text:'FIRMA',
+                alignment:'center',
+                fontSize:9,
+                bold:true
+              },
+
+            ],
+            ...studentProjectTable
+          ]
+        }
+      },
+      {
+        marginTop:30,
+        marginLeft:20,
+        table:{
+          widths:[150,150,150],
+          heights:['auto',40, 'auto','auto'],
+          body:[
+            [
+
+              {
+                text:'FIRMA DEL TUTOR DE LA ENTIDAD RECEPTORA -FORMADORA',
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+              {
+                text:'FIRMA DEL COORDINADOR DE CARRERA',
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+              {
+                text:'FIRMA DEL TUTOR ACADÉMICO',
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+
+            ],
+            [
+
+              {},
+              {},
+              {},
+            ],
+            [
+              {
+                text:`Nombre: ${businessTutor}`,
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+
+              },
+              {
+                text:`Nombre: ${careerCoordinator}`,
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+              {
+                text:`Nombre: ${academicTutor}`,
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+
+            ],
+            [
+              {
+                text: `CI. ${bussinesTutorDni}`,
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+              {
+                text: `CI. ${careerCoordinatorDni}`,
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+              {
+                text: `CI. ${academicTutorDni}`,
+                fontSize: 9,
+                bold:true,
+                alignment:'center'
+              },
+            ],
+          ]
+        }
+      }
     ],
 
   };
@@ -258,4 +411,3 @@ export function createDocument3({ logoImage, bgImage, code, docName, updateDate,
   // pdfMake.createPdf(documentDefinition).open();
 };
 
-////TODO: tabla de estudiantes segun empresa y proyecto

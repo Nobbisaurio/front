@@ -628,7 +628,7 @@ export function createDocument11({
   workSheet1.getCell('B56').value = 'Tutor Académico del ISTY';
 
   workSheet1.mergeCells('B57:F57');
-  workSheet1.getCell('B57').value = `Nombre: ${businessTutor}`;
+  workSheet1.getCell('B57').value = `Nombre: ${academicTutor}`;
 
   workSheet1.mergeCells('B58:F60');
   workSheet1.getCell('B58').value = 'Firma:' + '_'.repeat(35);
@@ -637,7 +637,7 @@ export function createDocument11({
   workSheet1.getCell('K56').value = 'Tutor Empresarial de la Empresa Formadora';
 
   workSheet1.mergeCells('K57:O57');
-  workSheet1.getCell('K57').value = `Nombre: ${academicTutor}`;
+  workSheet1.getCell('K57').value = `Nombre: ${businessTutor}`;
 
   workSheet1.mergeCells('K58:O60');
   workSheet1.getCell('K58').value = 'Firma:' + '_'.repeat(35);
@@ -1222,7 +1222,7 @@ export function createDocument11({
   workSheet2.getCell('B52').value = 'Tutor Académico del ISTY';
 
   workSheet2.mergeCells('B53:F53');
-  workSheet2.getCell('B53').value = `Nombre: ${businessTutor}`;
+  workSheet2.getCell('B53').value = `Nombre: ${academicTutor}`;
 
   workSheet2.mergeCells('B54:F56');
   workSheet2.getCell('B54').value = 'Firma:' + '_'.repeat(35);
@@ -1231,7 +1231,7 @@ export function createDocument11({
   workSheet2.getCell('K52').value = 'Tutor Empresarial de la Empresa Formadora';
 
   workSheet2.mergeCells('K53:O53');
-  workSheet2.getCell('K53').value = `Nombre: ${academicTutor}`;
+  workSheet2.getCell('K53').value = `Nombre: ${businessTutor}`;
 
   workSheet2.mergeCells('K54:O56');
   workSheet2.getCell('K54').value = 'Firma:' + '_'.repeat(35);

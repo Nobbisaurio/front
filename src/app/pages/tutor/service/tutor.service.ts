@@ -6,6 +6,7 @@ import {ListTutor} from '../models/list-tutor';
 import {CreateTutorAcademic, CreateTutorBusiness} from '../models/create-tutor';
 import {ListTutorAcademic} from "@pages/tutor/models/list-tutor-academic";
 import {PaginationOptions} from "@core/models/pagination-model";
+import { Tutor } from '@app/pages/project/models/list-projects';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,9 @@ export class TutorService {
     return this.http.post<ListTutor[]>(RouterApi.urlTutorBusinessActive + idCompany, options,{
       headers: this.headers
     });
+  }
+  getTutorByID(id:number):Observable<ListTutor>{
+    return this.http.get<ListTutor>(RouterApi.urlTutor + '/' + id)
   }
 
   deleteTutor(tutor: ListTutor): Observable<void> {

@@ -173,9 +173,12 @@ export function createDocument8({
   workSheet.getCell('J7').value = electivePeriod;
   workSheet.getCell('J8').value = academicPeriod;
   workSheet.getCell('J9').value = structuringCore;
-  workSheet.getCell('J10').value = 'TELÉFONO DE EMERGENCIA:';
-  workSheet.getCell('J11').value = 'CONTACTO DE EMERGENCIA:';
-  workSheet.getCell('J12').value = 'TIPO DE SANGRE:';
+  workSheet.getCell('J10').value = '';
+  workSheet.getCell('J10').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFF000'}};
+  workSheet.getCell('J11').value = '';
+  workSheet.getCell('J11').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFF000'}};
+  workSheet.getCell('J12').value = '';
+  workSheet.getCell('J12').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFF000'}};
 
   workSheet.getRow(13).height = 10;
 

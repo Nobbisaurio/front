@@ -146,8 +146,8 @@ export function createDocument6({ exceljs, fileSaver, logoImage, structuringCore
   workSheet.getCell('D6').value = company;
   workSheet.getCell('D7').value = [firstName, secondName, lastName, secondLastName].join(' ');
   workSheet.getCell('D8').value = dni;
-  workSheet.getCell('D6').value = academicTutor;
-  workSheet.getCell('D6').value = businessTutor;
+  workSheet.getCell('D9').value = academicTutor
+  workSheet.getCell('D10').value = businessTutor
   workSheet.getCell('L6').value = academicPeriod;
   workSheet.getCell('L7').value = electivePeriod;
   workSheet.getCell('L10').value = career;
@@ -155,8 +155,8 @@ export function createDocument6({ exceljs, fileSaver, logoImage, structuringCore
   workSheet.getCell('D6').alignment = { horizontal: 'center', vertical: 'middle' };
   workSheet.getCell('D7').alignment = { horizontal: 'center', vertical: 'middle' };
   workSheet.getCell('D8').alignment = { horizontal: 'center', vertical: 'middle' };
-  workSheet.getCell('D6').alignment = { horizontal: 'center', vertical: 'middle' };
-  workSheet.getCell('D6').alignment = { horizontal: 'center', vertical: 'middle' };
+  workSheet.getCell('D9').alignment = { horizontal: 'center', vertical: 'middle' };
+  workSheet.getCell('D10').alignment = { horizontal: 'center', vertical: 'middle' };
   workSheet.getCell('L6').alignment = { horizontal: 'center', vertical: 'middle' };
   workSheet.getCell('L7').alignment = { horizontal: 'center', vertical: 'middle' };
   workSheet.getCell('L10').alignment = { horizontal: 'center', vertical: 'middle' };

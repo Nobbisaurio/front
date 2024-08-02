@@ -316,7 +316,7 @@ export function createDocument12( { exceljs, fileSaver, instituteName, structuri
   workSheet1.getCell( 'B36' ).value = 'Tutor Académico del ISTY';
 
   workSheet1.mergeCells( 'B37:F37' );
-  workSheet1.getCell( 'B37' ).value = `Nombre: ${ businessTutor }`;
+  workSheet1.getCell( 'B37' ).value = `Nombre: ${ academicTutor }`;
 
   workSheet1.mergeCells( 'B38:F40' );
   workSheet1.getCell( 'B38' ).value = 'Firma:' + '_'.repeat( 35 );
@@ -326,7 +326,7 @@ export function createDocument12( { exceljs, fileSaver, instituteName, structuri
   workSheet1.getCell( 'K36' ).value = 'Tutor Empresarial de la Empresa Formadora';
 
   workSheet1.mergeCells( 'K37:O37' );
-  workSheet1.getCell( 'K37' ).value = `Nombre: ${ academicTutor }`;
+  workSheet1.getCell( 'K37' ).value = `Nombre: ${ businessTutor }`;
 
   workSheet1.mergeCells( 'K38:O40' );
   workSheet1.getCell( 'K38' ).value = 'Firma:' + '_'.repeat( 35 );
@@ -617,7 +617,7 @@ export function createDocument12( { exceljs, fileSaver, instituteName, structuri
   workSheet2.getCell( 'B32' ).value = 'Tutor Académico del ISTY';
 
   workSheet2.mergeCells( 'B33:F33' );
-  workSheet2.getCell( 'B33' ).value = `Nombre: ${ businessTutor }`;
+  workSheet2.getCell( 'B33' ).value = `Nombre: ${ academicTutor }`;
 
   workSheet2.mergeCells( 'B34:F36' );
   workSheet2.getCell( 'B34' ).value = 'Firma:' + '_'.repeat( 35 );
@@ -627,7 +627,7 @@ export function createDocument12( { exceljs, fileSaver, instituteName, structuri
   workSheet2.getCell( 'K32' ).value = 'Tutor Empresarial de la Empresa Formadora';
 
   workSheet2.mergeCells( 'K33:O33' );
-  workSheet2.getCell( 'K33' ).value = `Nombre: ${ academicTutor }`;
+  workSheet2.getCell( 'K33' ).value = `Nombre: ${ businessTutor }`;
 
   workSheet2.mergeCells( 'K34:O36' );
   workSheet2.getCell( 'K34' ).value = 'Firma:' + '_'.repeat( 35 );

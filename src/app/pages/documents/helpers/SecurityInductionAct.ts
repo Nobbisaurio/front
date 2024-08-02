@@ -17,6 +17,16 @@ const studentEnterpriseName = 'HSB SOFTECUADOR';
 export function createDocument2(
   { logoImage, bgImage, instituteName, code, docName, process, updateDate, elaborationDate, version, academicPeriod, career, dni, firstName, secondName, lastName, secondLastName, company }: DocumentProps
 ) {
+  const day = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+
+  const formattedDay = day < 10 ? `0${day}` : day;
+  const formattedMonth = month < 10 ? `0${month}` : month;
+
+
+
   const documentDefinition: TDocumentDefinitions = {
     pageSize: 'A4',
     pageMargins: [41, 41, 41, 41],
@@ -135,7 +145,7 @@ export function createDocument2(
         alignment: 'center',
       },
       {
-        text: 'Quito D.M. 02/01/2024',
+        text: `Quito D.M. ${formattedDay}/${formattedMonth}/${year}`,
         margin: [0, 10],
         alignment: 'right',
         fontSize: 10,

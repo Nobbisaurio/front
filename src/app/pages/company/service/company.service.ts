@@ -23,7 +23,6 @@ export class CompanyService {
   ) {}
 
   getCompanyProfile(id: number): Observable <Company>{
-    console.log(id);
     return this.http.get <Company>(RouterApi.urlCompanyProfile + '/' + id, {
       headers: this.headers
     });
